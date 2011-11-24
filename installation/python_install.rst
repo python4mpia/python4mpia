@@ -23,17 +23,11 @@ Astronomers workshop series held at the Harvard Center for Astrophysics in
 platforms (including Windows).  *All the installation instructions that follow
 are written assuming this option.*
 
-`Enthought <http://www.enthought.com>`_ is the company which leads most of the
-development of `NumPy`_ and `SciPy`_.  EPD is a bundled binary
-distribution of Python with a *large* set of useful packages built in.  The
-`Academic version <http://www.enthought.com/products/edudownload.php>`_ of EPD
-is free for use by students or employees of a degree-granting institution as
-specified in the `license terms
-<http://www.enthought.com/EPDAcademicTerms.html>`_.
-
-If you do not meet the academic license requirements but are using Python for
-research in astronomy (e.g. observatory staff scientist), we recommend
-contacting Enthought directly and requesting permission.
+`Enthought <http://www.enthought.com>`_ is the company which leads
+most of the development of `NumPy`_ and `SciPy`_.  EPD is a bundled
+binary distribution of Python with a set of useful packages built in.
+The `Free version <http://enthought.com/products/epd_free.php>`_ of
+EPD can be used without restrictions.
 
 **ActiveState Community Python Distribution**
 
