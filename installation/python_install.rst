@@ -5,28 +5,39 @@
 Installing a scientific Python distribution
 ===========================================
 
-Unless you are confident with (and enjoy) tracking down compiler errors and
-other issues related to package incompatibilities, we strongly recommend using
-a pre-built binary Python distribution.  For MacOS in particular there are a
-whole slew of options for Python which don't play well together.  Even if you
-already have an installation on your system you will probably save time in
-the long run by starting fresh with a binary Python distribution.  There are
-two main options that we have experience installing:
-
-**Enthought Python Distribution Free**
+Unless you are confident with (and enjoy) tracking down compiler
+errors and other issues related to package incompatibilities, we
+strongly recommend using a pre-built binary Python distribution.  For
+MacOS in particular there are a whole slew of options for Python which
+don't play well together.  Even if you already have an installation on
+your system you will probably save time in the long run by starting
+fresh with a binary Python distribution. 
 
 For Windows, MacOS and linux non-root installation, **the easiest
-option** is to use the `Enthought Python Distribution
-<http://www.enthought.com/products/epd.php>`_ (EPD).  For the Python
-for Astronomers workshop series held at the Harvard Center for
+option** is to use the `Free Enthought Python Distribution
+<http://www.enthought.com/products/epd_free.php>`_
+(EPDFree). `Enthought <http://www.enthought.com>`_ sponsors much of
+the development `NumPy`_ and `SciPy`_, EPDFree is a bundled binary
+distribution of Python including a set of useful packages. For the
+Python for Astronomers workshop series held at the Harvard Center for
 Astrophysics in 2011, over 50 astronomers successfully installed and
 used EPD on a variety of platforms (including Windows).  *All the
 installation instructions that follow are written assuming this
 option.*
 
-`Enthought <http://www.enthought.com>`_ sponsors much of the
-development `NumPy`_ and `SciPy`_.  EPDFree is a bundled binary
-distribution of Python including a set of useful packages.
+
+**Alternatives to EPDFree**
+
+If you have a Linux distribution and have root access to your
+computer, you can instead install the necessary packages using your
+default package manager (for example, ``apt-get`` or the Software
+Centre on Ubuntu, or ``yum`` on Fedora).  Alternatively, if you are
+using a Mac you can install the necessary packages using Macports by
+following `these instructions
+<http://astrofrog.github.com/macports-python/>`_. This is one way to
+get a 64-bit Python installation on mac, which isn't available with
+EPDFree.  But if you're not sure which installation method to use it's
+simplest to follow the instructions below to install EPDFree.
 
 Installation steps
 --------------------
@@ -145,7 +156,7 @@ pyregion, and coords.
   pip.exe install http://stsdas.stsci.edu/astrolib/coords-0.37.tar.gz
 
 
-.. Admonition:: What is pip and easy_install and distribute and setuptools?!
+.. Admonition:: What is pip and easy_install and distribute and setuptools?
 
    Things can appear very confusing if you start installing packages
    on your own and looking through various projects and installation
@@ -200,76 +211,5 @@ ipython::
   import pywcs
   import atpy
   import aplpy
-
-Try it out!
---------------
-
-Setup
-^^^^^^^^^^^
-
-First download the `<install_examples.tar>`_ tar file which has
-example data files that will be used in subsequent exercises.  Then
-change to a working directory, untar the file, and start up IPython::
-
-  tar xvf ~/Downloads/install_examples.tar   # or wherever your browser puts downloads
-  cd py4ast/install
-  ls
-  ipython -pylab
-
-.. tip::
-   For all of the workshops you should always start Python using the command::
-   
-     ipython -pylab  # (for Windows start the Pylab application)
-
-   This will automatically load all of the main plotting functions from
-   `Matplotlib`_ (e.g. ``plot()``, ``hist()``, and many more) as well as common
-   math functions and array utilities from `NumPy`_ (e.g. ``sin()``, ``exp()``,
-   ``array()``, etc).
-
-   In my ``~/.cshrc`` file I define an alias that I commonly use::
-
-     alias pylab "ipython -pylab"
-
-
-.. admonition:: Exercise: Read a table and examine it
-  
-  Look at the documentation for the `asciitable.read()
-  <http://cxc.harvard.edu/contrib/asciitable/#reading-tables>`_
-  function in `asciitable`_.  Follow the very first example and use
-  the ``read()`` function to read the data in the file ``table1.dat``
-  into the variable named ``data``.
-
-  This table is in the "ApJ machine-readable format" (which is
-  actually a bit tricky for machines to read).  This is very similar
-  to the table format used by CDS / Vizier for input and storage of
-  tables in astronomy.
-
-  Once you have read the table into the variable ``data`` then print
-  the table, print the column ``RAdeg``, and print the 3rd row.
-
-  Hints:
-     
-     - You can print a ``<variable>`` by just typing ``print <variable>`` at the command line, for example ``print data``.
-     - You can get tons of useful information about a variable with ``help`` or ``?``:
-
-        - ``help <variable>``
-        - ``? <variable>``
-
-       These two commands are pretty similar except that ``?`` gives a little bit more information
-       and in a more raw form.
-     - The object returned by ``asciitable.read()`` is a NumPy record array, 
-       which is just a fancy way of saying a table where you can access rows or columns of data.
-     - You can get the column names and types with ``print data.dtype``
-     - To print a column of data use ``print data["<column_name>"]``, for example ``print data["Name"]``
-     - To print a row of data use ``print data[<row_number>]``
-
-  Optional: use the `plot
-  <http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.plot>`_
-  and `hist
-  <http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.hist>`_
-  functions to examine the data graphically.  For instance plot RAdeg
-  versus DEdeg.  Look at the ``table1.dat`` file itself for detailed
-  column descriptions.
-
 
 .. include:: ../references.rst
