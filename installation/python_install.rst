@@ -5,26 +5,26 @@
 Installing a scientific Python distribution
 ===========================================
 
-Unless you are confident with (and enjoy) tracking down compiler
-errors and other issues related to package incompatibilities, we
-strongly recommend using a pre-built binary Python distribution.  For
-MacOS in particular there are a whole slew of options for Python which
-don't play well together.  Even if you already have an installation on
-your system you will probably save time in the long run by starting
-fresh with a binary Python distribution. 
+In order to run the examples to be presented in the workshops, your
+Python installation will need to meet the
+:ref:`python_pkg_requirements`.  Unless you are confident with (and
+enjoy) tracking down compiler errors and other issues related to
+package incompatibilities, we strongly recommend using a pre-built
+binary Python distribution.  For MacOS in particular there are a whole
+slew of options for Python which don't play well together.  Even if
+you already have an installation on your system you will probably save
+time in the long run by starting fresh with a binary Python
+distribution.
 
 For Windows, MacOS and linux non-root installation, **the easiest
 option** is to use the `Free Enthought Python Distribution
 <http://www.enthought.com/products/epd_free.php>`_
 (EPDFree). `Enthought <http://www.enthought.com>`_ sponsors much of
-the development `NumPy`_ and `SciPy`_, EPDFree is a bundled binary
+the development for `NumPy`_ and `SciPy`_. EPDFree is a bundled binary
 distribution of Python including a set of useful packages. For the
 Python for Astronomers workshop series held at the Harvard Center for
 Astrophysics in 2011, over 50 astronomers successfully installed and
-used EPD on a variety of platforms (including Windows).  *All the
-installation instructions that follow are written assuming this
-option.*
-
+used EPD on a variety of platforms (including Windows).
 
 **Alternatives to EPDFree**
 
@@ -35,61 +35,31 @@ Centre on Ubuntu, or ``yum`` on Fedora).  Alternatively, if you are
 using a Mac you can install the necessary packages using Macports by
 following `these instructions
 <http://astrofrog.github.com/macports-python/>`_. This is one way to
-get a 64-bit Python installation on mac, which isn't available with
+get a 64-bit Python installation on a Mac, which isn't available with
 EPDFree.  But if you're not sure which installation method to use it's
 simplest to follow the instructions below to install EPDFree.
 
-Installation steps
---------------------
+Installation Python and the Core Scientific packages
+----------------------------------------------------
 
-In order to run the examples to be presented in the workshops, your
-Python installation will need to meet the
-:ref:`python_pkg_requirements`.  The aim of this workshop is to get
-this set up correctly.  This will proceed in three steps:
-
-- Download the appropriate Enthought Python Distribution (EPD) installer
-- Install EPD as the core Python installation 
-- Install additional packages which are used in the workshops
-- Test the installation
-
-The installation process is particular to each platform.  For all
-options except "Macports or Linux package manager" you will need the
-EPD download as discussed in the next section.
-
-Download EPD
-^^^^^^^^^^^^^
-
-To download EPD go to the `EPDFree download
-<http://enthought.com/products/epd_free.php>`_ page.
-
-If you are running a Linux distribution, you need to establish whether
-your computer has a 32-bit or 64-bit processor and download the
-relevant package. To do this type ``uname -mpi`` at the command line.
-If you see ``x86_64 x86_64 x86_64`` you have a 64-bit machine and OS.
-If you see one or more ``i686`` or ``i386`` you are running a 32-bit
-OS.
-
-Only 32-bit packages are available for MacOSX and Windows
-installations, but these will work on both 32-bit and 64-bit systems.
-
-
-Install core Python
-^^^^^^^^^^^^^^^^^^^
-
-Now install EPD as the core Python on your system following the
-instructions below:
+Follow the relevant link below for detailed instructions on how to
+install the core Python using either EPDFree, your Linux package
+manager, or MacPorts:
 
 .. toctree::
    :maxdepth: 1
    
-   macosx
+   EPDFree
    linux
-   windows
+   macports
+
 
 Install additional packages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Here you will install the additional packages listed in the
+Once you've installed the core Python along with Numpy, Scipy,
+Matplotlib and IPython using one of the methods in the previous
+section, you can install the additional packages listed in the
 :ref:`python_pkg_requirements` section.  Copy and paste the lines
 applicable to your system one at a time, checking that each one works.
 The program outputs may contain various "warnings", but watch for
