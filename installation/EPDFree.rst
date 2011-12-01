@@ -3,9 +3,9 @@
 EPD Free (Linux, MacOS and Windows)
 ===================================
 
-These instructions tell you how to install the core scientific Python
-packages on either Linux, MacOS, or Windows using the Free Enthought
-Python Distribution.
+These instructions tell you how to install all the Python packages
+necessary for the course on either Linux, MacOS, or Windows using the
+Free Enthought Python Distribution.
 
 Download EPD
 ------------
@@ -21,8 +21,10 @@ see one or more ``i686`` or ``i386`` you are running a 32-bit OS. Only
 but these will work on both 32-bit and 64-bit systems.
 
 Once you've downloaded EPD, skip to the instructions below that apply
-to your operating system (Linux, MacOS or Windows).
+to your operating system (:ref:`Linux`, :ref:`Windows` or
+:ref:`MacOS`).
 
+.. _Linux:
 
 Linux
 -----
@@ -51,8 +53,11 @@ You should see::
 
   /home/me/epd7.1/bin/ipython  
 
-where ``/home/me/epd7.1`` is replaced by your installation root path.
+where ``/home/me/epd7.1`` is replaced by your installation root
+path. Now skip down to :ref:`install_additional_packages` to install
+the remaining packages needed for the course.
 
+.. _Windows:
 
 Windows
 -------
@@ -72,6 +77,10 @@ To exit IPython enter::
 
   exit()
 
+Now skip down to :ref:`install_additional_packages` to install the
+remaining packages needed for the course.
+
+.. _MacOS:
 
 MacOS
 -----
@@ -91,6 +100,10 @@ Open a new terminal window and type::
 You should see something like:
 
   /Library/Frameworks/EPD32.framework/Versions/Current/bin/ipython
+
+If everything has gone smoothly, skip down to
+:ref:`install_additional_packages` to install the remaining packages
+needed for the course.
 
 If EPD installed successfully and you can start ``python`` but not
 ``ipython`` (error message like ``ipython: command not found``) then
@@ -114,7 +127,7 @@ If you do not see something like
 to step 3.  
 
 Step 3
-########
+######
 
 Determine if you are running csh/tcsh or bash by entering the command ``ps`` in a terminal window.
 For ``csh`` or ``tcsh`` you should edit the file ``~/.cshrc`` and add the following lines at the end::
@@ -126,3 +139,81 @@ For ``bash`` you should edit the file ``~/.bash_profile`` and add the following 
 
  # Setting PATH for Enthough Python Distribution
  export PATH=/Library/Frameworks/EPD32.framework/Versions/Current/bin:$PATH
+
+.. _install_additional_packages:
+
+Install additional packages
+---------------------------
+
+Once you've installed EPDFree you can install the additional packages
+listed in the :ref:`python_pkg_requirements` section.  Copy and paste
+the lines applicable to your system one at a time, checking that each
+one works.  The program outputs may contain various "warnings", but
+watch for "errors" and look at the end to see if a successful
+installation was reported.
+
+Of these packages only ``pywcs`` was a significant issue during the
+CfA Python for Astronomers series.  Most Windows users and a few MacOS
+users had problems.  Since then a patch has been released, but it is
+still known to fail for 32-bit Windows XP.  This package is required
+to make images with ``APLpy`` and do WCS coordinate transformations,
+but otherwise it is not absolutely needed.
+
+MacOS and Linux
+~~~~~~~~~~~~~~~
+::
+
+  easy_install --upgrade pip
+  pip install --upgrade distribute
+  pip install asciitable
+  pip install pyfits
+  pip install pywcs
+  pip install atpy
+  pip install aplpy
+  pip install pyregion
+  pip install pyparsing
+  pip install http://stsdas.stsci.edu/astrolib/vo-0.6.tar.gz
+  pip install http://stsdas.stsci.edu/astrolib/coords-0.37.tar.gz
+
+
+Windows
+~~~~~~~
+
+For Windows XP 32-bit the following are known to have problems: pywcs,
+pyregion, and coords.
+::
+
+  cd C:\Python27\Scripts
+  easy_install.exe --upgrade pip
+  pip.exe install --upgrade distribute
+  pip.exe install asciitable
+  pip.exe install pyfits
+  pip.exe install pywcs     
+  pip.exe install atpy
+  pip.exe install aplpy
+  pip.exe install pyregion  
+  pip.exe install pyparsing
+  pip.exe install http://stsdas.stsci.edu/astrolib/vo-0.6.tar.gz
+  pip.exe install http://stsdas.stsci.edu/astrolib/coords-0.37.tar.gz
+
+
+.. Admonition:: What is pip and easy_install and distribute and setuptools?
+
+   Things can appear very confusing if you start installing packages
+   on your own and looking through various projects and installation
+   documentation.  First there was the ``distutils`` standard library
+   module that specifies what a package provides and how it gets
+   installed.  But this had some shortcomings and a 3rd party
+   extension named ``setuptools`` was developed and adopted fairly
+   widely.  In conjunction with ``setuptools`` was a script
+   ``easy_install`` that took care of downloading, untarring,
+   building, and installing packages.  Pretty good, except that the
+   developer of both these stopped actively developing them.
+
+   So some people took matters into their own hands and did a
+   "friendly fork" of ``setuptools`` named ``distribute``. Now
+   ``distribute`` is the standard, and likewise ``pip`` has replaced
+   ``easy_install`` as the best (and actively developed) easy
+   installer.
+
+
