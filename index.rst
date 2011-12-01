@@ -27,7 +27,7 @@ encounter in research*.
 
    intro/intro
    installation/installation
-   pure_python/pure_python
+..   pure_python/pure_python
 
 Workshop Schedule
 -----------------
