@@ -1,7 +1,10 @@
 .. _guide:
 
+MPIA Python Workshop
+====================
+
 About this website
-==================
+------------------
 
 This Python course for MPIA is adapted from the `Practical Python for
 Astronomers <http://python4astronomers.github.com>`_ course written by Tom
@@ -12,8 +15,8 @@ Attribution 3.0 License <http://creativecommons.org/licenses/by/3.0>`_.
 The present course has been restructured and adapted to reflect the interests
 of the MPIA audience and includes MPIA-specific set-up information.
 
-MPIA Python Course
-==================
+About the course
+----------------
 
 The MPIA Python course contains a series of hands-on workshops to explore
 the Python language and the powerful analysis tools it provides. *The emphasis
