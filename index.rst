@@ -32,13 +32,12 @@ encounter in research*.
 Workshop Schedule
 -----------------
 
-The workshop schedule is as follows. Except for the first introductory session
-all workshops are hands-on and participants should bring a laptop.
+The preliminary workshop schedule is as follows.
 
 ======== ======================================= ===================== =============
 Date     Topic                                   Location and time     Presenter
 ======== ======================================= ===================== =============
-7/12/11  Introduction to Python                  7 December 2011       T. Robitaille         
+7/12/11  Python installation                     7 December 2011       T. Robitaille         
 ======== ======================================= ===================== =============
 
 About the Workshops

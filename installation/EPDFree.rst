@@ -1,14 +1,14 @@
 .. _EPD_Free
 
 EPD Free (Linux, MacOS and Windows)
-===================================
+=============================================================
 
 These instructions tell you how to install all the Python packages
 necessary for the course on either Linux, MacOS, or Windows using the
 Free Enthought Python Distribution.
 
-Download EPD
-------------
+All Platforms: Download EPD
+---------------------------
 
 To download EPD go to the `EPDFree download
 <http://enthought.com/products/epd_free.php>`_ page. If you are
@@ -57,6 +57,30 @@ where ``/home/me/epd7.1`` is replaced by your installation root
 path. Now skip down to :ref:`install_additional_packages` to install
 the remaining packages needed for the course.
 
+.. _MacOS:
+
+MacOS
+-----
+
+Open the EPD disk image then double-click on ``EPD.mpkg`` and follow
+the prompts to install. Choose all the defaults for installing (in
+particular use the default installation location).
+
+Quick installation check
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Open a new terminal window and type::
+
+  which ipython
+
+You should see something like:
+
+  /Library/Frameworks/EPD32.framework/Versions/Current/bin/ipython
+
+If everything has gone smoothly, skip down to
+:ref:`install_additional_packages` to install the remaining packages
+needed for the course.
+
 .. _Windows:
 
 Windows
@@ -80,65 +104,6 @@ To exit IPython enter::
 Now skip down to :ref:`install_additional_packages` to install the
 remaining packages needed for the course.
 
-.. _MacOS:
-
-MacOS
------
-
-Assuming that you have downloaded the EPD disk image, open it, then
-double-click on ``EPD.mpkg`` and follow the prompts to install. Choose
-all the defaults for installing (in particular use the default
-installation location).
-
-Quick installation check
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-Open a new terminal window and type::
-
-  which ipython
-
-You should see something like:
-
-  /Library/Frameworks/EPD32.framework/Versions/Current/bin/ipython
-
-If everything has gone smoothly, skip down to
-:ref:`install_additional_packages` to install the remaining packages
-needed for the course.
-
-If EPD installed successfully and you can start ``python`` but not
-``ipython`` (error message like ``ipython: command not found``) then
-there is likely a problem with your PATH. To fix this, try following
-these steps:
-
-Step 1
-######
-
-Are you sure you opened a new terminal window after the installation finished?
-
-Step 2
-######
-
-Try this in a new terminal window::
-
-  echo $PATH
-
-If you do not see something like
-``/Library/Frameworks/EPD32.framework/Versions/Current/bin`` in your path then go
-to step 3.  
-
-Step 3
-######
-
-Determine if you are running csh/tcsh or bash by entering the command ``ps`` in a terminal window.
-For ``csh`` or ``tcsh`` you should edit the file ``~/.cshrc`` and add the following lines at the end::
-
- # Setting PATH for Enthough Python Distribution
- set path=(/Library/Frameworks/EPD32.framework/Versions/Current/bin $path)
-
-For ``bash`` you should edit the file ``~/.bash_profile`` and add the following lines at the end::
-
- # Setting PATH for Enthough Python Distribution
- export PATH=/Library/Frameworks/EPD32.framework/Versions/Current/bin:$PATH
 
 .. _install_additional_packages:
 
@@ -159,8 +124,8 @@ still known to fail for 32-bit Windows XP.  This package is required
 to make images with ``APLpy`` and do WCS coordinate transformations,
 but otherwise it is not absolutely needed.
 
-MacOS and Linux
-~~~~~~~~~~~~~~~
+Linux
+~~~~~
 ::
 
   easy_install --upgrade pip
@@ -175,6 +140,25 @@ MacOS and Linux
   pip install http://stsdas.stsci.edu/astrolib/vo-0.6.tar.gz
   pip install http://stsdas.stsci.edu/astrolib/coords-0.37.tar.gz
 
+Now :ref:`test_your_installation`.
+
+MacOS
+~~~~~
+::
+
+  sudo easy_install --upgrade pip
+  sudo pip install --upgrade distribute
+  pip install --user asciitable
+  pip install --user pyfits
+  pip install --user pywcs
+  pip install --user atpy
+  pip install --user aplpy
+  pip install --user pyregion
+  pip install --user pyparsing
+  pip install --user http://stsdas.stsci.edu/astrolib/vo-0.6.tar.gz
+  pip install --user http://stsdas.stsci.edu/astrolib/coords-0.37.tar.gz
+
+Now :ref:`test_your_installation`.
 
 Windows
 ~~~~~~~
@@ -195,6 +179,9 @@ pyregion, and coords.
   pip.exe install pyparsing
   pip.exe install http://stsdas.stsci.edu/astrolib/vo-0.6.tar.gz
   pip.exe install http://stsdas.stsci.edu/astrolib/coords-0.37.tar.gz
+
+
+Now :ref:`test_your_installation`.
 
 
 .. Admonition:: What is pip and easy_install and distribute and setuptools?

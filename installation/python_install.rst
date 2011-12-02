@@ -17,14 +17,20 @@ time in the long run by starting fresh with a binary Python
 distribution.
 
 For Windows, MacOS and linux non-root installation, **the easiest
-option** is to use the `Free Enthought Python Distribution
-<http://www.enthought.com/products/epd_free.php>`_
-(EPDFree). `Enthought <http://www.enthought.com>`_ sponsors much of
+option** is to use the Free Enthought Python Distribution (EPDFree).
+
+.. toctree::
+   :maxdepth: 1
+   
+   EPDFree installation instructions (MacOS, Linux and Windows) <EPDFree> 
+
+`Enthought <http://www.enthought.com>`_ sponsors much of
 the development for `NumPy`_ and `SciPy`_. EPDFree is a bundled binary
 distribution of Python including a set of useful packages. For the
 Python for Astronomers workshop series held at the Harvard Center for
 Astrophysics in 2011, over 50 astronomers successfully installed and
 used EPD on a variety of platforms (including Windows).
+
 
 **Alternatives to EPDFree**
 
@@ -38,19 +44,13 @@ Mac, which isn't available with EPDFree.  But if you're not sure which
 installation method to use it's simplest to follow the instructions
 below to install EPDFree.
 
-Installation Python and the Core Scientific packages
-----------------------------------------------------
-
-Follow the relevant link below for detailed instructions on how to
-install Python and all the required packages using either EPDFree,
-your Linux package manager, or MacPorts:
-
 .. toctree::
    :maxdepth: 1
-   
-   EPDFree
-   linux
-   macports
+
+   Linux package manager installation instructions <linux>
+   Macports installation instructions <macports>
+
+.. _test_your_installation:
 
 Test your installation
 ^^^^^^^^^^^^^^^^^^^^^^^^
