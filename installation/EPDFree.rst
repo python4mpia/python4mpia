@@ -21,8 +21,7 @@ see one or more ``i686`` or ``i386`` you are running a 32-bit OS. Only
 but these will work on both 32-bit and 64-bit systems.
 
 Once you've downloaded EPD, skip to the instructions below that apply
-to your operating system (:ref:`Linux`, :ref:`Windows` or
-:ref:`MacOS`).
+to your operating system: :ref:`Linux`, :ref:`MacOS` or :ref:`Windows`.
 
 .. _Linux:
 
