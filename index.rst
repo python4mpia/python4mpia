@@ -30,24 +30,34 @@ encounter in research*.
 
    intro/intro
    installation/installation
-..   pure_python/pure_python
 
 Workshop Schedule
 -----------------
 
 The preliminary workshop schedule is as follows.
 
-======== ======================================= ===================== =============
-Date     Topic                                   Location and time     Presenter
-======== ======================================= ===================== =============
-7/12/11  Python installation                     7 December 2011       T. Robitaille         
-======== ======================================= ===================== =============
+========== ======================================= ===================== =============
+Date       Topic                                   Location and time     Presenter
+========== ======================================= ===================== =============
+Dec. 7th    Python Installation Day                Hörsaal, 9.15-12:15
+Late Jan.   Python Keynote
+Early Feb.  Python Courses begin
+========== ======================================= ===================== =============
+
+The course will be running once. every two weeks. Planned Course topics (subject to alteration):
+
+* Introduction to pure Python
+* Plotting with Matplotlib
+* Using Numpy and Scipy
+* Fitting data
+* Astronomical data reduction
+* More advanced/specialized topics (For example object-oriented programming, interfacing with C/C++ and Fortran code)
 
 About the Workshops
 -------------------
 
 The content presented here is suitable for self-study by those wishing to learn
-Python for astronomy or other scientific research applications. 
+Python for astronomy or other scientific research applications.
 
 **A greater goal is for those knowledgable in Python to teach the workshop
 series at their local institutions, adapting the content as desired.** To that
