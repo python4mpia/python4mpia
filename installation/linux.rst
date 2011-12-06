@@ -20,7 +20,7 @@ First install the core packages for analysis with the following::
   sudo apt-get install python-scipy
   sudo apt-get install python-matplotlib
   sudo apt-get install python-setuptools
-  sudo apt-get install pyfits
+  sudo apt-get install python-pyfits
 
 Most of the remaining packages are not available in the package manager, so we install them using the Python package manager ``pip``. To install pip::
 
