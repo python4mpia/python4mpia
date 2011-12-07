@@ -61,11 +61,11 @@ check version numbers. First on the command line check the version
 numbers of python and ipython::
 
   python -V
-  ipython -V
+  ipython --version
 
-Then run ipython with the ``-pylab flag``::
+Then run ipython with the ``--pylab flag``::
 
-  ipython -pylab
+  ipython --pylab
 
 and run the following python commands::
 
