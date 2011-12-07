@@ -34,12 +34,18 @@ run the installation script. For example::
    bash epd_free-7-1-2-rh5-x86.sh
 
 Next you need to edit the appropriate shell startup file
-(e.g. ``~/.cshrc`` or ``~/.bash_profile``) and update your path to
+(e.g. ``~/.cshrc``, ``~/.bash_profile``) and update your path to
 include the EPD path.  For instance if you specified to install EPD in
 ``/home/me/epd7.1`` then the following will work::
 
   export PATH=/home/me/epd7.1/bin:$PATH  # bash
   set path=(/home/me/epd7.1/bin $path)   # csh or tcsh
+
+Finally run the shell startup file with::
+
+  source ~/.bash_profile    # bash	
+  source ~/.cshrc           # csh or tcsh
+
 
 Quick installation check
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -50,7 +56,7 @@ Open a new terminal window and type::
 
 You should see::
 
-  /home/me/epd7.1/bin/ipython  
+  /home/me/epd7.1/bin/ipython
 
 where ``/home/me/epd7.1`` is replaced by your installation root
 path. Now skip down to :ref:`install_additional_packages` to install
@@ -64,6 +70,11 @@ MacOS
 Open the EPD disk image then double-click on ``EPD.mpkg`` and follow
 the prompts to install. Choose all the defaults for installing (in
 particular use the default installation location).
+
+Finally run the shell startup file, which the EPD installer has
+edited::
+
+  source ~/.profile
 
 Quick installation check
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,7 +154,15 @@ Now :ref:`test_your_installation`.
 
 MacOS
 ~~~~~
-::
+
+First ensure that XCode version 3 or 4 is installed. To check if XCode
+is installed properly, type ``gcc`` on the command-line. If you get
+``gcc: command not found``, then XCode is not properly installed. To
+install either download it `here
+<http://itunes.apple.com/us/app/xcode/id448457090?mt=12>`_, or it
+should also be on the install DVDs for your Mac.
+
+Once XCode is installed, run the following commands::
 
   sudo easy_install --upgrade pip
   sudo pip install --upgrade distribute

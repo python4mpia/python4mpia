@@ -56,22 +56,30 @@ Test your installation
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 To do a very basic test whether you meet the requirements and have a
-functioning core scientific Python installation, do the following and
-check version numbers::
+functioning core scientific Python installation, do the following to
+check version numbers. First on the command line check the version
+numbers of python and ipython::
 
-  % python -V
-  % ipython -V
-  % ipython -pylab
+  python -V
+  ipython -V
+
+Then run ipython with the ``-pylab flag``::
+
+  ipython -pylab
+
+and run the following python commands::
+
   import numpy
   import scipy
   import scipy.linalg
+  import pylab as plt
 
   print numpy.__version__
   print scipy.__version__
   print matplotlib.__version__
 
   x = numpy.linspace(0, 20, 100)
-  plot(x, sin(x))
+  plt.plot(x, sin(x))
   print scipy.linalg.eig([[1,2],[3,4]])
 
 The commands above should succeed with no errors.  The version numbers
