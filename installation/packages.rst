@@ -183,6 +183,26 @@ installation via a standard ``setup.py`` script.  This is used as follows::
 More information is available in the `Installing Python Modules
 <http://docs.python.org/install/index.html>`_ page.
 
+.. Admonition:: What is pip and easy_install and distribute and setuptools?
+
+   Things can appear very confusing if you start installing packages
+   on your own and looking through various projects and installation
+   documentation.  First there was the ``distutils`` standard library
+   module that specifies what a package provides and how it gets
+   installed.  But this had some shortcomings and a 3rd party
+   extension named ``setuptools`` was developed and adopted fairly
+   widely.  In conjunction with ``setuptools`` was a script
+   ``easy_install`` that took care of downloading, untarring,
+   building, and installing packages.  Pretty good, except that the
+   developer of both these stopped actively developing them.
+
+   So some people took matters into their own hands and did a
+   "friendly fork" of ``setuptools`` named ``distribute``. Now
+   ``distribute`` is the standard, and likewise ``pip`` has replaced
+   ``easy_install`` as the best (and actively developed) easy
+   installer.
+
+
 Where do packages get installed?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

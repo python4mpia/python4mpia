@@ -6,15 +6,11 @@ MacPorts
 Why use MacPorts?
 -----------------
 
-Installing a full Python using MacPorts is very easy. The advantages of using
-MacPorts over other packages are:
+The advantages of using MacPorts over EPDFree and other packages are:
 
 * A full 64-bit installation of Python
-* The ability to install different Python versions side by side (e.g. 2.7 and
-  3.2)
 * The ability to seamlessly install a number of packages that can otherwise be
   tricky to install on Mac
-* An easy mechanism for updating packages
 * The ability to install many other useful non-Python utilities, including the
   GNU Fortran compilers and many common X11 applications (``xemacs``, ``gv``,
   ``xv``, etc.)
@@ -102,6 +98,53 @@ Make this Python installation the default::
 Note that this is optional - you can also invoke this Python installation by
 using ``python2.7`` and ``ipython-2.7``.
 
+Test your installation
+----------------------
+
+To do a test whether you have a functioning core scientific Python
+installation, do the following to check version numbers. First on the
+command line check the version numbers of python and ipython::
+
+  python -V
+  ipython --version
+
+Then run ipython from the command line with the ``--pylab`` flag::
+
+  ipython --pylab
+
+and inside ipython run the following python commands::
+
+  import numpy
+  import scipy
+  import scipy.linalg
+  import pylab as plt
+
+  print numpy.__version__
+  print scipy.__version__
+  print matplotlib.__version__
+
+  x = numpy.linspace(0, 20, 100)
+  plt.plot(x, sin(x))
+  print scipy.linalg.eig([[1, 2], [3, 4]])
+
+The commands above should succeed with no errors.  The version numbers
+should meet the requirements, and finally you should see a plot of a
+sine wave.
+
+To check the other required packages, do the following also from
+within ipython::
+
+  import asciitable
+  import pyfits
+  import pywcs
+  import atpy
+  import aplpy
+
+If all the above commands run without errors, you've installed
+everything successfully! There is no need to install anything further
+for the course, but read on for instructions on how to install future
+python packages you may need using MacPorts.
+
 Searching for packages
 ----------------------
 
@@ -167,4 +210,3 @@ the port command. If you did mistakenly install packages to the MacPorts
 directory, just go to
 ``/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages``
 and remove the files relating to the package you installed.
-
