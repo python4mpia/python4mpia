@@ -40,7 +40,10 @@ Parallel process of FITS images
 Making a fancy plot from Monte-Carlo samples
 ----------------------------------
 
-Assume you have run an MCMC and you are left with two arrays X,Y of MCMC samples of two fit parameters. You now want to use X,Y to visualise the likelihood manifold. You can do that (a) as a simple scatter plot or (b) in a more fancy way::
+Assume you have run an MCMC and you are left with two arrays X,Y of
+MCMC samples of two fit parameters. You now want to use X,Y to
+visualise the likelihood manifold. You can do that (a) as a simple
+scatter plot or (b) in a more fancy way::
 
   import numpy,math
   import pylab
@@ -137,3 +140,85 @@ Assume you have run an MCMC and you are left with two arrays X,Y of MCMC samples
   pylab.show()
 
 .. image:: plot_MCMC_samples.png
+
+Reading text files and plotting 
+-------------------------------
+
+Plot the space and redshift distribution of the luminous red galaxies
+(LRGs) from the catalogue here:
+http://www.2slaq.info/2SLAQ_LRG_v5pub.cat::
+
+  import numpy as np
+  import matplotlib.pyplot as plt
+  from scipy import integrate
+  from math import sqrt
+   
+  # Cosmological parameters needed to convert redshift to distance   
+  H0 = 70.    # Hubble parameter at z=0, km/s/Mpc
+  omega_m = 0.3
+  omega_lam = 0.7
+  c_kms = 299792.458 # speed of light, km/s
+  dH = c_kms / H0    # Hubble distance, Mpc
+   
+  def inv_efunc(z):
+      """ Used to calculate the comving distance to object at redshift
+      z. Eqn 14 from Hogg, astro-ph/9905116."""
+      zp1 = 1. + z
+      return 1. / sqrt(omega_m*zp1**3 + omega_lam)
+   
+  # Read the LRG positions, magnitudes and redshifts
+  #
+  # dtype=None means the type of each column (float, integer, string)
+  # will be guessed. 
+  r = np.genfromtxt('2SLAQ_LRG_v5pub.cat', dtype=None, skip_header=176,
+                    names='name,z,rmag,RA,Dec',usecols=(0, 12, 26, 27, 28))
+   
+  r = r[r['z'] > 0.1]
+   
+  # calculate comoving distance corresponding to each object's redshift
+  dist = np.array([dH * integrate.quad(inv_efunc, 0, z)[0] for z in r['z']])
+   
+  # plot the distribution of LRGs, converting redshifts to positions
+  # assuming Hubble flow.
+  theta = r['RA'] * np.pi / 180  # radians
+  x = dist * np.cos(theta)
+  y = dist * np.sin(theta)
+
+  # make the area of each circle representing an LRG position
+  # proportional to its apparent r-band luminosity
+  sizes = 30 * 10**-((r['rmag'] - np.median(r['rmag']))/ 2.5)   
+  fig = plt.figure()
+  ax = fig.add_subplot(111)
+  # Color each LRG by its declination
+  col = ax.scatter(x, y, marker='.', s=sizes, c=r['Dec'], faceted=0,
+                   cmap=plt.cm.Spectral)
+  cax = fig.colorbar(col)
+  cax.set_label('Declination (degrees)')
+  ax.set_xlabel('Comoving Mpc')
+  ax.set_ylabel('Comoving Mpc')
+  ax.axis('equal')
+
+  # Now plot the redshift distribution
+  zbins = np.arange(0.25, 0.9, 0.05)
+  fig = plt.figure()
+  ax = fig.add_subplot(111)
+  ax.hist(r['z'], bins=zbins)
+  ax.set_xlabel('LRG redshift')
+   
+  # Make a second axis to plot the comoving distance
+  ax1 = plt.twiny(ax)
+   
+  # Generate redshifts corresponding to distance tick positions;
+  # first get a curve giving Mpc as a function of redshift
+  redshifts = np.linspace(0, 2., 1000)
+  dist = [dH * integrate.quad(inv_efunc, 0, z)[0] for z in redshifts]
+  Mpcvals = np.arange(0, 4000, 500)
+  # Then interpolate to the redshift values at which we want ticks
+  Mpcticks = np.interp(Mpcvals, dist, redshifts)
+  ax1.set_xticks(Mpcticks)
+  ax1.set_xticklabels([str(v) for v in Mpcvals])
+  # Make both axes have the same start and end point.
+  ax1.set_xlim(*ax.get_xlim())
+  ax1.set_xlabel('Comoving distance (Mpc)')
+
+  plt.show()
