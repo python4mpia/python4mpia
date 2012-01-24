@@ -36,15 +36,15 @@ Workshop Schedule
 
 The preliminary workshop schedule is as follows.
 
-========== ======================================= ===================== =============
-Date       Topic                                   Location and time     Presenter
-========== ======================================= ===================== =============
-Dec. 7th    Python Installation Day                Hörsaal, 9.15-12:15
-Late Jan.   Python Keynote
-Early Feb.  Python Courses begin
-========== ======================================= ===================== =============
+========== ======================================= =====================
+Date       Topic                                   Location and time    
+========== ======================================= =====================
+Dec. 7th    Python Installation Day                Hörsaal, 9:15-12:15
+Feb. 1st    Python Keynote                         Hörsaal, 10:30-11:30
+Mid Feb.    Ongoing Python classes begin                    
+========== ======================================= =====================
 
-The course will be running once. every two weeks. Planned Course topics (subject to alteration):
+The course will be run once every two weeks. Planned Course topics (subject to alteration):
 
 * Introduction to pure Python
 * Plotting with Matplotlib
