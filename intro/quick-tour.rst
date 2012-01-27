@@ -67,27 +67,78 @@ This produces the nice image:
 .. image:: image_plotting.png 
    :scale: 60%
 
-Hello, world
-------------
+The Basics
+----------
 
-The following is from "myfile.py".  
+Here is a brief guide to the basics of python syntax.
+Defining variables::
+
+    a=1
+    name="Jorge"
+
+Python figures out the variable type for you.
+
+Define functions
 ::
 
     def hello(name="John"):
         print "Hello, "+name
                                                                                 
-    def array_hello(names=["Tom", "Dick", "Harry"]):
+    def list_hello(names=["Tom", "Dick", "Harry"]):
         for name in names:
             print "Hello, "+name
 
+":" indicates the beginning of something.  Indentation (4 spaces) tells python 
+which code is included in the code segment instead of `{` and `}`.
+
+In Python, python takes arguments and keywords.  You set default arguments 
+for keywords.
+
+It is easy to loop through elements of a `list` using a `for` loop.
 
 Run the functions by inside python typing
 ::
 
->>> import myfile
->>> myfile.hello()
->>> myfile.array_hello()
+>>> hello()
+>>> array_hello()
 
+Run a script file in `ipython` using the `run` command::
+
+    In [1]: run myfile.py
+    In [2]: a
+    Out[2]: 1
+
+    In [3]: name
+    Out[3]: 'Bob'
+
+The variables you define in the script file are still available to you.::
+
+    In [4]: hello
+    Out[4]: <function hello at 0x1cec8c0>
+
+Whoops.  A function needs to be called with `()`.  Otherwise, python just
+tells you that it is a function::
+
+    In [5]: hello()
+    Hello, John
+
+I can also set the keyword explicitly::
+
+    In [6]: hello(name="Bryan")
+    Hello, Bryan
+
+or be lazy and just pass in the argument alone and python will assign it to
+the keyword in the corresponding position::
+
+    In [7]: hello("Dieter")
+    Hello, Dieter
+
+My list example also works::
+
+    In [8]: list_hello()
+    Hello, Tom
+    Hello, Dick
+    Hello, Harry
 
 Reading text files and plotting 
 -------------------------------
