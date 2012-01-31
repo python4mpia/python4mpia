@@ -75,7 +75,7 @@ This produces the nice image:
 .. image:: aplpy_plot.png
    :scale: 60%
 
-We can also easily make 3-color images with FITS files that have different projections:
+We can also easily make 3-color images with FITS files that have different projections::
 
     import numpy as np
     import aplpy
