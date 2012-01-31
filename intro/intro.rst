@@ -1,20 +1,16 @@
 Introduction and Motivation
 =============================================================
 
-.. Make aplpy.gif with:
-   convert -delay 700 aplpy.png -delay 300 aplpy_plain.png -loop 0 aplpy.gif
-
-.. image:: aplpy.gif
-
 The MPIA Python course is a series of hands-on workshops to explore the Python
 language and the powerful analysis tools it provides. *The emphasis is on
 using Python to solve real-world problems that astronomers are likely to
 encounter in research.*
 
 This will be a hands-on experience largely focused on interactive data
-analysis using tutorial examples that you type or cut-n-paste into the Python
-interpreter. Participants should bring a laptop to each session or partner-up
-with someone who has a laptop.
+analysis using tutorial examples that you type or cut-n-paste into the
+Python interpreter. Apart from the first 'keynote' session,
+participants should bring a laptop to each session partner-up with
+someone who has a laptop.
 
 **Agenda**
 
@@ -29,5 +25,4 @@ start using it as a tool for research and analysis.
    who-python
    wrapup
 
-:Author: Originally written by Tom Aldcroft
-:Copyright: 2011 Smithsonian Astrophysical Observatory
+:Author: Originally written by Tom Aldcroft, with changes by Tom Robitaille and Neil Crighton.

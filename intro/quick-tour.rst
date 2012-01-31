@@ -130,8 +130,8 @@ Define functions
 ":" indicates the beginning of something.  Indentation (4 spaces) tells python 
 which code is included in the code segment instead of `{` and `}`.
 
-In Python, python takes arguments and keywords.  You set default arguments 
-for keywords.
+Functions in python can take both mandatory arguments and optional
+keyword arguments. You can set default arguments for keywords.
 
 It is easy to loop through elements of a `list` using a `for` loop.
 
@@ -139,7 +139,7 @@ Run the functions by inside python typing
 ::
 
 >>> hello()
->>> array_hello()
+>>> list_hello()
 
 Run a script file in `ipython` using the `run` command::
 
@@ -187,16 +187,16 @@ Plot the space and redshift distribution of luminous red galaxies
 http://www.2slaq.info/2SLAQ_LRG_v5pub.cat. First we'll read the
 required columns from this text file and plot the galaxy distribution
 in a thin declination slice, showing the galaxy brightness by the
-point size, and colouring points by the r-i colour.
+point size, and colouring points by the r-i colour::
    
   import numpy as np
   import matplotlib.pyplot as plt
   from scipy import integrate
   from math import sqrt
    
-  # To plot the space distribution we need convert redshift to distance.
-  # The values and function below are needed for this conversion.
-
+  # To plot the space distribution we need to convert redshift to
+  # distance.  The values and function below are needed for this
+  # conversion.
   omega_m = 0.3
   omega_lam = 0.7
   H0 = 70.    # Hubble parameter at z=0, km/s/Mpc
@@ -208,7 +208,7 @@ point size, and colouring points by the r-i colour.
       z. Eqn 14 from Hogg, astro-ph/9905116."""
       return 1. / sqrt(omega_m * (1. + z)**3 + omega_lam)
    
-  # Read the LRG positions, magnitudes and redshifts and r-i colour
+  # Now read the LRG positions, magnitudes and redshifts and r-i colours.
   r = np.genfromtxt('2SLAQ_LRG_v5pub.cat', dtype=None, skip_header=176,
    		    names='name,z,rmag,RA,Dec,rmi',	
                     usecols=(0, 12, 26, 27, 28, 32))   
@@ -233,9 +233,9 @@ point size, and colouring points by the r-i colour.
   fig = plt.figure()
   ax = fig.add_subplot(111)
    
-  # Plot the LRGs, colouring by r-i colour.
-  col = plt.scatter(x, y, marker='.', s=sizes, c=r['rmi'], faceted=0,
-                    cmap=plt.cm.Spectral)
+  # Plot the LRGs, colouring points by r-i colour.
+  col = plt.scatter(x, y, marker='.', s=sizes, c=r['rmi'], linewidths=0.3,
+                    cmap=plt.cm.Spectral_r)
 
   # Add a colourbar.
   cax = fig.colorbar(col)
@@ -285,111 +285,132 @@ along the bottom of the plot, corresponding distance along the top::
    :scale: 60%
 
 
-
 Making a fancy plot from Monte-Carlo samples
-----------------------------------
+--------------------------------------------
 
-Assume you have run an MCMC and you are left with two arrays X,Y of
-MCMC samples of two fit parameters. You now want to use X,Y to
-visualise the likelihood manifold. You can do that (a) as a simple
-scatter plot or (b) in a more fancy way::
+Assume you have run an MCMC and you are left with two arrays X,Y of MCMC samples of two fit parameters. You now want to use X,Y to visualise the likelihood manifold. You can do that (a) as a simple scatter plot or (b) in a more fancy way.
+
+Instead of Monte-Carlo samples, you could also be faced with distributions of any two parameters, such as effective temperature and surface gravity of a set of stars, or redshift and magnitude of a set of galaxies.
+
+First, let us create some artificial toy data to mimick the output of an MCMC algorithm in some science application::
 
   import numpy,math
-  import pylab
+  import matplotlib.pyplot as plt
+  import matplotlib.gridspec as gridspec
 
   # Create artificial data mimicking some MCMC results.
   N = 50000
-  X = numpy.random.normal(0.0, 1.5, N)  # Normal distribution
-  Y = numpy.random.gamma(2.0, 2.0, N)   # Gamma distribution
+  X = numpy.random.normal(0.0, 1.5, N)  # Draw N samples from normal distribution
+  Y = numpy.random.gamma(2.0, 2.0, N)   # Draw N samples from Gamma distribution
 
-  # Define plot ranges once, for multiple usage later (e.g. more than a single subplot).
+Second, let us create a simple plot by plainly plotting x vs. y. This is very easy and we can recap some of the basic Python plotting commands::
+
+  # Define plot ranges at beginning, since used often later.
+  YRANGE = [-0.4,11.4]
   XRANGE = [-6.4,6.4]
-  YRANGE = [-2.4,11.4]
 
   # Define figure size and formatting
-  fig = pylab.figure(1, figsize=(16,7.5))
-  fig.subplots_adjust(wspace=0.2, left=0.04, bottom=0.07, top=0.99, right=0.99)
+  fig = plt.figure(1, figsize=(7,7))
+  fig.subplots_adjust(left=0.10, bottom=0.09, top=0.98, right=0.98)
 
-  # Two subplots next to each other. Start with left subplot.
-  pylab.subplot(121)
   # Simply plot X vs. Y as data points.
-  pylab.plot(X, Y, 'o', ms=4, alpha=0.1, color='blue')
+  plt.plot(X, Y, 'o', ms=4, alpha=0.1, color='blue')
 
-  pylab.xlim(XRANGE)
-  pylab.ylim(YRANGE)
-  pylab.xticks(fontsize=16)
-  pylab.yticks(fontsize=16)
-  pylab.xlabel(r'$x$', fontsize=24)
-  pylab.ylabel(r'$y$', fontsize=24)
+  # Set plot ranges, axes ticks and axes labels.
+  plt.xlim(XRANGE)                 # Set x plot range.
+  plt.ylim(YRANGE)                 # Set y plot range.
+  plt.xticks(fontsize=16)          # Set ticks x axis.
+  plt.yticks(fontsize=16)          # Set ticks y axis.
+  plt.xlabel(r'$x$', fontsize=24)  # Set label x axis.
+  plt.ylabel(r'$y$', fontsize=24)  # Set label y axis.
 
-  # Next, make right subplot.
-  pylab.subplot(122)
+  plt.savefig('plot_MCMC_samples_plain.png') # Save png file.
 
+The result looks like this:
+
+.. image:: plot_MCMC_samples_plain.png
+     :height: 350px
+     :width:  350px
+
+Now, we would like to make this plot a little fancier. Our wish list is:
+
+- We would like to see the density in the crowded regions!
+- smoothed distribution instead of single points
+- contours of confidence levels
+- projected distributions of both parameters as side panels
+
+The result should look like this:
+
+.. image:: plot_MCMC_samples_fancy.png
+     :height: 350px
+     :width:  350px
+
+Here is the code showing how to do this. We start by the top right panel, which is the main panel::
+
+  fig = plt.figure(2, figsize=(7,7))
+  fig.subplots_adjust(hspace=0.001, wspace=0.001, left=0.10, bottom=0.095, top=0.975, right=0.98)
+  # gridspec enables you to assign different formats to panels in one plot.
+  gs = gridspec.GridSpec(2, 2, width_ratios=[1,4], height_ratios=[4,1])
+
+  plt.subplot(gs[1]) # Main panel top right contains full 2D histogram.
   # Convert to 2d histogram.
-  B      = 25
-  hist2D = numpy.histogram2d(X, Y, bins=[B,B], range=[XRANGE,YRANGE], normed=False)[0]
+  Bins = 25
+  hist2D, xedges, yedges = numpy.histogram2d(X, Y, bins=[Bins,Bins], range=[XRANGE,YRANGE],
+      normed=False)
 
   # Plot Monte-Carlo samples as 2D histogram.
-  # Beware: imshow switches axes, so switch back.
-  hist2D = numpy.transpose(hist2D)
-  pylab.imshow(hist2D, cmap=pylab.cm.gray, interpolation='gaussian')
+  hist2D = numpy.transpose(hist2D)  # Beware: numpy switches axes, so switch back.
+  plt.pcolormesh(xedges, yedges, hist2D, cmap=plt.cm.gray)
 
   # Overplot with error contours 1,2,3 sigma.
   maximum    = numpy.max(hist2D)
-  # Infering correct levels of 1,2,3 sigma would require some further code,
-  # so let's fake it by setting the three levels to some guessed values.
-  [L1,L2,L3] = [0.5*maximum,0.25*maximum,0.125*maximum]
-  #print [L1,L2,L3]
-  cs = pylab.contour(hist2D, levels=[L1,L2,L3], linestyles=['--','--','--'], colors=['orange','orange','orange'], linewidths=1)
-  # use dictionary in order to assign my own labels to the contours.
+  [L1,L2,L3] = [0.5*maximum,0.25*maximum,0.125*maximum]  # Replace with a proper code!
+  # Use bin edges to restore extent.
+  extent = [xedges[0],xedges[-1], yedges[0],yedges[-1]]
+  cs = plt.contour(hist2D, extent=extent, levels=[L1,L2,L3], linestyles=['--','--','--'], 
+      colors=['orange','orange','orange'], linewidths=1)
+  # use dictionary in order to assign your own labels to the contours.
   fmtdict = {L1:r'$1\sigma$',L2:r'$2\sigma$',L3:r'$3\sigma$'}
-  pylab.clabel(cs, fmt=fmtdict, inline=True, fontsize=20)
+  plt.clabel(cs, fmt=fmtdict, inline=True, fontsize=20)
 
-  # Also plot marginal likelihoods.
-  S  = 101
-  I  = []
+  plt.xlim(XRANGE)
+  plt.ylim(YRANGE)
+
+Finally, add the two side panels showing the projected distributions of X and Y::
+
   # Bin X,Y separately. As 1D bin, can use more bins now.
+  S  = 101
   LX = numpy.histogram(X, bins=S, range=XRANGE, normed=True)[0]
   LY = numpy.histogram(Y, bins=S, range=YRANGE, normed=True)[0]
-  # Rescale by maxima. Don't want this histogram to span whole subplot.
-  rescale_X = 0.15*float(B)/numpy.max(LX)
-  rescale_Y = 0.15*float(B)/numpy.max(LY)
-  for s in range(S):
-	  I.append(float(s)*float(B)/float(S))
-	  LX[s] = LX[s]*rescale_X
-	  LY[s] = LY[s]*rescale_Y
-  pylab.plot(I, LX, '-', lw=3, color='white')
-  pylab.plot(LY, I, '-', lw=3, color='white')
+  # Restore positions lost by binning.
+  X = XRANGE[0] + (XRANGE[1]-XRANGE[0])*numpy.array(range(0,len(LX)))/float(len(LX)-1)
+  Y = YRANGE[0] + (YRANGE[1]-YRANGE[0])*numpy.array(range(0,len(LY)))/float(len(LY)-1)
 
-  pylab.xlim(0,B-1)
-  pylab.ylim(0,B-1)
+  # bottom right panel: projected density of x.
+  plt.subplot(gs[3])
+  plt.plot(X, LX, '-', lw=3, color='black')
 
-  # Sadly, through binning numpy looses the position information, so we need to restore it manually
-  # in order to plot proper axes ticks.
-  T = []
-  L = []
-  for x in -6,-4,-2,0,2,4,6:
-	  index = (x-XRANGE[0])*float(B-1)/(XRANGE[1] - XRANGE[0])
-	  T.append(index)
-	  L.append(x)
-  pylab.xticks(T, L, fontsize=16)
+  plt.xticks(fontsize=16)
+  plt.yticks([])
+  plt.xlabel(r'$x$', fontsize=24)
+  plt.ylabel(r'$\cal L$', fontsize=24)
+  plt.xlim(XRANGE)
+  plt.ylim(0.0, 1.1*numpy.max(LX))
 
-  T = []
-  L = []
-  for y in -2,0,2,4,6,8,10:
-	  index = (y-YRANGE[0])*float(B-1)/(YRANGE[1] - YRANGE[0])
-	  T.append(index)
-	  L.append(y)
-  pylab.yticks(T, L, fontsize=16)
+  # top left panel: projected density of y.
+  plt.subplot(gs[0])
+  plt.plot(LY, Y, '-', lw=3, color='black')
 
-  pylab.xlabel(r'$x$', fontsize=24)
-  pylab.ylabel(r'$y$', fontsize=24)
+  plt.yticks(fontsize=16)
+  plt.xticks([])
+  plt.xlabel(r'$\cal L$', fontsize=24)
+  plt.ylabel(r'$y$', fontsize=24)
+  plt.xlim(0.0, 1.1*numpy.max(LY))
+  plt.ylim(YRANGE)
 
-  pylab.savefig('plot_MCMC_samples.png')  # Save figure as png-file.
-  pylab.show()
+  plt.savefig('plot_MCMC_samples_fancy.png')
+  plt.show()
 
-.. image:: plot_MCMC_samples.png
-   :scale: 35%
 
 
 Parallel process of FITS images
@@ -460,231 +481,3 @@ If we run this from ipython or with python, we can see 12 ``Processing ...`` mes
     Wall time: 91.78 s
 
 The speedup is therefore a factor of 10.9!
-
-Reading a table and plotting with asciitable
---------------------------------------------
-
-The Fermi Gamma-ray satellite has a nice catalog of AGN available through
-HEASARC.  The script below will read in the catalog data using the `asciitable`_
-module, do some basic filtering with `NumPy`_, and make a couple of plots with
-`matplotlib`_ ::
-
-  import asciitable   # Make external package available
-
-  # Read table.  
-  # ==> dat[column_name] and dat[row_number] both valid <==
-  dat = asciitable.read('fermi_agn.dat')
-
-  redshift = dat['redshift']    # array of values from 'redshift' column
-  flux = dat['photon_flux']
-  gamma = dat['spectral_index']
-
-  # Select rows that have a measured redshift
-  with_z = (redshift != -999)
-
-  figure(1)
-  semilogx(flux, gamma, '.b', label='All')  # First plot!
-  semilogx(flux[with_z], gamma[with_z], 'or', label='With Z')
-  legend(numpoints=1)
-  grid()
-  xlabel('Flux (photon/cm$^2$/s)')   # latex works
-  ylabel('Spectral index $\Gamma$')
-
-  # Select low- and high-z samples
-  lowz = with_z & (redshift < 0.8)
-  highz = with_z & (redshift >= 0.8)
-
-  figure(2)
-  bins = arange(1.2, 3.0, 0.1)    # values from 1.2 to 3.0 by 0.1
-  hist(gamma[lowz], bins, color='b', alpha=0.5, label='z < 0.8')
-  hist(gamma[highz], bins, color='r', alpha=0.5, label='z > 0.8')
-  xlabel('Spectral index $\Gamma$')
-  title('$\Gamma$ for low-z and high-z samples')
-  legend(loc='upper left')
-
-  asciitable.write(dat[with_z], 'fermi_agn_with_z.dat')
-
-.. image:: scatter.png
-   :scale: 70%
-
-.. image:: hist.png
-   :scale: 70%
-
-Curve fitting with SciPy
-------------------------
-
-`SciPy`_ provides `curve_fit
-<http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html>`_,
-a simple and useful implementation of the Levenburg-Marquardt non-linear
-minimization algorithm.  This example shows a code to generate a fake dataset
-and then fit with a gaussian, returning the covariance matrix for parameter
-uncertainties.
-
-::
-
-  from scipy.optimize import curve_fit
-
-  # Create a function
-  # ==> First encounter with *whitespace* in Python <==
-  def gaussian(x, a, b, c):
-      val = a * exp(-(x - b)**2 / c**2)
-      return val
-
-  # Generate fake data.
-  # Note: functions in random package, array arithmetic (exp)
-  n = 100
-  x = random.uniform(-10., 10., n)  
-  y = exp(-(x - 3.)**2 / 4) * 10. + random.normal(0., 2., n)
-  e = random.uniform(0.1, 1., n)
-
-  # Fit
-  popt, pcov = curve_fit(gaussian, x, y, sigma=e)
-
-  # Print results
-  print "Scale =  %.3f +/- %.3f" % (popt[0], sqrt(pcov[0, 0]))
-  print "Offset = %.3f +/- %.3f" % (popt[1], sqrt(pcov[1, 1]))
-  print "Sigma =  %.3f +/- %.3f" % (popt[2], sqrt(pcov[2, 2]))
-
-  # Plot data
-  errorbar(x, y, yerr=e, linewidth=1, color='black', fmt=None)
-
-  # Plot model
-  xm = linspace(-10., 10., 100)  # 100 evenly spaced points
-  plot(xm, gaussian(xm, popt[0], popt[1], popt[2]))
-
-  # Save figure
-  savefig('fit.png')
-   
-The plotted fit result is as shown below:
-
-.. image:: fit.png
-   :scale: 50%
-
-Intermission: NumPy, Matplotlib, and SciPy
-------------------------------------------
-
-These three packages are the workhorses of scientific Python.  
-
-- `NumPy`_ is the fundamental package for scientific computing in Python [`NumPy Reference
-  <http://docs.scipy.org/doc/numpy/reference/>`_]
-- `Matplotlib`_ is one of many plotting packages.  Started as a Matlab clone.
-- `SciPy`_ is a collection of mathematical algorithms and convenience
-  functions [`SciPy Reference <http://docs.scipy.org/doc/scipy/reference/>`_]
-
-
-Synthetic images
-----------------
-
-This example demonstrates how to create a synthetic image of a cluster,
-including convolution with a Gaussian filter and the addition of noise.
-::
-
-  import pyfits
-  from scipy.ndimage import gaussian_filter
-
-  # Create empty image
-  nx, ny = 512, 512
-  image = zeros((ny, nx))
-
-  # Set number of stars
-  n = 10000
-
-  # Generate random positions
-  r = random.random(n) * nx
-  theta = random.uniform(0., 2. * pi, n)
-
-  # Generate random fluxes
-  f = random.random(n) ** 2
-
-  # Compute position
-  x = nx / 2 + r * cos(theta)
-  y = ny / 2 + r * sin(theta)
-
-  # Add stars to image
-  # ==> First for loop and if statement <==
-  for i in range(n):
-      if x[i] >= 0 and x[i] < nx and y[i] >= 0 and y[i] < ny:
-          image[y[i], x[i]] += f[i]
-
-  # Convolve with a gaussian
-  image = gaussian_filter(image, 1)
-
-  # Add noise
-  image += random.normal(3., 0.01, image.shape)
-
-  # Write out to FITS image
-  pyfits.writeto('cluster.fits', image, clobber=True)
-
-The simulated cluster image is below:
-
-.. image:: synthetic_image.png
-   :scale: 70%
-
-Running existing compiled codes
--------------------------------
-
-In addition to just doing computations and plotting, Python is great for gluing
-together other codes and doing system type tasks.
-
-::
-
-  import os
-  import asciitable
-
-  smoothing = 30  # Smoothing window length
-  freqs = [2, 4]  # Frequency values for making data
-  noises = [1, 5] # Noise amplitude inputs
-
-  figure(1)
-  clf()
-
-  # Loop over freq and noise values, running standalone code to create noisy data
-  # and smooth it.  Get the data back into Python and plot.
-  plot_num = 1
-  for freq in freqs:
-      for noise in noises:
-          # Run the compiled code "make_data" to make data as a list of x, y, y_smooth
-          cmd = 'make_data %s %s %s' % (freq, noise, smoothing)
-          print 'Running', cmd
-          out = os.popen(cmd).read()
-          # out now contains the output from <cmd> as a single string
-
-          # Write the output to a file
-          filename = 'data_%s_%s' % (freq, noise)
-          open(filename, 'w').write(out)
-
-          # Parse the output string as a table
-          dat = asciitable.read(out)
-
-          # Make a plot
-          subplot(2, 2, plot_num)
-          plot(dat['x'], dat['y'])
-          plot(dat['x'], dat['y_smooth'], linewidth=3, color='r')
-
-          plot_num += 1
-
-
-.. image:: run_codes.png
-   :scale: 70%
-
-
-And much much more...
-----------------------
-
-- Fast access to big (1e9 rows) tables with `PyTables
-  <http://www.pytables.org>`_ + `HDF5 <http://www.hdfgroup.org/HDF5/>`_
-- 3-d plotting and surface rendering with `Mayavi <http://mayavi.sourceforge.net/>`_
-- Sophisticated data modeling with advanced statistics with `Sherpa 
-  <http://cxc.harvard.edu/sherpa/>`_
-- `Query VO tables
-  <http://www.astropython.org/blog/2011/3/Querying-tables-in-the-virtual-observatory>`_
-  and `broadcast <https://gist.github.com/855678>`_ or 
-  `retrieve <https://gist.github.com/855678>`_ tables to VO applications like 
-  `TOPCAT`_.  
-- GUI application to quickly view thousands of X-ray survey image cutouts
-- Python-based web site for browsing a complex multi-wavelength survey
-- `Thermal modeling of the Chandra X-ray satellite 
-  <http://conference.scipy.org/scipy2010/slides/tom_aldcroft_chandra.pdf>`_
-- Interactive multi-user plots accessed through a web browser (!)
-- Distributed computing with `MPI for Python <http://mpi4py.scipy.org/>`_
-- Make a little `video distribution web site <http://youtube.com>`_

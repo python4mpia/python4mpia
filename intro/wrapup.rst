@@ -15,12 +15,11 @@ All the workshop materials will be available through the web site:
 Installing Python and the rest
 ------------------------------
 
-In order to follow along the tutorial sessions you need to have Python 2.6 or
-2.7 installed and satisfy these :ref:`python_pkg_requirements`.  Please look
-ahead to the workshop on :ref:`installing_scientific_python`.  You are
-encouraged to attempt the installation on your own, but at the very least you
-should download the necessary package files for your configuration in advance
-of the session.
+In order to follow along the with future sessions you need to have
+Python 2.6 or 2.7 installed and satisfy these
+:ref:`python_pkg_requirements`.  Please to instructions in
+:ref:`installing_scientific_python`. If you have trouble installing
+packages feel free to contact the MPIA python mailing list.
 
 Final words
 -----------
