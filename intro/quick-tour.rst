@@ -2,7 +2,7 @@
 
 Quick tour of Python
 ====================
-   
+
 In the spirit of this workshop let's jump in to real Python analysis code.
 
 Making a publication quality image
@@ -102,12 +102,12 @@ Define functions
 
     def hello(name="John"):
         print "Hello, "+name
-                                                                                
+
     def list_hello(names=["Tom", "Dick", "Harry"]):
         for name in names:
             print "Hello, "+name
 
-":" indicates the beginning of something.  Indentation (4 spaces) tells python 
+":" indicates the beginning of something.  Indentation (4 spaces) tells python
 which code is included in the code segment instead of `{` and `}`.
 
 Functions in python can take both mandatory arguments and optional
@@ -165,11 +165,11 @@ Array indexing
 Numpy array indexing and multidimensional arrays::
 
   import scipy
-  import numpy as np  
+  import numpy as np
   from numpy import random
-  import matplotlib.pyplot as plt 
+  import matplotlib.pyplot as plt
   import asciitable
-   
+
   # Create a simple numerical numpy 1D array (a vector, if you like):
   x = np.arange(10)
   print x
@@ -177,40 +177,40 @@ Numpy array indexing and multidimensional arrays::
   # To index a single element in x:
   print 'the first element of x is {0}' .format(x[0])
   print 'the second element of x is {0}' .format(x[1])
-   
+
   # Selecting ranges with the :
   print 'to select the first 4 elements of x type x[0:4] or simply x[:4]= {0}' .format(x[0:4])
-   
+
   # Indexing in steps
   print 'pick every other element of x by typing x[: :2] = {0}'.format(x[: : 2])
-   
+
   # Negative indexing: start counting from the end
   print 'The last element of x can be indexed as x[-1] = {0}'.format(x[-1])
   print 'The last-but-one element of x can be indexed as x[-2] = {0}'.format(x[-2])
-   
+
   # Negative indexing can also be used to select ranges, as above:
   print 'The last 4 elements of x are picked with x[-4:] = {0}'.format(x[-4:])
-  print 'Negative indexing and stepsizes can be used to reverse an array! try e.g. x[: :-1] = {0}'.format(x[: : -1])   
-   
+  print 'Negative indexing and stepsizes can be used to reverse an array! try e.g. x[: :-1] = {0}'.format(x[: : -1])
+
   # Now let's create a more typical array, with 2 dimensions, with numpy's random number generator:
   x2 = np.floor(10.*np.random.random((3,4)))
   print x2
-   
+
   # Indexing a 2D array is much the same as for a 1D array.... The : indicates "all elements from this axis"
   print 'Element (1,1) of x2 is selected by x2[0,0] = {0}'.format(x2[0,0])
   print 'The first row of x2 is selected by x2[0,:] = {0}'.format(x2[0,:])
   print 'The 3rd column of x2 is selected by x2[:,2] = {0}'.format(x2[:,2])
-   
+
   # We can also create more multi-dimensional arrays. This is a 4D array:
   x4 = np.floor(10.*np.random.random((2,3,4,2)))
   print x4
-   
+
   # In principle indexing an N-dimensional array is again similar to previous examples....
   print 'The (0,0,0,0) element of x4 is selected by x4[0,0,0,0] = {0}'.format(x4[0,0,0,0])
   print 'To select just from one axis and include all elements from the other axes, use ..., e.g. x4[1,...] = \n{0}'.format(x4[1,...])
 
 
-Reading text files and plotting 
+Reading text files and plotting
 -------------------------------
 
 Plot the space and redshift distribution of luminous red galaxies
@@ -219,12 +219,12 @@ http://www.2slaq.info/2SLAQ_LRG_v5pub.cat. First we'll read the
 required columns from this text file and plot the galaxy distribution
 in a thin declination slice, showing the galaxy brightness by the
 point size, and colouring points by the r-i colour::
-   
+
   import numpy as np
   import matplotlib.pyplot as plt
   from scipy import integrate
   from math import sqrt
-   
+
   # To plot the space distribution we need to convert redshift to
   # distance.  The values and function below are needed for this
   # conversion.
@@ -238,32 +238,32 @@ point size, and colouring points by the r-i colour::
       """ Used to calculate the comoving distance to object at redshift
       z. Eqn 14 from Hogg, astro-ph/9905116."""
       return 1. / sqrt(omega_m * (1. + z)**3 + omega_lam)
-   
+
   # Now read the LRG positions, magnitudes and redshifts and r-i colours.
   r = np.genfromtxt('2SLAQ_LRG_v5pub.cat', dtype=None, skip_header=176,
    		    names='name,z,rmag,RA,Dec,rmi',	
-                    usecols=(0, 12, 26, 27, 28, 32))   
+                    usecols=(0, 12, 26, 27, 28, 32))
 
   # Only keep objects with a redshift larger than 0.1 and in a narrow
   # declination slice around the celestial equator
   condition = (np.abs(r['Dec']) < 0.2) & (r['z'] > 0.1)
   r = r[condition]
-   
+
   # Calculate the comoving distance corresponding to each object's redshift
   dist = np.array([dH * integrate.quad(inv_efunc, 0, z)[0] for z in r['z']])
-   
+
   # Plot the distribution of LRGs, converting redshifts to positions
   # assuming Hubble flow.
   theta = r['RA'] * np.pi / 180  # radians
   x = dist * np.cos(theta)
   y = dist * np.sin(theta)
-   
+
   # Make the area of each circle representing an LRG position
   # proportional to its apparent r-band luminosity.
   sizes = 30 * 10**-((r['rmag'] - np.median(r['rmag']))/ 2.5)
   fig = plt.figure()
   ax = fig.add_subplot(111)
-   
+
   # Plot the LRGs, colouring points by r-i colour.
   col = plt.scatter(x, y, marker='.', s=sizes, c=r['rmi'], linewidths=0.3,
                     cmap=plt.cm.Spectral_r)
@@ -278,33 +278,33 @@ point size, and colouring points by the r-i colour::
 
 This produces the image:
 
-.. image:: dist_Mpc.png 
+.. image:: dist_Mpc.png
    :scale: 60%
-   
+
 Now we'll plot a histogram of the redshift distribution. This
 example demonstrates plotting two scales on the same axis -- redshift
 along the bottom of the plot, corresponding distance along the top::
-   
+
   zbins = np.arange(0.25, 0.9, 0.05)
   fig = plt.figure()
   ax = fig.add_subplot(111)
   plt.hist(r['z'], bins=zbins)
   plt.xlabel('LRG redshift')
-   
+
   # Make a second axis to plot the comoving distance
   ax1 = plt.twiny(ax)
-   
+
   # Generate redshifts corresponding to distance tick positions;
   # first get a curve giving Mpc as a function of redshift
   redshifts = np.linspace(0, 2., 1000)
   dist = [dH * integrate.quad(inv_efunc, 0, z)[0] for z in redshifts]
   Mpcvals = np.arange(0, 4000, 500)
-   
+
   # Then interpolate to the redshift values at which we want ticks.
   Mpcticks = np.interp(Mpcvals, dist, redshifts)
   ax1.set_xticks(Mpcticks)
   ax1.set_xticklabels([str(v) for v in Mpcvals])
-   
+
   # Make both axes have the same start and end point.
   x0,x1 = ax.get_xlim()
   ax1.set_xlim(x0, x1)
@@ -312,7 +312,7 @@ along the bottom of the plot, corresponding distance along the top::
 
   plt.show()
 
-.. image:: hist_z.png 
+.. image:: hist_z.png
    :scale: 60%
 
 
@@ -398,7 +398,7 @@ Here is the code showing how to do this. We start by the top right panel, which 
   [L1,L2,L3] = [0.5*maximum,0.25*maximum,0.125*maximum]  # Replace with a proper code!
   # Use bin edges to restore extent.
   extent = [xedges[0],xedges[-1], yedges[0],yedges[-1]]
-  cs = plt.contour(hist2D, extent=extent, levels=[L1,L2,L3], linestyles=['--','--','--'], 
+  cs = plt.contour(hist2D, extent=extent, levels=[L1,L2,L3], linestyles=['--','--','--'],
       colors=['orange','orange','orange'], linewidths=1)
   # use dictionary in order to assign your own labels to the contours.
   fmtdict = {L1:r'$1\sigma$',L2:r'$2\sigma$',L3:r'$3\sigma$'}
