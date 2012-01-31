@@ -63,106 +63,130 @@ Parallel process of FITS images
 Making a fancy plot from Monte-Carlo samples
 ----------------------------------
 
-Assume you have run an MCMC and you are left with two arrays X,Y of
-MCMC samples of two fit parameters. You now want to use X,Y to
-visualise the likelihood manifold. You can do that (a) as a simple
-scatter plot or (b) in a more fancy way::
+Assume you have run an MCMC and you are left with two arrays X,Y of MCMC samples of two fit parameters. You now want to use X,Y to visualise the likelihood manifold. You can do that (a) as a simple scatter plot or (b) in a more fancy way.
+
+Instead of Monte-Carlo samples, you could also be faced with distributions of any two parameters, such as effective temperature and surface gravity of a set of stars, or redshift and magnitude of a set of galaxies.
+
+First, let us create some artificial toy data to mimick the output of an MCMC algorithm in some science application::
 
   import numpy,math
-  import pylab
+  import matplotlib.pyplot as plt
+  import matplotlib.gridspec as gridspec
 
   # Create artificial data mimicking some MCMC results.
   N = 50000
-  X = numpy.random.normal(0.0, 1.5, N)  # Normal distribution
-  Y = numpy.random.gamma(2.0, 2.0, N)   # Gamma distribution
+  X = numpy.random.normal(0.0, 1.5, N)  # Draw N samples from normal distribution
+  Y = numpy.random.gamma(2.0, 2.0, N)   # Draw N samples from Gamma distribution
 
-  # Define plot ranges once, for multiple usage later (e.g. more than a single subplot).
+Second, let us create a simple plot by plainly plotting x vs. y. This is very easy and we can recap some of the basic Python plotting commands::
+
+  # Define plot ranges at beginning, since used often later.
+  YRANGE = [-0.4,11.4]
   XRANGE = [-6.4,6.4]
-  YRANGE = [-2.4,11.4]
 
   # Define figure size and formatting
-  fig = pylab.figure(1, figsize=(16,7.5))
-  fig.subplots_adjust(wspace=0.2, left=0.04, bottom=0.07, top=0.99, right=0.99)
+  fig = plt.figure(1, figsize=(7,7))
+  fig.subplots_adjust(left=0.10, bottom=0.09, top=0.98, right=0.98)
 
-  # Two subplots next to each other. Start with left subplot.
-  pylab.subplot(121)
   # Simply plot X vs. Y as data points.
-  pylab.plot(X, Y, 'o', ms=4, alpha=0.1, color='blue')
+  plt.plot(X, Y, 'o', ms=4, alpha=0.1, color='blue')
 
-  pylab.xlim(XRANGE)
-  pylab.ylim(YRANGE)
-  pylab.xticks(fontsize=16)
-  pylab.yticks(fontsize=16)
-  pylab.xlabel(r'$x$', fontsize=24)
-  pylab.ylabel(r'$y$', fontsize=24)
+  # Set plot ranges, axes ticks and axes labels.
+  plt.xlim(XRANGE)                 # Set x plot range.
+  plt.ylim(YRANGE)                 # Set y plot range.
+  plt.xticks(fontsize=16)          # Set ticks x axis.
+  plt.yticks(fontsize=16)          # Set ticks y axis.
+  plt.xlabel(r'$x$', fontsize=24)  # Set label x axis.
+  plt.ylabel(r'$y$', fontsize=24)  # Set label y axis.
 
-  # Next, make right subplot.
-  pylab.subplot(122)
+  plt.savefig('plot_MCMC_samples_plain.png') # Save png file.
 
+The result looks like this:
+
+.. image:: plot_MCMC_samples_plain.png
+     :height: 350px
+     :width:  350px
+
+Now, we would like to make this plot a little fancier. Our wish list is:
+
+- We would like to see the density in the crowded regions!
+- smoothed distribution instead of single points
+- contours of confidence levels
+- projected distributions of both parameters as side panels
+
+The result should look like this:
+
+.. image:: plot_MCMC_samples_fancy.png
+     :height: 350px
+     :width:  350px
+
+Here is the code showing how to do this. We start by the top right panel, which is the main panel::
+
+  fig = plt.figure(2, figsize=(7,7))
+  fig.subplots_adjust(hspace=0.001, wspace=0.001, left=0.10, bottom=0.095, top=0.975, right=0.98)
+  # gridspec enables you to assign different formats to panels in one plot.
+  gs = gridspec.GridSpec(2, 2, width_ratios=[1,4], height_ratios=[4,1])
+
+  plt.subplot(gs[1]) # Main panel top right contains full 2D histogram.
   # Convert to 2d histogram.
-  B      = 25
-  hist2D = numpy.histogram2d(X, Y, bins=[B,B], range=[XRANGE,YRANGE], normed=False)[0]
+  Bins = 25
+  hist2D, xedges, yedges = numpy.histogram2d(X, Y, bins=[Bins,Bins], range=[XRANGE,YRANGE],
+      normed=False)
 
   # Plot Monte-Carlo samples as 2D histogram.
-  # Beware: imshow switches axes, so switch back.
-  hist2D = numpy.transpose(hist2D)
-  pylab.imshow(hist2D, cmap=pylab.cm.gray, interpolation='gaussian')
+  hist2D = numpy.transpose(hist2D)  # Beware: numpy switches axes, so switch back.
+  plt.pcolormesh(xedges, yedges, hist2D, cmap=plt.cm.gray)
 
   # Overplot with error contours 1,2,3 sigma.
   maximum    = numpy.max(hist2D)
-  # Infering correct levels of 1,2,3 sigma would require some further code,
-  # so let's fake it by setting the three levels to some guessed values.
-  [L1,L2,L3] = [0.5*maximum,0.25*maximum,0.125*maximum]
-  #print [L1,L2,L3]
-  cs = pylab.contour(hist2D, levels=[L1,L2,L3], linestyles=['--','--','--'], colors=['orange','orange','orange'], linewidths=1)
-  # use dictionary in order to assign my own labels to the contours.
+  [L1,L2,L3] = [0.5*maximum,0.25*maximum,0.125*maximum]  # Replace with a proper code!
+  # Use bin edges to restore extent.
+  extent = [xedges[0],xedges[-1], yedges[0],yedges[-1]]
+  cs = plt.contour(hist2D, extent=extent, levels=[L1,L2,L3], linestyles=['--','--','--'], 
+      colors=['orange','orange','orange'], linewidths=1)
+  # use dictionary in order to assign your own labels to the contours.
   fmtdict = {L1:r'$1\sigma$',L2:r'$2\sigma$',L3:r'$3\sigma$'}
-  pylab.clabel(cs, fmt=fmtdict, inline=True, fontsize=20)
+  plt.clabel(cs, fmt=fmtdict, inline=True, fontsize=20)
 
-  # Also plot marginal likelihoods.
-  S  = 101
-  I  = []
+  plt.xlim(XRANGE)
+  plt.ylim(YRANGE)
+
+Finally, add the two side panels showing the projected distributions of X and Y::
+
   # Bin X,Y separately. As 1D bin, can use more bins now.
+  S  = 101
   LX = numpy.histogram(X, bins=S, range=XRANGE, normed=True)[0]
   LY = numpy.histogram(Y, bins=S, range=YRANGE, normed=True)[0]
-  # Rescale by maxima. Don't want this histogram to span whole subplot.
-  rescale_X = 0.15*float(B)/numpy.max(LX)
-  rescale_Y = 0.15*float(B)/numpy.max(LY)
-  for s in range(S):
-	  I.append(float(s)*float(B)/float(S))
-	  LX[s] = LX[s]*rescale_X
-	  LY[s] = LY[s]*rescale_Y
-  pylab.plot(I, LX, '-', lw=3, color='white')
-  pylab.plot(LY, I, '-', lw=3, color='white')
+  # Restore positions lost by binning.
+  X = XRANGE[0] + (XRANGE[1]-XRANGE[0])*numpy.array(range(0,len(LX)))/float(len(LX)-1)
+  Y = YRANGE[0] + (YRANGE[1]-YRANGE[0])*numpy.array(range(0,len(LY)))/float(len(LY)-1)
 
-  pylab.xlim(0,B-1)
-  pylab.ylim(0,B-1)
+  # bottom right panel: projected density of x.
+  plt.subplot(gs[3])
+  plt.plot(X, LX, '-', lw=3, color='black')
 
-  # Sadly, through binning numpy looses the position information, so we need to restore it manually
-  # in order to plot proper axes ticks.
-  T = []
-  L = []
-  for x in -6,-4,-2,0,2,4,6:
-	  index = (x-XRANGE[0])*float(B-1)/(XRANGE[1] - XRANGE[0])
-	  T.append(index)
-	  L.append(x)
-  pylab.xticks(T, L, fontsize=16)
+  plt.xticks(fontsize=16)
+  plt.yticks([])
+  plt.xlabel(r'$x$', fontsize=24)
+  plt.ylabel(r'$\cal L$', fontsize=24)
+  plt.xlim(XRANGE)
+  plt.ylim(0.0, 1.1*numpy.max(LX))
 
-  T = []
-  L = []
-  for y in -2,0,2,4,6,8,10:
-	  index = (y-YRANGE[0])*float(B-1)/(YRANGE[1] - YRANGE[0])
-	  T.append(index)
-	  L.append(y)
-  pylab.yticks(T, L, fontsize=16)
+  # top left panel: projected density of y.
+  plt.subplot(gs[0])
+  plt.plot(LY, Y, '-', lw=3, color='black')
 
-  pylab.xlabel(r'$x$', fontsize=24)
-  pylab.ylabel(r'$y$', fontsize=24)
+  plt.yticks(fontsize=16)
+  plt.xticks([])
+  plt.xlabel(r'$\cal L$', fontsize=24)
+  plt.ylabel(r'$y$', fontsize=24)
+  plt.xlim(0.0, 1.1*numpy.max(LY))
+  plt.ylim(YRANGE)
 
-  pylab.savefig('plot_MCMC_samples.png')  # Save figure as png-file.
-  pylab.show()
+  plt.savefig('plot_MCMC_samples_fancy.png')
+  plt.show()
 
-.. image:: plot_MCMC_samples.png
+
 
 Reading text files and plotting 
 -------------------------------
