@@ -1,16 +1,18 @@
-More Code Examples
-==================
+.. _examples:
 
-This page contains further examples of applications of Python scripts to
-Astronomy beyond those in the quick tour.
+More Examples
+=============
+
+This page contains further examples of applications of Python scripts
+to Astronomy beyond those in the :ref:`quick tour`:
 
 Reading a table and plotting with asciitable
 --------------------------------------------
 
 The Fermi Gamma-ray satellite has a nice catalog of AGN available through
-HEASARC.  The script below will read in the catalog data using the `asciitable`_
-module, do some basic filtering with `NumPy`_, and make a couple of plots with
-`matplotlib`_ ::
+HEASARC.  The script below will read in the catalog data using the asciitable
+module, do some basic filtering with NumPy, and make a couple of plots with
+matplotlib ::
 
   import asciitable   # Make external package available
 
@@ -56,12 +58,12 @@ module, do some basic filtering with `NumPy`_, and make a couple of plots with
 Curve fitting with SciPy
 ------------------------
 
-`SciPy`_ provides `curve_fit
+SciPy provides `curve_fit
 <http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html>`_,
-a simple and useful implementation of the Levenburg-Marquardt non-linear
-minimization algorithm.  This example shows a code to generate a fake dataset
-and then fit with a gaussian, returning the covariance matrix for parameter
-uncertainties.
+a simple and useful implementation of the Levenburg-Marquardt
+non-linear minimization algorithm.  This example shows a code to
+generate a fake dataset and then fit with a gaussian, returning the
+covariance matrix for parameter uncertainties.
 
 ::
 
@@ -108,10 +110,10 @@ Intermission: NumPy, Matplotlib, and SciPy
 
 These three packages are the workhorses of scientific Python.  
 
-- `NumPy`_ is the fundamental package for scientific computing in Python [`NumPy Reference
+- NumPy is the fundamental package for scientific computing in Python [`NumPy Reference
   <http://docs.scipy.org/doc/numpy/reference/>`_]
-- `Matplotlib`_ is one of many plotting packages.  Started as a Matlab clone.
-- `SciPy`_ is a collection of mathematical algorithms and convenience
+- Matplotlib is one of many plotting packages.  Started as a Matlab clone.
+- SciPy is a collection of mathematical algorithms and convenience
   functions [`SciPy Reference <http://docs.scipy.org/doc/scipy/reference/>`_]
 
 

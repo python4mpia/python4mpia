@@ -1,4 +1,4 @@
-.. include:: ../references.rst
+.. _quick tour:
 
 Quick tour of Python
 ====================
@@ -466,5 +466,5 @@ The speedup is therefore a factor of 10.9!
 More Examples
 -------------
 
-The above examples were shown during the keynote session. More
-examples can be found here.
+The above examples were shown during the keynote session. More can be
+found in the :ref:`examples` section.
