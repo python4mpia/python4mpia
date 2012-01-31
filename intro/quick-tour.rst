@@ -357,35 +357,71 @@ scatter plot or (b) in a more fancy way::
 Parallel process of FITS images
 -------------------------------
 
+This example demonstrates the use of the built-in `multiprocessing
+<http://docs.python.org/library/multiprocessing.html>`_ module, specifically
+the ability to create process *pools*. The idea is essentially that given a
+function and a list of inputs to the function, the multiprocessing Pool allows
+the function to be run over multiple input values in parallel, speeding up the
+process if multiple cores are availbale on a machine.
+
 ::
 
+    import os
     import glob
     import multiprocessing
+    import shutil
 
     import pyfits
-    from scipy.ndimage import gaussian_filter
+    from scipy.ndimage import median_filter
 
-    # Define a function to run on files
+    # Define a function to run on files. The steps are:
+    # - read in FITS file
+    # - convolve the data in the primary HDU
+    # - write out the result to a new file
     def smooth(filename):
-
-        # Read in FITS file
+        print "Processing %s" % filename
         hdulist = pyfits.open(filename)
-
-        # Convolve the data in the primary HDU
-        hdulist[0].data = gaussian_filter(hdulist[0].data, 3)
-
-        # Write out the result to a new file
-        hdulist.writeto(filename.replace('.fits', '_smooth.fits'))
+        hdulist[0].data = median_filter(hdulist[0].data, 15)
+        hdulist.writeto(filename.replace('files/', 'files_smooth/'),
+                        clobber=True)
 
     # Search for all FITS files
     files = glob.glob('files/*.fits')
 
-    # Define a 'pool' of 16 processors
-    p = multiprocessing.Pool(processes=16)
+    # Remove output directory if it already exists
+    if os.path.exists('files_smooth'):
+        shutil.rmtree('files_smooth')
+
+    # Create output directory
+    os.mkdir('files_smooth')
+
+    # Define a 'pool' of 12 processes
+    p = multiprocessing.Pool(processes=12)
 
     # Run the function over all files in parallel
-    ap.map(smooth, files)
+    result = p.map(smooth, files)
 
+If we run this from ipython or with python, we can see 12 ``Processing ...`` messages appear at the same time, and a quick look at ``top`` shows us that 12 processes are running simultaneously. If we run this from ``ipython``, we can then try running it with different number of processes and timing it::
+
+    In [2]: run process.py
+
+    In [3]: p = multiprocessing.Pool(processes=12)
+
+    In [4]: %time result = p.map(smooth, files)
+    Processing files/image_000.fits
+    ...
+    CPU times: user 0.01 s, sys: 0.00 s, total: 0.02 s
+    Wall time: 8.45 s
+
+    In [52]: p = multiprocessing.Pool(processes=1)
+
+    In [53]: %time result = p.map(smooth, files)
+    Processing files/image_000.fits
+    ...
+    CPU times: user 0.13 s, sys: 0.04 s, total: 0.17 s
+    Wall time: 91.78 s
+
+The speedup is therefore a factor of 10.9!
 
 Reading a table and plotting with asciitable
 --------------------------------------------
