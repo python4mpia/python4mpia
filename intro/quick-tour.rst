@@ -159,6 +159,57 @@ My list example also works::
     Hello, Dick
     Hello, Harry
 
+Array indexing
+--------------
+
+Numpy array indexing and multidimensional arrays::
+
+  import scipy
+  import numpy as np  
+  from numpy import random
+  import matplotlib.pyplot as plt 
+  import asciitable
+   
+  # Create a simple numerical numpy 1D array (a vector, if you like):
+  x = np.arange(10)
+  print x
+   	
+  # To index a single element in x:
+  print 'the first element of x is {0}' .format(x[0])
+  print 'the second element of x is {0}' .format(x[1])
+   
+  # Selecting ranges with the :
+  print 'to select the first 4 elements of x type x[0:4] or simply x[:4]= {0}' .format(x[0:4])
+   
+  # Indexing in steps
+  print 'pick every other element of x by typing x[: :2] = {0}'.format(x[: : 2])
+   
+  # Negative indexing: start counting from the end
+  print 'The last element of x can be indexed as x[-1] = {0}'.format(x[-1])
+  print 'The last-but-one element of x can be indexed as x[-2] = {0}'.format(x[-2])
+   
+  # Negative indexing can also be used to select ranges, as above:
+  print 'The last 4 elements of x are picked with x[-4:] = {0}'.format(x[-4:])
+  print 'Negative indexing and stepsizes can be used to reverse an array! try e.g. x[: :-1] = {0}'.format(x[: : -1])   
+   
+  # Now let's create a more typical array, with 2 dimensions, with numpy's random number generator:
+  x2 = np.floor(10.*np.random.random((3,4)))
+  print x2
+   
+  # Indexing a 2D array is much the same as for a 1D array.... The : indicates "all elements from this axis"
+  print 'Element (1,1) of x2 is selected by x2[0,0] = {0}'.format(x2[0,0])
+  print 'The first row of x2 is selected by x2[0,:] = {0}'.format(x2[0,:])
+  print 'The 3rd column of x2 is selected by x2[:,2] = {0}'.format(x2[:,2])
+   
+  # We can also create more multi-dimensional arrays. This is a 4D array:
+  x4 = np.floor(10.*np.random.random((2,3,4,2)))
+  print x4
+   
+  # In principle indexing an N-dimensional array is again similar to previous examples....
+  print 'The (0,0,0,0) element of x4 is selected by x4[0,0,0,0] = {0}'.format(x4[0,0,0,0])
+  print 'To select just from one axis and include all elements from the other axes, use ..., e.g. x4[1,...] = \n{0}'.format(x4[1,...])
+
+
 Reading text files and plotting 
 -------------------------------
 
