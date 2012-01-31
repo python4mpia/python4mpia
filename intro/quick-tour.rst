@@ -29,43 +29,82 @@ Making a publication quality image
 ----------------------------------
 
 Making a publication quality image is a snap in Python using the `APLpy
-<http://aplpy.github.com>`_ package.  Images can be made interactively or
-(reproducibly) with a script.  Let's see how the cover image for today's
-talk was made.
+<http://aplpy.github.com>`_ package (Astronomical Tables in Python).  Images can be made interactively or (reproducibly) with a script. Let's use this in combination with `ATpy <http://atpy.github.com>`_ to make a plot of a region with contours and a catalog overlaid.
 
 ::
 
-  import aplpy
+    import numpy as np
+    import aplpy
+    import atpy
 
-  # Convert all images to common projection
-  aplpy.make_rgb_cube(['m1.fits', 'i3.fits', 'i2.fits'], 'rgb.fits')
+    # Create a new figure
+    fig = aplpy.FITSFigure('i3.fits')
 
-  # Make 3-color image
-  aplpy.make_rgb_image('rgb.fits', 'rgb.png', 
-                       vmin_r=20, vmax_r=400,
-                       vmin_g=0, vmax_g=150, 
-                       vmin_b=-2,vmax_b=50)
+    # Show the colorscale
+    fig.show_colorscale()
 
-  # Create a new figure
-  fig = aplpy.FITSFigure('rgb_2d.fits')
+    # Add contours
+    fig.show_contour('sc.fits', cmap='jet', levels=np.linspace(0.0, 1.0, 10))
 
-  # Show the RGB image
-  fig.show_rgb('rgb.png')
+    # Make ticks white
+    fig.ticks.set_color('white')
 
-  # Add contours
-  fig.show_contour('sc.fits', cmap='gist_heat', levels=[0.2,0.4,0.6,0.8,1.0])
+    # Make labels smaller and serif
+    fig.tick_labels.set_font(size='small')
 
-  # Overlay a grid
-  fig.add_grid()
-  fig.grid.set_alpha(0.5)
+    # Overlay a grid
+    fig.add_grid()
+    fig.grid.set_alpha(0.5)
 
-  # Save image
-  fig.save('plot.png')
+    # Add a colorbar
+    fig.add_colorbar()
+
+    # Use ATpy to read in an IRSA table
+    tab = atpy.Table('2mass.tbl')
+    tab_bright = tab.where(tab['j_m'] < 13.)
+
+    # Plot markers
+    fig.show_markers(tab['ra'], tab['dec'], marker='+', edgecolor='white')
+    fig.show_markers(tab_bright['ra'], tab_bright['dec'], marker='o', edgecolor='white')
+
+    # Save image for publication
+    fig.save('aplpy_plot.png')
 
 This produces the nice image:
 
-.. image:: image_plotting.png 
+.. image:: aplpy_plot.png
    :scale: 60%
+
+We can also easily make 3-color images with FITS files that have different projections::
+
+    import numpy as np
+    import aplpy
+
+    # Convert all images to common projection
+    aplpy.make_rgb_cube(['m1.fits', 'i3.fits', 'i2.fits'], 'rgb.fits')
+
+    # Make 3-color image
+    aplpy.make_rgb_image('rgb.fits', 'rgb.png',
+                         vmin_r=20, vmax_r=400,
+                         vmin_g=0, vmax_g=150,
+                         vmin_b=-2,vmax_b=50,
+                         embed_avm_tags=True)
+
+    # Make a plot similarly to before
+    fig = aplpy.FITSFigure('rgb.png')
+    fig.show_rgb()
+    fig.show_contour('sc.fits', cmap='jet', levels=np.linspace(0.0, 1.0, 10))
+    fig.ticks.set_color('white')
+    fig.tick_labels.set_font(size='small')
+    fig.add_grid()
+    fig.grid.set_alpha(0.5)
+    fig.save('aplpy_rgb_plot.png')
+
+Which produces the following:
+
+.. image:: aplpy_rgb_plot.png
+   :scale: 60%
+
 
 The Basics
 ----------
@@ -356,35 +395,71 @@ scatter plot or (b) in a more fancy way::
 Parallel process of FITS images
 -------------------------------
 
+This example demonstrates the use of the built-in `multiprocessing
+<http://docs.python.org/library/multiprocessing.html>`_ module, specifically
+the ability to create process *pools*. The idea is essentially that given a
+function and a list of inputs to the function, the multiprocessing Pool allows
+the function to be run over multiple input values in parallel, speeding up the
+process if multiple cores are availbale on a machine.
+
 ::
 
+    import os
     import glob
     import multiprocessing
+    import shutil
 
     import pyfits
-    from scipy.ndimage import gaussian_filter
+    from scipy.ndimage import median_filter
 
-    # Define a function to run on files
+    # Define a function to run on files. The steps are:
+    # - read in FITS file
+    # - convolve the data in the primary HDU
+    # - write out the result to a new file
     def smooth(filename):
-
-        # Read in FITS file
+        print "Processing %s" % filename
         hdulist = pyfits.open(filename)
-
-        # Convolve the data in the primary HDU
-        hdulist[0].data = gaussian_filter(hdulist[0].data, 3)
-
-        # Write out the result to a new file
-        hdulist.writeto(filename.replace('.fits', '_smooth.fits'))
+        hdulist[0].data = median_filter(hdulist[0].data, 15)
+        hdulist.writeto(filename.replace('files/', 'files_smooth/'),
+                        clobber=True)
 
     # Search for all FITS files
     files = glob.glob('files/*.fits')
 
-    # Define a 'pool' of 16 processors
-    p = multiprocessing.Pool(processes=16)
+    # Remove output directory if it already exists
+    if os.path.exists('files_smooth'):
+        shutil.rmtree('files_smooth')
+
+    # Create output directory
+    os.mkdir('files_smooth')
+
+    # Define a 'pool' of 12 processes
+    p = multiprocessing.Pool(processes=12)
 
     # Run the function over all files in parallel
-    ap.map(smooth, files)
+    result = p.map(smooth, files)
 
+If we run this from ipython or with python, we can see 12 ``Processing ...`` messages appear at the same time, and a quick look at ``top`` shows us that 12 processes are running simultaneously. If we run this from ``ipython``, we can then try running it with different number of processes and timing it::
+
+    In [2]: run process.py
+
+    In [3]: p = multiprocessing.Pool(processes=12)
+
+    In [4]: %time result = p.map(smooth, files)
+    Processing files/image_000.fits
+    ...
+    CPU times: user 0.01 s, sys: 0.00 s, total: 0.02 s
+    Wall time: 8.45 s
+
+    In [52]: p = multiprocessing.Pool(processes=1)
+
+    In [53]: %time result = p.map(smooth, files)
+    Processing files/image_000.fits
+    ...
+    CPU times: user 0.13 s, sys: 0.04 s, total: 0.17 s
+    Wall time: 91.78 s
+
+The speedup is therefore a factor of 10.9!
 
 Reading a table and plotting with asciitable
 --------------------------------------------
