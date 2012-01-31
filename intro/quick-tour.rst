@@ -29,43 +29,82 @@ Making a publication quality image
 ----------------------------------
 
 Making a publication quality image is a snap in Python using the `APLpy
-<http://aplpy.github.com>`_ package.  Images can be made interactively or
-(reproducibly) with a script.  Let's see how the cover image for today's
-talk was made.
+<http://aplpy.github.com>`_ package (Astronomical Tables in Python).  Images can be made interactively or (reproducibly) with a script. Let's use this in combination with `ATpy <http://atpy.github.com>`_ to make a plot of a region with contours and a catalog overlaid. 
 
 ::
 
-  import aplpy
+    import numpy as np
+    import aplpy
+    import atpy
 
-  # Convert all images to common projection
-  aplpy.make_rgb_cube(['m1.fits', 'i3.fits', 'i2.fits'], 'rgb.fits')
+    # Create a new figure
+    fig = aplpy.FITSFigure('i3.fits')
 
-  # Make 3-color image
-  aplpy.make_rgb_image('rgb.fits', 'rgb.png', 
-                       vmin_r=20, vmax_r=400,
-                       vmin_g=0, vmax_g=150, 
-                       vmin_b=-2,vmax_b=50)
+    # Show the colorscale
+    fig.show_colorscale()
 
-  # Create a new figure
-  fig = aplpy.FITSFigure('rgb_2d.fits')
+    # Add contours
+    fig.show_contour('sc.fits', cmap='jet', levels=np.linspace(0.0, 1.0, 10))
 
-  # Show the RGB image
-  fig.show_rgb('rgb.png')
+    # Make ticks white
+    fig.ticks.set_color('white')
 
-  # Add contours
-  fig.show_contour('sc.fits', cmap='gist_heat', levels=[0.2,0.4,0.6,0.8,1.0])
+    # Make labels smaller and serif
+    fig.tick_labels.set_font(size='small')
 
-  # Overlay a grid
-  fig.add_grid()
-  fig.grid.set_alpha(0.5)
+    # Overlay a grid
+    fig.add_grid()
+    fig.grid.set_alpha(0.5)
 
-  # Save image
-  fig.save('plot.png')
+    # Add a colorbar
+    fig.add_colorbar()
+
+    # Use ATpy to read in an IRSA table
+    tab = atpy.Table('2mass.tbl')
+    tab_bright = tab.where(tab['j_m'] < 13.)
+
+    # Plot markers
+    fig.show_markers(tab['ra'], tab['dec'], marker='+', edgecolor='white')
+    fig.show_markers(tab_bright['ra'], tab_bright['dec'], marker='o', edgecolor='white')
+
+    # Save image for publication
+    fig.save('aplpy_plot.png')
 
 This produces the nice image:
 
-.. image:: image_plotting.png 
+.. image:: aplpy_plot.png 
    :scale: 60%
+   
+We can also easily make 3-color images with FITS files that have different projections:
+
+    import numpy as np
+    import aplpy
+
+    # Convert all images to common projection
+    aplpy.make_rgb_cube(['m1.fits', 'i3.fits', 'i2.fits'], 'rgb.fits')
+
+    # Make 3-color image
+    aplpy.make_rgb_image('rgb.fits', 'rgb.png', 
+                         vmin_r=20, vmax_r=400,
+                         vmin_g=0, vmax_g=150, 
+                         vmin_b=-2,vmax_b=50,
+                         embed_avm_tags=True)
+
+    # Make a plot similarly to before
+    fig = aplpy.FITSFigure('rgb.png')
+    fig.show_rgb()
+    fig.show_contour('sc.fits', cmap='jet', levels=np.linspace(0.0, 1.0, 10))
+    fig.ticks.set_color('white')
+    fig.tick_labels.set_font(size='small')
+    fig.add_grid()
+    fig.grid.set_alpha(0.5)
+    fig.save('aplpy_rgb_plot.png')
+
+Which produces the following:
+
+.. image:: aplpy_rgb_plot.png 
+   :scale: 60%
+
 
 The Basics
 ----------
