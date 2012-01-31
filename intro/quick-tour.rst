@@ -29,7 +29,7 @@ Making a publication quality image
 ----------------------------------
 
 Making a publication quality image is a snap in Python using the `APLpy
-<http://aplpy.github.com>`_ package (Astronomical Tables in Python).  Images can be made interactively or (reproducibly) with a script. Let's use this in combination with `ATpy <http://atpy.github.com>`_ to make a plot of a region with contours and a catalog overlaid. 
+<http://aplpy.github.com>`_ package (Astronomical Tables in Python).  Images can be made interactively or (reproducibly) with a script. Let's use this in combination with `ATpy <http://atpy.github.com>`_ to make a plot of a region with contours and a catalog overlaid.
 
 ::
 
@@ -72,9 +72,9 @@ Making a publication quality image is a snap in Python using the `APLpy
 
 This produces the nice image:
 
-.. image:: aplpy_plot.png 
+.. image:: aplpy_plot.png
    :scale: 60%
-   
+
 We can also easily make 3-color images with FITS files that have different projections:
 
     import numpy as np
@@ -84,9 +84,9 @@ We can also easily make 3-color images with FITS files that have different proje
     aplpy.make_rgb_cube(['m1.fits', 'i3.fits', 'i2.fits'], 'rgb.fits')
 
     # Make 3-color image
-    aplpy.make_rgb_image('rgb.fits', 'rgb.png', 
+    aplpy.make_rgb_image('rgb.fits', 'rgb.png',
                          vmin_r=20, vmax_r=400,
-                         vmin_g=0, vmax_g=150, 
+                         vmin_g=0, vmax_g=150,
                          vmin_b=-2,vmax_b=50,
                          embed_avm_tags=True)
 
@@ -102,7 +102,7 @@ We can also easily make 3-color images with FITS files that have different proje
 
 Which produces the following:
 
-.. image:: aplpy_rgb_plot.png 
+.. image:: aplpy_rgb_plot.png
    :scale: 60%
 
 
