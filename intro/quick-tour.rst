@@ -9,7 +9,7 @@ Making a publication quality image
 ----------------------------------
 
 Making a publication quality image is a snap in Python using the `APLpy
-<http://aplpy.github.com>`_ package (Astronomical Tables in Python).  Images can be made interactively or (reproducibly) with a script. Let's use this in combination with `ATpy <http://atpy.github.com>`_ to make a plot of a region with contours and a catalog overlaid.
+<http://aplpy.github.com>`_ package (the Astronomical Plotting Library in Python).  Images can be made interactively or (reproducibly) with a script. Let's use this in combination with `ATpy <http://atpy.github.com>`_ (Astronomical Tables in Python) to make a plot of a region with contours and a catalog overlaid.
 
 ::
 
@@ -128,7 +128,7 @@ Run a script file in `ipython` using the `run` command::
     Out[2]: 1
 
     In [3]: name
-    Out[3]: 'Bob'
+    Out[3]: 'Jorge'
 
 The variables you define in the script file are still available to you.::
 
