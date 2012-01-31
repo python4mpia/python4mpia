@@ -24,5 +24,6 @@ start using it as a tool for research and analysis.
    quick-tour
    who-python
    wrapup
+   More examples <examples>
 
 :Author: Originally written by Tom Aldcroft, with changes by Tom Robitaille and Neil Crighton.

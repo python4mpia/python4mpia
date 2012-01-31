@@ -2,28 +2,8 @@
 
 Quick tour of Python
 ====================
-
-.. Basic:
-     read file
-     plot histogram
-     plot cumulative distribution
-     write file
-   Numpy / Scipy docs main page: http://docs.scipy.org/doc/
-   Modeling / analysis
-   Built in numpy funcs (stats, sort)
-   SciPy overview http://docs.scipy.org/doc/scipy-0.9.0/reference/
-   Curve fit example
-   Synthetic images
-   Compiled extensions
-   HDF5 (Read 100 million data rows, beyond capability of TOPCAT) (live demo)
-   Esaview (live demo)
-   CygOb2 aeview.py
-   C-COSMOS browse (live demo)
    
 In the spirit of this workshop let's jump in to real Python analysis code.
-These examples assume you are using `pylab
-<http://matplotlib.sourceforge.net/faq/usage_faq.html#matplotlib-pylab-and-pyplot-how-are-they-related>`_
-(you'll understand what that is after the 2nd hands-on session).
 
 Making a publication quality image
 ----------------------------------
@@ -481,3 +461,10 @@ If we run this from ipython or with python, we can see 12 ``Processing ...`` mes
     Wall time: 91.78 s
 
 The speedup is therefore a factor of 10.9!
+
+
+More Examples
+-------------
+
+The above examples were shown during the keynote session. More
+examples can be found here.
