@@ -29,7 +29,7 @@ Making a publication quality image is a snap in Python using the `APLpy
     # Make ticks white
     fig.ticks.set_color('white')
 
-    # Make labels smaller and serif
+    # Make labels smaller
     fig.tick_labels.set_font(size='small')
 
     # Overlay a grid
