@@ -165,49 +165,96 @@ Array indexing
 Numpy array indexing and multidimensional arrays::
 
   import scipy
-  import numpy as np
+  import numpy as np  
   from numpy import random
-  import matplotlib.pyplot as plt
+  import matplotlib.pyplot as plt 
   import asciitable
-
+   
+  plt.close('all')
+   
   # Create a simple numerical numpy 1D array (a vector, if you like):
   x = np.arange(10)
   print x
+   
    	
   # To index a single element in x:
   print 'the first element of x is {0}' .format(x[0])
   print 'the second element of x is {0}' .format(x[1])
-
+   
   # Selecting ranges with the :
   print 'to select the first 4 elements of x type x[0:4] or simply x[:4]= {0}' .format(x[0:4])
-
+   
   # Indexing in steps
   print 'pick every other element of x by typing x[: :2] = {0}'.format(x[: : 2])
-
+   
   # Negative indexing: start counting from the end
   print 'The last element of x can be indexed as x[-1] = {0}'.format(x[-1])
   print 'The last-but-one element of x can be indexed as x[-2] = {0}'.format(x[-2])
-
+   
   # Negative indexing can also be used to select ranges, as above:
   print 'The last 4 elements of x are picked with x[-4:] = {0}'.format(x[-4:])
   print 'Negative indexing and stepsizes can be used to reverse an array! try e.g. x[: :-1] = {0}'.format(x[: : -1])
-
+   
+   
   # Now let's create a more typical array, with 2 dimensions, with numpy's random number generator:
   x2 = np.floor(10.*np.random.random((3,4)))
   print x2
-
+   
   # Indexing a 2D array is much the same as for a 1D array.... The : indicates "all elements from this axis"
   print 'Element (1,1) of x2 is selected by x2[0,0] = {0}'.format(x2[0,0])
   print 'The first row of x2 is selected by x2[0,:] = {0}'.format(x2[0,:])
   print 'The 3rd column of x2 is selected by x2[:,2] = {0}'.format(x2[:,2])
-
+   
   # We can also create more multi-dimensional arrays. This is a 4D array:
   x4 = np.floor(10.*np.random.random((2,3,4,2)))
   print x4
-
+   
   # In principle indexing an N-dimensional array is again similar to previous examples....
   print 'The (0,0,0,0) element of x4 is selected by x4[0,0,0,0] = {0}'.format(x4[0,0,0,0])
   print 'To select just from one axis and include all elements from the other axes, use ..., e.g. x4[1,...] = \n{0}'.format(x4[1,...])
+   
+   
+  # Now look at a more complex dataset: a catalogue, which I can read in with the asciitable package.
+  # this datafile is the 1st data release of large bubbles from the Milky Way Project (http://www.milkywayproject.org/data)
+  print 'Reading in catalogue of bubbles....'
+  catfile = 'mwp-large-bubbles-dr1-25-01-2012.csv'
+  catcols = ["id","lat","lon","dl0","reff","abratio","thick","thickoutratio","reffout","ecc","hitrate","disp","hierarchy"]
+  catexc = ["dl0", "abratio", "thick", "thickoutratio", "reffout", "ecc", "hitrate","disp","hierarchy"]			#columns to exclude
+  cat=asciitable.read(catfile, delimiter=',', names=catcols, comment='#')
+  neg=cat.lon > 180.
+  cat.lon[neg]=cat.lon[neg]-360.
+  print '# bubbles in catalogue: %i' %(np.size(cat))
+   
+  # This reads the catalogue into a numpy recarray
+   
+  # Plot them on the sky using the scatter function in matplotlib.pyplot (plt.scatter):
+  scat = plt.figure()
+  ball = scat.add_subplot(311)
+  plt.scatter(cat.lon, cat.lat, marker = 'o', edgecolor='green', facecolor='None', label='all bubbles')
+  plt.xlabel('lon')
+  plt.legend(loc = 'best')
+  plt.ylabel('lat')
+  plt.suptitle('Bubbles in the inner galactic plane')
+   
+   
+  # or we can just plot the ones at positive latitudes
+  pos = cat[cat.lat >= 0.0]
+  bpos = scat.add_subplot(312)
+  plt.scatter(pos.lon, pos.lat, marker = 'o', edgecolor='red', facecolor='None', label='bubbles, b >= 0.' )
+  plt.xlabel('lon')
+  plt.legend(loc = 'best')
+  plt.ylabel('lat')
+   
+  # or those with effective radii > 5 arcminutes
+  big = cat[cat.reff >= 5.]
+  bbig = scat.add_subplot(313)
+  plt.scatter(big.lon, big.lat, marker = 'o', edgecolor='blue', facecolor='None', label='big bubbles' )
+  plt.xlabel('lon')
+  plt.legend(loc = 'best')
+  plt.ylabel('lat')
+   
+  # show the figure:
+  scat.show()
 
 
 Reading text files and plotting
