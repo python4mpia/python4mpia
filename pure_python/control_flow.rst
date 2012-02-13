@@ -1,4 +1,4 @@
-Control flow statements
+Control Flow Statements
 =======================
 
 Setting and modifying variables will only get you so far before you need to
@@ -127,6 +127,6 @@ For example, in the following example::
     8.617
     9.848
 
-the loop is executed until ``a`` is equal to or exceeds 10::
+the loop is executed until ``a`` is equal to or exceeds 10.
 
 

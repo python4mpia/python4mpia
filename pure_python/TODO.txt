@@ -1,0 +1,4 @@
+TODO:
+    - write function sections
+    - add examples throughout
+    - add good style tips

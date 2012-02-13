@@ -69,7 +69,9 @@ We can then run the script on the command-line with::
 
 .. note:: the ``print`` statement is necessary, because typing ``a`` on its
           own will only print out the value in interactive mode. In scripts,
-          the printing has to be explicitely requested with the print command.
+          the printing has to be explicitly requested with the print command.
+
+It is also possible to make Python scripts executable. Simply add ``#!/usr/bin/env python`` on the first line of your script and change the file permission to make it executable with ``chmod +x test.py``. Now the script can be run without the preceeding ``python`` command; instead you can just type ``./test.py`` in the command line.
 
 Combining interactive and non-interactive use
 ---------------------------------------------
