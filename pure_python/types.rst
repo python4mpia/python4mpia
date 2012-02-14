@@ -59,23 +59,16 @@ However, there is one case where this happens but is not desirable, and that you
     >>> 3 / 2
     1
 
-This is behavior is widely regarded as a huge design mistake and Python 3.x has been fixed to behave like you would expect. To see how Python 3.x behaves, we can use::
-
-    >>> from __future__ import division
-
-After typing this, we can use the Python 3.x syntax::
-
-    >>> 3 / 2
-    1.5
-
-    >>> 3 // 2
-    1
-
-Another way to prevent this is to cast at least one of the integers in the division to a ``float``::
+This is behavior is widely regarded as a huge design mistake and Python 3.x has been fixed to behave like you would expect (more on Python 3.x later). A way to prevent this is to cast at least one of the integers in the division to a ``float``::
 
     >>> 3 / float(2)
     1.5
 
+or::
+
+    >>> 3 / 2.
+    1.5
+    
 Lists, tuples, and sets
 -----------------------
 

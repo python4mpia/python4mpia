@@ -30,8 +30,11 @@ code. For example, in the following example::
 
 The first print statement, and the ``a = 2`` statement only get executed if
 ``a`` is 1. On the other hand, ``print "finished"`` gets executed regardless,
-once Python exits the if statement. Indentation is very important in Python,
-and the convention is to use four spaces (not tabs) for each level of indent.
+once Python exits the if statement. 
+
+.. Note::
+
+    Indentation is very important in Python, and the convention is to use four spaces (not tabs) for each level of indent.
 
 Back to the if-statements, the conditions in the statements can be anything
 that returns a boolean value. For example, ``a == 1``, ``b != 4``, and ``c <=
@@ -48,6 +51,10 @@ comparisons should be executed, for example::
 
 More generally, any function or expression that ultimately returns ``True`` or
 ``False`` can be used.
+
+.. Note::
+
+    In the previous examples we have included comments. All lines starting with the ``#`` character are ignored by Python. If you would like to comment out a section of code, you can enclose it in trip quotes: ``'''commented out code'''``.
 
 ``for`` loops
 -------------
@@ -85,7 +92,17 @@ Finally, if a third number is specified, this is taken to be the step size::
     In [4]: range(2, 20, 2)
     Out[4]: [2, 4, 6, 8, 10, 12, 14, 16, 18]
 
-The ``range`` function can be used as the iterable in a ``for`` loop::
+The ``range`` function can be used as the iterable in a ``for`` loop.
+
+.. admonition::  Exercise
+
+    Write a for loop that prints out the integers 1 to 9.
+
+.. raw:: html
+
+   <p class="flip8">Click to Show/Hide Solution</p> <div class="panel8">
+
+::
 
     In [5]: for x in range(10):
        ...:     print x
@@ -115,18 +132,48 @@ For example, in the following example::
 
     In [4]: while a < 10:
        ...:        print a
-       ...:        a += 1.231
+       ...:        a += 1
        ...:     
     0
-    1.231
-    2.462
-    3.693
-    4.924
-    6.155
-    7.386
-    8.617
-    9.848
-
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    
 the loop is executed until ``a`` is equal to or exceeds 10.
 
+.. admonition::  Exercise
 
+    Write a while loop to print out the Fibonacci numbers below 100.
+
+.. raw:: html
+
+   <p class="flip9">Click to Show/Hide Solution</p> <div class="panel9">
+
+::
+
+    In [3]: a = 0, b = 1
+
+    In [4]: while a < 100:
+       ...:        print a
+       ...:        c = a + b
+       ...:        a = b
+       ...:        b = c    
+       ...:  
+    0
+    1
+    1
+    2
+    3
+    5
+    8
+    13
+    21
+    34
+    55
+    89

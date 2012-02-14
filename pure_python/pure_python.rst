@@ -18,6 +18,6 @@ statements, ...) and basic file input/output operations.
    modules.rst
    python3.rst
    
-:Authors: Thomas Robitaille
-:Copyright: 2011, Thomas Robitaille
+:Authors: Thomas Robitaille, Rory Holmes
+:Copyright: 2012, Thomas Robitaille
 

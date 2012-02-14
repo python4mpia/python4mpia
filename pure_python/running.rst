@@ -67,11 +67,14 @@ We can then run the script on the command-line with::
     $ python test.py
     1
 
-.. note:: the ``print`` statement is necessary, because typing ``a`` on its
-          own will only print out the value in interactive mode. In scripts,
-          the printing has to be explicitly requested with the print command.
+.. note:: The ``print`` statement is necessary, because typing ``a`` on its own will only print out the value in interactive mode. In scripts, the printing has to be explicitly requested with the print command. To print multiple variables, just separate them with a comma after the print command: ``print a, 1.5, "spam"``. To print variable within strings use the following syntax: ``print ("This is a integer: %d, this is a float: %f, and is a string: %s" % (5, 3.141, "spam"))``
 
-It is also possible to make Python scripts executable. Simply add ``#!/usr/bin/env python`` on the first line of your script and change the file permission to make it executable with ``chmod +x test.py``. Now the script can be run without the preceeding ``python`` command; instead you can just type ``./test.py`` in the command line.
+``print`` command prints the subsequent variables
+
+Executable Scripts
+------------------
+
+It is also possible to make Python scripts executable. Simply add ``#!/usr/bin/env python`` on the first line of your ``test.py`` script and change the file permission to make it executable with ``chmod +x test.py``. Now the script can be run without the preceeding ``python`` command; instead you can just type ``./test.py`` in the command line.
 
 Combining interactive and non-interactive use
 ---------------------------------------------

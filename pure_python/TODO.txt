@@ -1,4 +1,4 @@
 TODO:
-    - write function sections
     - add examples throughout
     - add good style tips
+    - add python 2 v python 3 differences
