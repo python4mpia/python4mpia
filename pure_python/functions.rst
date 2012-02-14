@@ -5,7 +5,6 @@ As with other languages, you can write functions in Python to avoid repeating co
 
     def my_function():
         print "Hello World!"
-        return  
         
 This can be called with ``my_function()``. 
 
@@ -22,13 +21,12 @@ This function simply adds the two numbers that it is given as arguments. As you 
     
     def print_argument(x = 5):
         print x
-        return
 
 In this example, we have defined what the default value of the ``x`` variable in the function. If you try and call this function without any arguments, the default will be used. If you call it with an argument, the specified value will be used.
 
 .. admonition::  Exercise
 
-    Write a function that prints out "The managing director of MPIA is [name]", where [name] is the argument that is given. If not argument is given, [name] should be the default string "Hans-Walter Rix".
+    Write a function that prints out "The managing director of MPIA is [name]", where [name] is the argument that is given. If no argument is given, [name] should be the default string "Hans-Walter Rix". If the argument "Thomas Henning" is given, the function should print "Thomas Henning was the managing director of MPIA last year".
 
 .. raw:: html
 
@@ -37,8 +35,10 @@ In this example, we have defined what the default value of the ``x`` variable in
 ::
 
     def mpia_director(name="Hans-Walter Rix"):
-        print ("The managing director of MPIA is " + name)
-        return
+        if name == "Thomas Henning":
+            print ("%s was the managing director of MPIA last year." % name)
+        else:
+            print ("The managing director of MPIA is " + name + ".")
 
  
 

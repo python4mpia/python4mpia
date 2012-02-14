@@ -74,7 +74,7 @@ We can then run the script on the command-line with::
 Executable Scripts
 ------------------
 
-It is also possible to make Python scripts executable. Simply add ``#!/usr/bin/env python`` on the first line of your ``test.py`` script and change the file permission to make it executable with ``chmod +x test.py``. Now the script can be run without the preceeding ``python`` command; instead you can just type ``./test.py`` in the command line.
+It is also possible to make Python scripts executable. Simply add ``#!/usr/bin/env python`` on the first line of your ``test.py`` script and change the file permission to make it executable with ``chmod +x test.py``. Now the script can be run without the preceeding ``python`` command; instead you can just type ``./test.py`` in the command line. Note that this will only work on Linux and Macs, not on Windows.
 
 Combining interactive and non-interactive use
 ---------------------------------------------

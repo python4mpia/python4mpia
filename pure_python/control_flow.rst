@@ -96,7 +96,7 @@ The ``range`` function can be used as the iterable in a ``for`` loop.
 
 .. admonition::  Exercise
 
-    Write a for loop that prints out the integers 1 to 9.
+    Write a for loop that prints out the integers 1 to 9, but not 5 and 7.
 
 .. raw:: html
 
@@ -105,16 +105,15 @@ The ``range`` function can be used as the iterable in a ``for`` loop.
 ::
 
     In [5]: for x in range(10):
-       ...:     print x
+       ...:    if (x != 5) and (x != 7):
+       ...:        print x
        ...:
     0
     1
     2
     3
     4
-    5
     6
-    7
     8
     9
 
