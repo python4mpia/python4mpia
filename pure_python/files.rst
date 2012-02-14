@@ -43,11 +43,11 @@ Now ``data`` contains a string::
 
 But what we'd really like to do is read the file line by line. There are several ways to do this, the simplest of which is to use a ``for`` loop in the following way::
 
-In [7]: f = open('data.txt', 'r')
+    In [7]: f = open('data.txt', 'r')
 
-In [8]: for line in f:
-   ...:     print repr(line)
-   ...:     
+    In [8]: for line in f:
+       ...:     print repr(line)
+       ...:
 
 Notice the indent before ``print``, which is necessary to indicate that we are inside the loop (there is no ``end for`` in Python). Note that we are using ``repr()`` to show any invisible characters (this will be useful in a minute). The output should now look something like this::
 
