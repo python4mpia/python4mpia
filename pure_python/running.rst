@@ -51,7 +51,7 @@ If you now type the up arrow twice, you will get back to ``a = 1``.
 
 .. note:: IPython is much more than just a Python shell with a few 
           improvements compared to the default shell. See the `IPython
-          documentation <http://ipython.org/>` for a full overview of its
+          documentation <http://ipython.org/>`_ for a full overview of its
           capabilities!
 
 Running scripts
@@ -68,8 +68,6 @@ We can then run the script on the command-line with::
     1
 
 .. note:: The ``print`` statement is necessary, because typing ``a`` on its own will only print out the value in interactive mode. In scripts, the printing has to be explicitly requested with the print command. To print multiple variables, just separate them with a comma after the print command: ``print a, 1.5, "spam"``. To print variable within strings use the following syntax: ``print ("This is a integer: %d, this is a float: %f, and is a string: %s" % (5, 3.141, "spam"))``
-
-``print`` command prints the subsequent variables
 
 Executable Scripts
 ------------------

@@ -120,12 +120,9 @@ One useful operation with lists and tuples is ``+``, which can be used for conca
 
 .. note:: Unlike Numpy arrays:
 
-        * Python lists can contain anything, including other lists, objects, or complex data structures.
-        * When you slice a Python list it returns a copy.
-        * Vector math does not work on lists
-            * Multiplying a list by an int ``n`` gives ``n`` copies of the list.
-            * Adding another list concatentates.
-            * Multiplying by a float gives an error.
+    * Python lists can contain anything, including other lists, objects, or complex data structures.
+    * When you slice a Python list it returns a copy.
+    * Vector math does not work on lists. For example, multiplying a list by an int ``n`` gives ``n`` copies of the list, adding another list concatentates, and multiplying by a float gives an error.
 
 Sets (``set``) are a third type of sequence which you can make from a tuple or a list::
 

@@ -30,7 +30,7 @@ code. For example, in the following example::
 
 The first print statement, and the ``a = 2`` statement only get executed if
 ``a`` is 1. On the other hand, ``print "finished"`` gets executed regardless,
-once Python exits the if statement. 
+once Python exits the if statement.
 
 .. Note::
 
@@ -104,8 +104,8 @@ The ``range`` function can be used as the iterable in a ``for`` loop.
 
 ::
 
-    In [5]: for x in range(10):
-       ...:    if (x != 5) and (x != 7):
+    In [1]: for x in range(10):
+       ...:    if x != 5 and x != 7:
        ...:        print x
        ...:
     0
@@ -127,12 +127,12 @@ Similarly to other programming languages, Python also provides a ``while`` loop 
 
 For example, in the following example::
 
-    In [3]: a = 0
+    In [1]: a = 0
 
-    In [4]: while a < 10:
-       ...:        print a
-       ...:        a += 1
-       ...:     
+    In [2]: while a < 10:
+       ...:     print a
+       ...:     a += 1
+       ...:
     0
     1
     2
@@ -143,7 +143,7 @@ For example, in the following example::
     7
     8
     9
-    
+
 the loop is executed until ``a`` is equal to or exceeds 10.
 
 .. admonition::  Exercise
@@ -156,14 +156,16 @@ the loop is executed until ``a`` is equal to or exceeds 10.
 
 ::
 
-    In [3]: a = 0, b = 1
+    In [1]: a = 0
 
-    In [4]: while a < 100:
-       ...:        print a
-       ...:        c = a + b
-       ...:        a = b
-       ...:        b = c    
-       ...:  
+    In [2]: b = 1
+
+    In [3]: while a < 100:
+       ...:     print a
+       ...:     c = a + b
+       ...:     a = b
+       ...:     b = c
+       ...:
     0
     1
     1
