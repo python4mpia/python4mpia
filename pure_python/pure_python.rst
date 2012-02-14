@@ -19,5 +19,5 @@ statements, ...) and basic file input/output operations.
    python3.rst
    
 :Authors: Thomas Robitaille, Rory Holmes
-:Copyright: 2012, Thomas Robitaille
+:Copyright: 2012, Thomas Robitaille, Rory Holmes
 

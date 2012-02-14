@@ -21,4 +21,4 @@ The plotting module ``matplotlib.pyplot`` can now simply be referred to as ``plt
     >>> plt.plot(x,y)
     >>> plt.show()
     
-Congratulations, you have just made your first plot. There will be much on ``numpy`` and ``matplotlib.pyplot`` in future workshops.
+There will be much on ``numpy`` and ``matplotlib.pyplot`` in future workshops.
