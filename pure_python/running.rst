@@ -49,7 +49,7 @@ The ``>>>`` symbols are now replaced by ``In [x]``, and output, when present, is
 
 If you now type the up arrow twice, you will get back to ``a = 1``.
 
-.. note:: IPython is much more than just a Python shell with a few 
+.. note:: IPython is much more than just a Python shell with a few
           improvements compared to the default shell. See the `IPython
           documentation <http://ipython.org/>`_ for a full overview of its
           capabilities!
@@ -96,4 +96,4 @@ It can sometimes be useful to run a script to set things up, and to continue in 
     Out[2]: 2
 
 
-          
+
