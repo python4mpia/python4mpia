@@ -30,28 +30,26 @@ encounter in research*.
 
    intro/intro
    installation/installation
+   pure_python/pure_python.rst
 
 Workshop Schedule
 -----------------
 
-The preliminary workshop schedule is as follows.
+The workshop schedule is as follows:
 
-========== ======================================= =====================
+========== ======================================= ========================
 Date       Topic                                   Location and time    
-========== ======================================= =====================
-Dec. 7th    Python Installation Day                Hörsaal, 9:15-12:15
+========== ======================================= ========================
+Dec. 7th    Python Installation Day                Hörsaal,  9:15-12:15
 Feb. 1st    Python Keynote                         Hörsaal, 10:30-11:30
-Mid Feb.    Ongoing Python classes begin                    
-========== ======================================= =====================
-
-The course will be run once every two weeks. Planned Course topics (subject to alteration):
-
-* Introduction to pure Python
-* Plotting with Matplotlib
-* Using Numpy and Scipy
-* Fitting data
-* Astronomical data reduction
-* More advanced/specialized topics (For example object-oriented programming, interfacing with C/C++ and Fortran code)
+Feb 15th    Introduction to pure Python            Hörsaal, 10:30-12:15
+Feb 29th    Numpy, Scipy, and Matplotlib           Hörsaal, 10:45-12:15
+Mar 14th    Making publication-quality plots       Hörsaal, 10:45-12:15
+Mar 28th    Advanced Scipy - Fitting data          Hörsaal, 10:45-12:15
+Apr 11th    Object-Oriented Programming            Hörsaal, 10:45-12:15
+Apr 25th    Optimizing your Python code            Hörsaal, 10:45-12:15
+May 9th     Everything we wish we'd known sooner!  Hörsaal, 10:45-12:15
+========== ======================================= ========================
 
 About the Workshops
 -------------------
