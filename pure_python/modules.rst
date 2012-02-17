@@ -1,24 +1,49 @@
-Importing Modules 
+Importing Modules
 =================
 
-One of the strengths of Python is that there are many preexisting add-ons ("'modules'"), which allow you to do complex tasks in only a few lines of code. For example, there are modules for scientific computing, plotting, multiprocessing, graphical user interfaces and databases. The default Python install includes a number of the core modules. In the following workshops we will look a number of these modules in more detail, such as ``numpy`` for scientific computing and ``matplotlib.pyplot`` for plotting. Ultimately, you will start writing your own modules that include functionalities you commonly use.
+One of the strengths of Python is that there are many built-in add-ons - or
+*modules* - which allow you to do complex tasks in only a few lines of code. In addition, there are many other third-party modules (e.g. Numpy, Scipy,
+Matplotlib) that can be installed, and you can also develop your own modules
+that include functionalities you commonly use.
 
-To include additional modules in your programs, you need to import them::
+The built-in modules are referred to as the *Standard Library*, and you can
+find a full list of the available functionality in the `Python Documentation
+<http://docs.python.org/library/index.html>`_.
 
-    >>> import numpy
-    
-This will give you access to functions available within this module, which you can now access if you use the module name as a prefix. For example, we can now create an array of numbers and perform an operation on them using the ``numpy`` functions ``arange()`` and ``sin()``::
+To use modules in your Python session or script, you need to import them. The
+following example shows how to import the built-in ``os`` module, which
+contains amongst other things many useful functions relating to files and
+paths:
 
-    >>> x = numpy.arange(0, 3.141, 0.01)
-    >>> y = numpy.sin(x)
-    
-If the module name is too long to be conveniently written each time you want to use a function, you can define a shortcut when you import it::
+    >>> import os
+
+This will give you access to functions available within this module, which you
+can now access if you use the module name as a prefix. For example, if we want
+to check if a file ``data/m31.fits`` exists, we can use the ``os.path.exists``
+function:
+
+    >>> os.path.exists('data/m31.fits')
+    False
+
+In this case, we can use the function in an ``if`` statement, since it returns a boolean::
+
+    >>> if os.path.exists('data/m31.fits'):
+    ...     print "The file exists"
+    ... else:
+    ...     print "The file does not exist"
+    ...
+    The file does not exist
+
+.. note:: As with objects in Python, once you have imported a module, you can
+          (in IPython) type the name of the module, followed by ``.``, then
+          press TAB to see the available functions!
+
+If a module name is too long to be conveniently written each time you want to use a function, you can define a shortcut when you import it::
 
     >>> import matplotlib.pyplot as plt
-    
-The plotting module ``matplotlib.pyplot`` can now simply be referred to as ``plt``. We can continue the previous example with the ``plot()`` function from this module::
+    >>> fig = plt.figure()
 
-    >>> plt.plot(x,y)
-    >>> plt.show()
-    
-There will be much on ``numpy`` and ``matplotlib.pyplot`` in future workshops.
+In the following workshops we will look a number of third-party modules in
+more detail, such as ``numpy`` for creating and manipulating high performance
+arrays, ``scipy`` for scientific computing and ``matplotlib.pyplot`` for
+plotting.
