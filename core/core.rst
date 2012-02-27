@@ -51,14 +51,14 @@ without worrying about details of the platform (e.g. linux has wget,
 Mac has curl, Windows might not have tar, etc etc).
 
 First, download the following :download:`this <core_examples.tar>` file,
-expand it, then change to the ``core/`` directory.
+expand it, then change to the ``core_examples`` directory.
 
 If you have issues downloading the file, start up ``ipython`` and enter::
 
   import urllib2, tarfile
-  url = 'http://python4mpia.github.com/core/core_examples.tar'
+  url = 'http://python4mpia.github.com/_downloads/core_examples.tar'
   tarfile.open(fileobj=urllib2.urlopen(url), mode='r|').extractall()
-  cd py4ast/core
+  cd core_examples
   ls
 
 .. admonition:: Exercise (for the interested reader): How did that code above work?
