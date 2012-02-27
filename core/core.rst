@@ -174,15 +174,15 @@ Arrays can be created in different ways::
 
   >>> import numpy as np
 
-  >>> a = np.array([10, 20, 30, 40])   # create an array from a list of values
+  >>> a = np.array([10, 20, 30, 40])  # create an array from a list of values
   >>> a
   array([10, 20, 30, 40]
 
-  >>> b = np.arange(4)                 # create an array of 4 integers, from 0 to 3
+  >>> b = np.arange(4)  # create an array of 4 integers, from 0 to 3
   >>> b
   array([0, 1, 2, 3]),
 
-  >>> np.arange(0.0, 10.0, 0.1)    # create a float array from 0 to 100 stepping by 0.1
+  >>> np.arange(0.0, 10.0, 0.1)  # create a float array from 0 to 100 stepping by 0.1
   array([ 0. ,  0.1,  0.2,  0.3,  0.4,  0.5,  0.6,  0.7,  0.8,  0.9,  1. ,
           1.1,  1.2,  1.3,  1.4,  1.5,  1.6,  1.7,  1.8,  1.9,  2. ,  2.1,
           2.2,  2.3,  2.4,  2.5,  2.6,  2.7,  2.8,  2.9,  3. ,  3.1,  3.2,
@@ -194,17 +194,17 @@ Arrays can be created in different ways::
           8.8,  8.9,  9. ,  9.1,  9.2,  9.3,  9.4,  9.5,  9.6,  9.7,  9.8,
           9.9]),
 
-  >>> np.linspace(-np.pi, np.pi, 5)      # create an array of 5 evenly spaced samples from -pi to pi
+  >>> np.linspace(-np.pi, np.pi, 5)  # create an array of 5 evenly spaced samples from -pi to pi
   array([-3.14159265, -1.57079633,  0.        ,  1.57079633,  3.14159265]))
 
 New arrays can be obtained by operating with existing arrays::
 
-  >>> a + b**2            # elementwise operations
+  >>> a + b**2  # elementwise operations
   array([10, 21, 34, 49])
 
 Arrays may have more than one dimension::
 
-  >>> f = np.ones([3, 4])                 # 3 x 4 float array of ones
+  >>> f = np.ones([3, 4])  # 3 x 4 float array of ones
   >>> f
   array([[ 1.,  1.,  1.,  1.],
          [ 1.,  1.,  1.,  1.],
@@ -218,7 +218,7 @@ Arrays may have more than one dimension::
           [0, 0, 0, 0],
           [0, 0, 0, 0]]]),
 
-  >>> i = np.zeros_like(f)                # array of zeros with same shape/type as f
+  >>> i = np.zeros_like(f)  # array of zeros with same shape/type as f
   array([[ 0.,  0.,  0.,  0.],
          [ 0.,  0.,  0.,  0.],
          [ 0.,  0.,  0.,  0.]]))
@@ -226,7 +226,7 @@ Arrays may have more than one dimension::
 You can change the dimensions of existing arrays::
 
   >>> w = np.arange(12)
-  >>> w.shape = [3, 4]       # does not modify the total number of elements
+  >>> w.shape = [3, 4]  # does not modify the total number of elements
   array([[ 0,  1,  2,  3],
          [ 4,  5,  6,  7],
          [ 8,  9, 10, 11]]),
@@ -295,13 +295,13 @@ The ">>>" indicates the input to Python::
          [10, 11, 12, 13, 14],
          [15, 16, 17, 18, 19]])
 
-   >>> a[2, 3]   # select element in row 2, col 3 (counting from 0)
+   >>> a[2, 3]  # select element in row 2, col 3 (counting from 0)
    13
 
-   >>> a[2, :]   # select every element in row 2
+   >>> a[2, :]  # select every element in row 2
    array([10, 11, 12, 13, 14])
 
-   >>> a[:, 0]   # select every element in col 0
+   >>> a[:, 0]  # select every element in col 0
    array([ 0,  5, 10, 15])
 
    >>> a[0:3, 1:3]
@@ -451,7 +451,7 @@ This introduces the important concept of slicing with a **boolean mask**.  Let's
 look at a smaller example::
 
    >>> a = np.array([1, 4, -2, 4, -5])
-   >>> neg = (a < 0)    # Parentheses here for clarity but are not required
+   >>> neg = (a < 0)  # Parentheses here for clarity but are not required
    >>> neg
    array([False, False,  True, False,  True], dtype=bool)
 
@@ -510,10 +510,10 @@ and that you can compose logical expressions::
 
      >>> a = np.arange(8)
      >>> b = a
-     >>> id(a)     # Unique identifier for the object referred to by "a": arange(8)
+     >>> id(a)  # Unique identifier for the object referred to by "a": arange(8)
      122333200
 
-     >>> id(b)     # Unique identifier for the object referred to by "b": same ^^
+     >>> id(b)  # Unique identifier for the object referred to by "b": same ^^
      122333200
 
      >>> b[3] = -10
@@ -543,7 +543,7 @@ and that you can compose logical expressions::
      >>> a
      array([  0, 100,   2,   3])
 
-     >>> b    # Still as expected after changing "a"
+     >>> b  # Still as expected after changing "a"
      array([0, 1, 4, 9])
 
 Fit the background
@@ -556,11 +556,11 @@ image which includes the source region.
 Let's tackle a simpler problem first and fit the background for a single column::
 
   x = np.append(arange(10, 200), arange(300, 480))  # Background rows
-  y = img_cr[x, 10]         # Background rows of column 10 of cleaned image
+  y = img_cr[x, 10]  # Background rows of column 10 of cleaned image
   plt.figure()
   plt.plot(x, y)
-  pfit = np.polyfit(x, y, 2)   # Fit a 2nd order polynomial to (x, y) data
-  yfit = np.polyval(pfit, x)   # Evaluate the polynomial at x
+  pfit = np.polyfit(x, y, 2)  # Fit a 2nd order polynomial to (x, y) data
+  yfit = np.polyval(pfit, x)  # Evaluate the polynomial at x
   plt.plot(x, yfit)
   plt.grid()
 
