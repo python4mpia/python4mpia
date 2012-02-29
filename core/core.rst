@@ -315,7 +315,7 @@ As a first practical
 example plot column 300 of the longslit image to look at the spatial profile::
 
   import matplotlib.pyplot as plt
-  plt.clf()
+  plt.figure()
   plt.plot(img[:, 300])
 
 .. image:: img_col300.png
@@ -557,7 +557,7 @@ image which includes the source region.
 
 Let's tackle a simpler problem first and fit the background for a single column::
 
-  x = np.append(arange(10, 200), arange(300, 480))  # Background rows
+  x = np.append(np.arange(10, 200), np.arange(300, 480))  # Background rows
   y = img_cr[x, 10]  # Background rows of column 10 of cleaned image
   plt.figure()
   plt.plot(x, y)
@@ -577,7 +577,7 @@ Now do this for every column and store the results in a background image::
       pfit = np.polyfit(x, img_cr[x, col], 2) # Fit poly over bkg rows for col
       bkg[:, col] = np.polyval(pfit, xrows)   # Eval poly at ALL row positions
 
-  ImgView(bkg)
+  imgview.ImgView(bkg)
 
 .. image:: bkg_fit1.png
    :scale: 50
