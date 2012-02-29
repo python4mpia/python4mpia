@@ -30,7 +30,8 @@ encounter in research*.
 
    intro/intro
    installation/installation
-   pure_python/pure_python.rst
+   pure_python/pure_python
+   core/core
 
 Workshop Schedule
 -----------------
