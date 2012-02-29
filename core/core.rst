@@ -51,9 +51,11 @@ without worrying about details of the platform (e.g. linux has wget,
 Mac has curl, Windows might not have tar, etc etc).
 
 First, download the following :download:`this <core_examples.tar>` file,
-expand it, then change to the ``core_examples`` directory.
+expand it, then change to the ``core_examples`` directory, then launch::
 
-If you have issues downloading the file, start up ``ipython`` and enter::
+    ipython --pylab
+
+If you have issues downloading the file, start up ``ipython --pylab`` and enter::
 
   import urllib2, tarfile
   url = 'http://python4mpia.github.com/_downloads/core_examples.tar'
