@@ -44,7 +44,7 @@ Date       Topic                                   Location and time
 Dec. 7th    Python Installation Day                Hörsaal,  9:15-12:15
 Feb. 1st    Python Keynote                         Hörsaal, 10:30-11:30
 Feb 15th    Introduction to pure Python            Hörsaal, 10:30-12:15
-Feb 29th    Numpy, Scipy, and Matplotlib           Hörsaal, 10:45-12:15
+Feb 29th    Numpy and Scipy                        Hörsaal, 10:45-12:15
 Mar 14th    Making publication-quality plots       Hörsaal, 10:45-12:15
 Mar 28th    Advanced Scipy - Fitting data          Hörsaal, 10:45-12:15
 Apr 11th    Object-Oriented Programming            Hörsaal, 10:45-12:15
