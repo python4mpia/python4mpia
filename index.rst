@@ -32,6 +32,8 @@ encounter in research*.
    installation/installation
    pure_python/pure_python
    core/core
+   plotting/plotting
+
 
 Workshop Schedule
 -----------------
