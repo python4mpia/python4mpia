@@ -15,6 +15,7 @@ Plotting and Images
    :maxdepth: 1
    
    matplotlib
+   advanced
 
 
 :Authors: Tom Aldcroft, Tom Robitaille

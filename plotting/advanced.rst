@@ -187,3 +187,55 @@ If you only want to hide labels, not the ticks, from an axis, then just do::
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
     ax.xaxis.set_ticklabels('')
+
+Tips and tricks
+---------------
+
+Designing plots
+^^^^^^^^^^^^^^^
+
+When designing plots, it's often fastest to save the plot to PNG when trying out different commands, and to switch to EPS and/or PDF (if necessary) only at the very end, once the plot is satisfactory, because PNG output is fastest. In particular, on MacOS X, if you have the PNG file open, and re-run the script to re-generate it, you simply need to click on the open file to refresh, which makes it easy to tweak the plot.
+
+Using your system's latex
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+One of the rc parameters available is ``text.usetex``, which allows Matplotlib to use the system LaTeX installation instead of the built-in one. The system installation generally produces better results, but is quite slow (it may take several seconds to generate the labels for the plot). The parameter can be set in-script with::
+
+    plt.rc('text', usetex=True)
+
+Because of the slower performance, we recommend only enabling this option at the last minute, once you are ready to make the final plot.
+
+Automatic bounding box
+^^^^^^^^^^^^^^^^^^^^^^
+
+When saving a plot, the default edge of the output image are set by the edge of the figure. However, in some cases, one might end up with too much whitespace around the axes, or labels that fall partly outside the figure. One way to fix this is to use::
+
+    fig.savefig('myplot.eps', bbox_inches='tight')
+
+Note however that this means that if a figure size was specified when initializing the figure, the final figure size may be a little different.
+
+Separating computations and plotting
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you are doing calculations prior to plotting, and these take a while to get carried out, it is a good idea to separate the computational part of scripts from the plotting part (i.e. have a dedicated plotting script). You can use files to save the information from the computation routine, and then read this in to a plotting program. The advantage of doing this is that it is easier to tweak the plotting script without re-running the computation every time.
+
+Making many plots
+^^^^^^^^^^^^^^^^^
+
+When using the partial object-oriented interface described in this workshop, one needs to be aware that pyplot always keeps a reference to open figures. For example, when doing::
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+
+one would normally expect (in Python terms) that when the second figure is created, there are no longer references to the original figure, and the memory should be freed, but this is not the case. Pyplot keeps an internal reference to all figures unless specifically instructed to close a figure. Therefore, when making many plots, users may run out of memory. The solution is to explicitly close figures when they are no longer used::
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+    plt.close(fig)
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+    plt.close(fig)
