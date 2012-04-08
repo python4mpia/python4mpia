@@ -1,5 +1,5 @@
-Advanced plotting with Matplotlib
-=================================
+Advanced plotting
+=================
 
 .. _`subplots_adjust`: http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.subplots_adjust
 .. _`rc`: http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.rc
