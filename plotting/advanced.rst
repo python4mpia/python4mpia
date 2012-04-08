@@ -8,7 +8,7 @@ Advanced plotting
 Moving to object-based plotting
 -------------------------------
 
-In `Matplotlib`_, we learned about making plots using a very procedural method, e.g.::
+In :ref:`Matplotlib <matplotlib>`, we learned about making plots using a very procedural method, e.g.::
 
     plt.figure()
     plt.subplot(1, 1, 1)
@@ -36,7 +36,11 @@ this for the current workshop. One of the biggest advantages of using this metho
 
 defines two figures, one with two sets of axes, and one with one set of axes. Subsequently, use ``ax1.plot(...)`` to plot to the subplot in ``fig1``, and ``ax2.plot(...)`` and ``ax3.plot(...)`` to plot in the top and bottom subplots of ``fig2`` respectively.
 
-TODO: plt.draw()
+The slight downside of this method is that in interactive mode, you will need to explicitly call::
+
+    plt.draw()
+
+to refresh the figure after plotting commands.
 
 .. note:: while this method is more object-oriented than the procedural method
           we presented last time, it still relies on pyplot to instantiate the
