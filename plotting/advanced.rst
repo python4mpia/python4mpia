@@ -106,7 +106,28 @@ Note that is also allows us to easily make inset plots::
    :scale: 60%
    :align: center
 
-Exercise: TODO
+.. admonition:: Exercise: Practice creating custom axes
+
+    Create a set of square axes in a figure that has ``figsize=(10, 5)``,
+    leaving enough space for the axis and tick labels. Make the set of axes
+    centered in the figure.
+
+.. raw:: html
+
+   <p class="flip1">Click to Show/Hide Solution</p> <div class="panel1">
+
+The figure has an aspect ratio of 2:1, so we need to compensate for this in the axes dimensions, since these are in relative units::
+
+    fig = plt.figure(figsize=(10, 5))
+    ax = fig.add_axes([0.3, 0.1, 0.4, 0.8])
+
+.. image:: advanced_plots/exercise_1.png
+   :scale: 60%
+   :align: center
+
+.. raw:: html
+
+   </div>
 
 Controlling the appearance of plots
 -----------------------------------
@@ -131,7 +152,55 @@ In Matplotlib, every plot element is a full Python object with properties that c
    :scale: 60%
    :align: center
 
-This is very powerful, as it allows you to customize virtually *all* elements in a plot. However, in practice, this can be a lot of work for simple and common things (e.g. setting the tick label properties), so matplotlib allows users to specify default properties via rc parameters. These can be set either in a `~/.matplotlib/matplotlibrc` file, or in a script. To set these via a file, see `matplotlibrc`_. Example lines from this script include::
+This is very powerful, as it allows you to customize virtually *all* elements in a plot. In general, most matplotlib functions/methods return a *handle* to the element that is being plotted. In the following example::
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    title = ax.set_title("My plot", fontsize='large')
+    points = ax.scatter([1,2,3], [4,5,6])
+
+``title`` will be the title object, and points will be a scatter object. Both can be used to set/change the current properties.
+
+.. admonition:: Exercise: Explore customization
+
+    Run the above example in ``ipython --pylab``, and try and use the title
+    and points objects to change the points to be red, and the title to have
+    an ``x-large`` font size.
+
+    **Hint 1:** <tab> suggestion/completion is your friend!
+
+    **Hint 2:** Don't forget to run ``plt.draw()`` to refresh the plot after
+    modifying properties!
+
+.. raw:: html
+
+   <p class="flip2">Click to Show/Hide Solution</p> <div class="panel2">
+
+::
+
+   points.set_color('red')
+   title.set_fontsize('x-large')
+   plt.draw()
+
+Easy! :-)
+
+.. raw:: html
+
+   </div>
+
+**Remember:** Tab completion is your friend for exploring all the capabilities
+of Matplotlib. When you plot something, you can always get a handle to it, and
+then use this to get and set parameters!
+
+``rc`` parameters
+-----------------
+
+In practice, this can be a lot of work for simple and common things (e.g.
+setting the tick label properties), so matplotlib allows users to specify
+default properties via rc parameters. These can be set either in a
+``~/.matplotlib/matplotlibrc`` file, or in a script. To set these via a file,
+see `matplotlibrc`_ (this also shows all the options that are availables).
+Example (modified) lines from this script include::
 
     #xtick.major.size     : 4      # major tick size in points
     #xtick.minor.size     : 2      # minor tick size in points
@@ -283,6 +352,85 @@ If you only want to hide labels, not the ticks, from an axis, then just do::
 .. image:: advanced_plots/custom_ticks_4.png
    :scale: 60%
    :align: center
+
+
+.. admonition:: Exercise: Practice setting custom labels
+
+    Make a plot that looks like this (note the x-axis):
+
+    .. image:: advanced_plots/exercise_3.png
+       :scale: 60%
+       :align: center
+
+    (the y values are ``[4, 3, 2, 3, 4, 5, 4]``)
+
+.. raw:: html
+
+   <p class="flip3">Click to Show/Hide Solution</p> <div class="panel3">
+
+::
+
+    # Initialize figure and axes
+    fig = plt.figure(figsize=(8, 6))
+    ax = fig.add_axes([0.1, 0.1, 0.8, 0.8])
+
+    # Define spectral types
+    spectral_id = [1, 2, 3, 4, 5, 6, 7]
+    spectral_types = ['O', 'B', 'A', 'F', 'G', 'K', 'M']
+
+    # Plot the data
+    ax.plot(spectral_id, [4, 3, 2, 3, 4, 5, 4], 'ro')
+
+    # Set the limits
+    ax.set_xlim(0.5, 7.5)
+    ax.set_ylim(0., 10.)
+
+    # Set the custom ticks on the x-axis
+    ax.set_xticks(spectral_id)
+    ax.set_xticklabels(spectral_types)
+
+    # Set the axis labels
+    ax.set_xlabel("Spectral type")
+    ax.set_ylabel("Number of sources")
+
+.. raw:: html
+
+   </div>
+
+.. admonition:: Exercise: Practice axes placement and hiding labels
+
+    Create a set of 4 axes in a 2 by 2 grid, with no space between the sets of
+    axes, and with no labels in the overlap regions.
+
+    Create a set of square axes in a figure that has ``figsize=(10, 5)``,
+    leaving enough space for the axis and tick labels. Make the set of axes
+    centered in the figure.
+
+.. raw:: html
+
+   <p class="flip4">Click to Show/Hide Solution</p> <div class="panel4">
+
+::
+
+    fig = plt.figure(figsize=(8, 8))
+    ax1 = fig.add_axes([0.1, 0.1, 0.4, 0.4])
+    ax2 = fig.add_axes([0.1, 0.5, 0.4, 0.4])
+    ax2.set_xticklabels('')
+    ax3 = fig.add_axes([0.5, 0.1, 0.4, 0.4])
+    ax3.set_yticklabels('')
+    ax4 = fig.add_axes([0.5, 0.5, 0.4, 0.4])
+    ax4.set_xticklabels('')
+    ax4.set_yticklabels('')
+
+which gives:
+
+.. image:: advanced_plots/exercise_4.png
+   :scale: 60%
+   :align: center
+
+.. raw:: html
+
+   </div>
 
 Tips and tricks
 ---------------

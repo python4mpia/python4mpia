@@ -185,3 +185,47 @@ ax.plot(x, 20/x, color='0.50', ls='dashed')
 ax.set_xlabel('Time (s)')
 ax.set_ylabel('Temperature (K)')
 fig.savefig('publication_lines.png', bbox_inches='tight')
+
+plt.rcdefaults()
+fig = plt.figure(figsize=(10, 5))
+ax = fig.add_axes([0.3, 0.1, 0.4, 0.8])
+fig.savefig('exercise_1.png', facecolor='0.95')
+
+plt.rcdefaults()
+
+# Initialize figure and axes
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_axes([0.1, 0.1, 0.8, 0.8])
+
+# Define spectral types
+spectral_id = [1, 2, 3, 4, 5, 6, 7]
+spectral_types = ['O', 'B', 'A', 'F', 'G', 'K', 'M']
+
+# Plot the data
+ax.plot(spectral_id, [4,3,2,3,4,5,4], 'ro')
+
+# Set the limits
+ax.set_xlim(0.5, 7.5)
+ax.set_ylim(0., 10.)
+
+# Set the custom ticks on the x-axis
+ax.set_xticks(spectral_id)
+ax.set_xticklabels(spectral_types)
+
+# Set the axis labels
+ax.set_xlabel("Spectral type")
+ax.set_ylabel("Number of sources")
+
+fig.savefig('exercise_3.png')
+
+plt.rcdefaults()
+fig = plt.figure(figsize=(8, 8))
+ax1 = fig.add_axes([0.1, 0.1, 0.4, 0.4])
+ax2 = fig.add_axes([0.1, 0.5, 0.4, 0.4])
+ax2.set_xticklabels('')
+ax3 = fig.add_axes([0.5, 0.1, 0.4, 0.4])
+ax3.set_yticklabels('')
+ax4 = fig.add_axes([0.5, 0.5, 0.4, 0.4])
+ax4.set_xticklabels('')
+ax4.set_yticklabels('')
+fig.savefig('exercise_4.png', facecolor='0.95')
