@@ -432,8 +432,44 @@ which gives:
 
    </div>
 
+Patches and collections
+-----------------------
+
+Many objects in Matplotlib are in fact *patches* or collections of patches. It is actually very easy to add your own custom items (e.g. a circle, a square, etc.) to a plot. First, import the patch class you need::
+
+    from matplotlib.patches import Circle
+
+Then, you can create a circle::
+
+    c = Circle((0.5, 0.5), radius=0.2,
+                edgecolor='red', facecolor='blue', alpha=0.3)
+
+Finally, add your patch to your figure::
+
+    ax.add_patch(c)
+
+.. image:: advanced_plots/patches.png
+   :scale: 60%
+   :align: center
+
+See `here <http://matplotlib.sourceforge.net/api/artist_api.html?#module-matplotlib.patches>`_ for a complete list of patches and options.
+
+Similarly, there are line classes::
+
+    from matplotlib.lines import Line2D
+    ...
+    l = Line2D(...)
+    ax.add_line(l)
+
+See `here <http://matplotlib.sourceforge.net/api/artist_api.html?#module-matplotlib.lines>`_ for a complete list of line types and options.
+
 Tips and tricks
 ---------------
+
+Matplotlib gallery
+^^^^^^^^^^^^^^^^^^
+
+We've only touched the tip of the iceberg in terms of methods for plotting, so remember that the `Matplotlib gallery <http://matplotlib.sourceforge.net/gallery.html>`_ is your friend! Just click on a figure to see the code that produced it!
 
 Designing plots
 ^^^^^^^^^^^^^^^

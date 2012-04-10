@@ -235,3 +235,12 @@ ax = fig.add_subplot(1,1,1)
 image = np.random.poisson(10., (100, 80))
 i = ax.imshow(image, interpolation='nearest', extent=[-10., 10., -10., 10.])
 fig.savefig('imshow_extent.png', facecolor='0.95')
+
+from matplotlib.patches import Circle
+
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+c = Circle((0.5, 0.5), radius=0.2,
+            edgecolor='red', facecolor='blue', alpha=0.3)
+ax.add_patch(c)
+fig.savefig('patches.png', facecolor='0.95')
