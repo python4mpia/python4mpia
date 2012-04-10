@@ -240,11 +240,16 @@ Example (modified) lines from this script include::
 
 These lines are commented out by default, but you can uncomment them to make them active. However, it's often easier to define properties on a per-script basis using the `rc`_ function. This function's first argument is the category of the settings, and this is followed by a set of keyword arguments to set the parameters for this element. To reproduce the above lines from the ``matplotlibrc`` file, one would do::
 
-    import matplotlib.pyplot as plt
-
     plt.rc('xtick', color='r', labelsize='medium', direction='out')
     plt.rc('xtick.major', size=4, pad=4)
     plt.rc('xtick.minor', size=2, pad=4)
+
+after which running::
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+
+produces:
 
 .. image:: advanced_plots/appearance_fonts_rc.png
    :scale: 60%
@@ -279,7 +284,7 @@ and the legend will automatically appear!
    :scale: 60%
    :align: center
 
-Note that you can control the font size in a legend with the following rc parameter::
+Note that you can control the font size (and other properties) in a legend with the following rc parameter::
 
     plt.rc('legend', fontsize='small')
 
@@ -292,7 +297,7 @@ which would produce:
 Adding a colorbar
 -----------------
 
-Adding a colorbar to a plot is also straightforward, and involves capturing the handle to the imshow object::
+Adding a colorbar to a plot is also straightforward, and involves capturing the handle to the ``imshow`` object::
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
@@ -310,7 +315,7 @@ Note that in the above ``colorbar`` call, the colorbar box automatically eats up
     ax = fig.add_axes([0.1,0.1,0.6,0.8])
     image = np.random.poisson(10., (100, 80))
     i = ax.imshow(image, interpolation='nearest')
-    colorbar_ax = fig.add_axes([0.7, 0.1, 0.1, 0.8])
+    colorbar_ax = fig.add_axes([0.7, 0.1, 0.05, 0.8])
     fig.colorbar(i, cax=colorbar_ax)
 
 .. image:: advanced_plots/colorbar_cax.png
@@ -323,7 +328,7 @@ You will notice that even though the axes we specified *should* line up nicely, 
     ax = fig.add_axes([0.1,0.1,0.6,0.8])
     image = np.random.poisson(10., (100, 80))
     i = ax.imshow(image, aspect='auto', interpolation='nearest')
-    colorbar_ax = fig.add_axes([0.7, 0.1, 0.1, 0.8])
+    colorbar_ax = fig.add_axes([0.7, 0.1, 0.05, 0.8])
     fig.colorbar(i, cax=colorbar_ax)
 
 .. image:: advanced_plots/colorbar_cax_aspect.png
@@ -331,6 +336,24 @@ You will notice that even though the axes we specified *should* line up nicely, 
    :align: center
 
 With these options, you should now have complete control on the placement of axes and colorbars!
+
+Note that it is also possible to use colorbars with other types of plots, for example scatter plots::
+
+    fig = plt.figure()
+    ax = fig.add_axes([0.1, 0.1, 0.6, 0.8])
+    x = np.random.random(400)
+    y = np.random.random(400)
+    c = np.random.poisson(10., 400)
+    s = ax.scatter(x, y, c=c, edgecolor='none')
+    ax.set_xlim(0., 1.)
+    ax.set_ylim(0., 1.)
+    colorbar_ax = fig.add_axes([0.7, 0.1, 0.05, 0.8])
+    fig.colorbar(s, cax=colorbar_ax)
+
+.. image:: advanced_plots/colorbar_cax_scatter.png
+   :scale: 60%
+   :align: center
+
 
 Custom ticks and labels
 -----------------------
