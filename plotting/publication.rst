@@ -45,7 +45,7 @@ the time, 'serif' is best)::
     plt.rc('font', family='serif')
 
     fig = plt.figure(figsize=(4, 3))
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     plt.plot([1, 2, 3, 4])
     ax.set_xlabel('The x values')
     ax.set_ylabel('The y values')
@@ -66,7 +66,7 @@ size can often be reduced compared to the default::
     plt.rc('ytick', labelsize='x-small')
 
     fig = plt.figure(figsize=(4, 3))
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     plt.plot([1, 2, 3, 4])
     ax.set_xlabel('The x values')
     ax.set_ylabel('The y values')
@@ -85,7 +85,7 @@ Matplotlib uses color for lines by default. However, you should try and use just
     plt.rc('ytick', labelsize='x-small')
 
     fig = plt.figure(figsize=(4, 3))
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
 
     x = np.linspace(1., 8., 30)
     ax.plot(x, x ** 1.5, color='k', ls='solid')
@@ -100,7 +100,7 @@ Matplotlib uses color for lines by default. However, you should try and use just
 LaTeX
 -----
 
-If you don't *need* LaTeX, don't use it (e.g. for specific symbols). It is slower to plot, and text looks just fine without.
+If you don't *need* LaTeX, don't use it. It is slower to plot, and text looks just fine without. If you need it, e.g. for symbols, then use it.
 
 One of the rc parameters available is ``text.usetex``, which allows Matplotlib to use the system LaTeX installation instead of the built-in one. The system installation generally produces better results, but is quite slow (it may take several seconds to generate the labels for the plot). The parameter can be set in-script with::
 

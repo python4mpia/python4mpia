@@ -137,13 +137,13 @@ Twin axes
 In some cases, it can be desirable to show two different x axes (e.g. distance and redshift), or two different y axes (e.g. two different quantities such as density and temperature). Matplotlib provides an easy way to create *twin* axes. For example::
 
     fig = plt.figure()
-    ax1 = fig.add_subplot(1,1,1)
+    ax1 = fig.add_subplot(1, 1, 1)
     ax2 = ax.twinx()
 
 creates a new set of axes (``ax2``) that shares the x-axis with ``ax1``, but can have a separate y-axis (similarly, ``twiny`` would return a second set of axes sharing the y-axis, but with a separate x-axis). As an example, we can use this to plot two different quantities as a function of time::
 
     fig = plt.figure()
-    ax1 = fig.add_subplot(1,1,1)
+    ax1 = fig.add_subplot(1, 1, 1)
     ax2 = ax1.twinx()
     t = np.linspace(0., 10., 100)
     ax1.plot(t, t ** 2, 'b-')
@@ -269,7 +269,7 @@ Adding a legend
 Adding a legend to a plot is straightforward. First, whenever calling a plotting routine for which you want the results included in the legend, add the ``label=`` argument::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     x = np.linspace(1., 8., 30)
     ax.plot(x, x ** 1.5, 'ro', label='density')
     ax.plot(x, 20/x, 'bx', label='temperature')
@@ -300,7 +300,7 @@ Adding a colorbar
 Adding a colorbar to a plot is also straightforward, and involves capturing the handle to the ``imshow`` object::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     image = np.random.poisson(10., (100, 80))
     i = ax.imshow(image, interpolation='nearest')
     fig.colorbar(i)  # note that colorbar is a method of the figure, not the axes
@@ -361,7 +361,7 @@ Custom ticks and labels
 In some cases, you may want to specify which tick locations should be shown. This can be done with::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     ax.set_xticks([0.1, 0.5, 0.7])
     ax.set_yticks([0.2, 0.4, 0.8])
 
@@ -372,7 +372,7 @@ In some cases, you may want to specify which tick locations should be shown. Thi
 It is also easy to specify what the label strings should be explicitly::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     ax.set_xticks([0.1, 0.5, 0.7])
     ax.set_xticklabels(['a', 'b', 'c'])
     ax.set_yticks([0.2, 0.4, 0.8])
@@ -387,7 +387,7 @@ It is best to only use ``set_ticklabels`` when also using ``set_ticks``, so that
 This can also be used to hide ticks and/or labels. For example, to hide ticks and labels on the x axis, just do::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     ax.set_xticks([])
 
 .. image:: advanced_plots/custom_ticks_3.png
@@ -397,7 +397,7 @@ This can also be used to hide ticks and/or labels. For example, to hide ticks an
 If you only want to hide labels, not the ticks, from an axis, then just do::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     ax.set_xticklabels('')
 
 .. image:: advanced_plots/custom_ticks_4.png
@@ -451,11 +451,11 @@ If you only want to hide labels, not the ticks, from an axis, then just do::
 .. admonition:: Exercise: Practice axes placement and hiding labels
 
     Create a set of 4 axes in a 2 by 2 grid, with no space between the sets of
-    axes, and with no labels in the overlap regions.
+    axes, and with no labels in the overlap regions, like this:
 
-    Create a set of square axes in a figure that has ``figsize=(10, 5)``,
-    leaving enough space for the axis and tick labels. Make the set of axes
-    centered in the figure.
+    .. image:: advanced_plots/exercise_4.png
+        :scale: 60%
+        :align: center
 
 .. raw:: html
 
@@ -465,6 +465,8 @@ If you only want to hide labels, not the ticks, from an axis, then just do::
 
     fig = plt.figure(figsize=(8, 8))
     ax1 = fig.add_axes([0.1, 0.1, 0.4, 0.4])
+    ax1.set_xticks([0., 0.2, 0.4, 0.6, 0.8])
+    ax1.set_yticks([0., 0.2, 0.4, 0.6, 0.8])
     ax2 = fig.add_axes([0.1, 0.5, 0.4, 0.4])
     ax2.set_xticklabels('')
     ax3 = fig.add_axes([0.5, 0.1, 0.4, 0.4])
@@ -473,24 +475,24 @@ If you only want to hide labels, not the ticks, from an axis, then just do::
     ax4.set_xticklabels('')
     ax4.set_yticklabels('')
 
-which gives:
-
-.. image:: advanced_plots/exercise_4.png
-   :scale: 60%
-   :align: center
-
 .. raw:: html
 
    </div>
 
-Patches and collections
------------------------
+Artists, Patches, and Lines
+---------------------------
 
-Many objects in Matplotlib are in fact *patches* or collections of patches. It is actually very easy to add your own custom items (e.g. a circle, a square, etc.) to a plot. First, import the patch class you need::
+Virtually all objects in Matplotlib are *artists*, which are objects that have
+visual attributes that can be set. There are two important kinds of artists:
+*lines*, and *patches*.
+
+It is actually very easy to add your own custom lines or patches (e.g. a
+circle, a square, etc.) to a plot. In the case of a patch, import the patch
+class you need::
 
     from matplotlib.patches import Circle
 
-Then, you can create a circle::
+Then, create an instance of the patch::
 
     c = Circle((0.5, 0.5), radius=0.2,
                 edgecolor='red', facecolor='blue', alpha=0.3)
@@ -542,7 +544,7 @@ Showing images/maps with non-pixel coordinates
 By default, when using ``imshow``, the x- and y-axis show the pixel coordinates. You can change this by specifying the extent of the image in whatever coordinate system you want to use::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     image = np.random.poisson(10., (100, 80))
     i = ax.imshow(image, interpolation='nearest',
                   extent=[-10., 10., -10., 10.])
@@ -565,17 +567,17 @@ Making many plots
 When using the partial object-oriented interface described in this workshop, one needs to be aware that pyplot always keeps a reference to open figures. For example, when doing::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
 
 one would normally expect (in Python terms) that when the second figure is created, there are no longer references to the original figure, and the memory should be freed, but this is not the case. Pyplot keeps an internal reference to all figures unless specifically instructed to close a figure. Therefore, when making many plots, users may run out of memory. The solution is to explicitly close figures when they are no longer used::
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     plt.close(fig)
 
     fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    ax = fig.add_subplot(1, 1, 1)
     plt.close(fig)

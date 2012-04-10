@@ -37,15 +37,7 @@ Getting started
 
 Start off by downloading :download:`this tar file <APLpy-example.tar>`, expand it, and go to the ``APLpy-example`` directory on the command line. Then, launch pylab::
 
-    $ ipython -pylab
-
-If you have trouble downloading the file, then start up IPython (``ipython -pylab``) and enter::
-
-    import urllib2, tarfile
-    url = 'http://python4astronomers.github.com/_downloads/APLpy-example.tar'
-    tarfile.open(fileobj=urllib2.urlopen(url), mode='r|').extractall()
-    cd APLpy-example
-    ls
+    $ ipython --pylab
 
 Import the ``aplpy`` module (note the lowercase module name)::
 
