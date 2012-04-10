@@ -77,7 +77,7 @@ The easiest way to make a set of axes in a matplotlib figure is to use the subpl
 
 The second line creates subplot on a 1x1 grid. As we described before, the arguments for ``add_subplot`` are the number of rows, columns, and the ID of the subplot, between 1 and the number of columns times the number of rows.
 
-While it is possible to adjust the spacing between the subplots using `subplots_adjust`_, or use the `gridspec`_ functionality for more advanced subplotting, it is often easier to just use the more general `add_axes`_ method instead of `add_subplot`_. The `add_axes`_ method takes a list of four values, which are ``xmin``, ``xmax``, ``dx``, and ``dy`` for the subplot, where ``xmin`` and ``ymin`` are the coordinates of the lower left corner of the subplot, and ``dx`` and ``dy`` are the width and height of the subplot, with all values specified in relative units (where 0 is left/bottom and 1 is top/right). For example::
+While it is possible to adjust the spacing between the subplots using `subplots_adjust`_, or use the `gridspec`_ functionality for more advanced subplotting, it is often easier to just use the more general `add_axes`_ method instead of `add_subplot`_. The `add_axes`_ method takes a list of four values, which are ``xmin``, ``ymin``, ``dx``, and ``dy`` for the subplot, where ``xmin`` and ``ymin`` are the coordinates of the lower left corner of the subplot, and ``dx`` and ``dy`` are the width and height of the subplot, with all values specified in relative units (where 0 is left/bottom and 1 is top/right). For example::
 
     fig = plt.figure()
     ax = fig.add_axes([0., 0., 1., 1., ])
