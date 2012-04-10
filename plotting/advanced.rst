@@ -131,6 +131,32 @@ The figure has an aspect ratio of 2:1, so we need to compensate for this in the 
 
    </div>
 
+Twin axes
+---------
+
+In some cases, it can be desirable to show two different x axes (e.g. distance and redshift), or two different y axes (e.g. two different quantities such as density and temperature). Matplotlib provides an easy way to create *twin* axes. For example::
+
+    fig = plt.figure()
+    ax1 = fig.add_subplot(1,1,1)
+    ax2 = ax.twinx()
+
+creates a new set of axes (``ax2``) that shares the x-axis with ``ax1``, but can have a separate y-axis (similarly, ``twiny`` would return a second set of axes sharing the y-axis, but with a separate x-axis). As an example, we can use this to plot two different quantities as a function of time::
+
+    fig = plt.figure()
+    ax1 = fig.add_subplot(1,1,1)
+    ax2 = ax1.twinx()
+    t = np.linspace(0., 10., 100)
+    ax1.plot(t, t ** 2, 'b-')
+    ax2.plot(t, 1000 / (t + 1), 'r-')
+    ax1.set_ylabel('Density (cgs)', color='red')
+    ax2.set_ylabel('Temperature (K)', color='blue')
+    ax1.set_xlabel('Time (s)')
+
+.. image:: advanced_plots/twinx.png
+   :scale: 60%
+   :align: center
+
+
 Controlling the appearance of plots
 -----------------------------------
 

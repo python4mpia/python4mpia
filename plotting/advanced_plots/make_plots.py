@@ -244,3 +244,15 @@ c = Circle((0.5, 0.5), radius=0.2,
             edgecolor='red', facecolor='blue', alpha=0.3)
 ax.add_patch(c)
 fig.savefig('patches.png', facecolor='0.95')
+
+fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
+ax2 = ax1.twinx()
+t = np.linspace(0., 10., 100)
+ax1.plot(t, t ** 2, 'b-')
+ax2.plot(t, 1000 / (t + 1), 'r-')
+ax1.set_ylabel('Density (cgs)', color='red')
+ax2.set_ylabel('Temperature (K)', color='blue')
+ax1.set_xlabel('Time (s)')
+fig.savefig('twinx.png')
+
