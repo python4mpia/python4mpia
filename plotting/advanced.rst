@@ -9,7 +9,7 @@ Advanced plotting
 Moving to object-based plotting
 -------------------------------
 
-In :ref:`Matplotlib <matplotlib>`, we learned about making plots using a very procedural method, e.g.::
+In :doc:`matplotlib`, we learned about making plots using a procedural method, e.g.::
 
     plt.figure()
     plt.subplot(1, 1, 1)
@@ -448,6 +448,24 @@ When saving a plot, the default edge of the output image are set by the edge of 
     fig.savefig('myplot.eps', bbox_inches='tight')
 
 Note however that this means that if a figure size was specified when initializing the figure, the final figure size may be a little different.
+
+Showing images/maps with non-pixel coordinates
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, when using ``imshow``, the x- and y-axis show the pixel coordinates. You can change this by specifying the extent of the image in whatever coordinate system you want to use::
+
+    fig = plt.figure()
+    ax = fig.add_subplot(1,1,1)
+    image = np.random.poisson(10., (100, 80))
+    i = ax.imshow(image, interpolation='nearest',
+                  extent=[-10., 10., -10., 10.])
+    fig.savefig('imshow_extent.png', facecolor='0.95')
+
+.. image:: advanced_plots/imshow_extent.png
+   :scale: 60%
+   :align: center
+
+Note that if you want to use WCS coordinates, you probably want to use :doc:`aplpy` instead!
 
 Separating computations and plotting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
