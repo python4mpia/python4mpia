@@ -4,6 +4,7 @@ Advanced plotting
 .. _`subplots_adjust`: http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.subplots_adjust
 .. _`rc`: http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.rc
 .. _`matplotlibrc`: http://matplotlib.sourceforge.net/users/customizing.html#a-sample-matplotlibrc-file
+.. _`gridspec`: http://matplotlib.sourceforge.net/users/gridspec.html
 
 Moving to object-based plotting
 -------------------------------
@@ -68,12 +69,20 @@ The easiest way to make a set of axes in a matplotlib figure is to use the subpl
     fig = plt.figure()  # create a figure object
     ax = fig.add_subplot(1, 1, 1)  # create an axes object in the figure
 
+.. image:: advanced_plots/subplot.png
+   :scale: 60%
+   :align: center
+
 The second line creates subplot on a 1x1 grid. As we described before, the arguments for ``add_subplot`` are the number of rows, columns, and the ID of the subplot, between 1 and the number of columns times the number of rows.
 
-While it is possible to adjust the spacing between the subplots using `subplots_adjust`_, it is often easier to just use the more general ``add_axes`` method instead of ``add_subplot``. The ``add_axes`` method takes a list of four values, which are ``xmin``, ``xmin``, ``dx``, and ``dy`` for the subplot, where ``xmin`` and ``ymin`` are the coordinates of the lower left corner of the subplot, and ``dx`` and ``dy`` are the width and height of the subplot, with all values specified in relative units (where 0 is left/bottom and 1 is top/right). For example::
+While it is possible to adjust the spacing between the subplots using `subplots_adjust`_, or use the `gridspec`_ functionality for more advanced subplotting, it is often easier to just use the more general ``add_axes`` method instead of ``add_subplot``. The ``add_axes`` method takes a list of four values, which are ``xmin``, ``xmin``, ``dx``, and ``dy`` for the subplot, where ``xmin`` and ``ymin`` are the coordinates of the lower left corner of the subplot, and ``dx`` and ``dy`` are the width and height of the subplot, with all values specified in relative units (where 0 is left/bottom and 1 is top/right). For example::
 
     fig = plt.figure()
     ax = fig.add_axes([0., 0., 1., 1., ])
+
+.. image:: advanced_plots/axes_full.png
+   :scale: 60%
+   :align: center
 
 will show a subplot that occupies all the figure (and the axis labels will in fact be hidden). This allows us to easily set up axes that touch::
 
@@ -81,14 +90,21 @@ will show a subplot that occupies all the figure (and the axis labels will in fa
     ax1 = fig.add_axes([0.1, 0.1, 0.4, 0.8])
     ax2 = fig.add_axes([0.5, 0.1, 0.4, 0.8])
 
+.. image:: advanced_plots/two_axes.png
+   :scale: 60%
+   :align: center
+
 although we still need a good way to hide the axis labels in the subplot on the right hand side. Combined with the ``figsize=`` argument, this allows us to control the exact aspect ratio of the subplots.
 
 Note that is also allows us to easily make inset plots::
 
     fig = plt.figure()
     ax1 = fig.add_axes([0.1, 0.1, 0.8, 0.8])
-    ax2 = fig.add_axes([0.68, 0.68, 0.16, 0.16])
+    ax2 = fig.add_axes([0.72, 0.72, 0.16, 0.16])
 
+.. image:: advanced_plots/axes_inset.png
+   :scale: 60%
+   :align: center
 
 Exercise: TODO
 
@@ -106,8 +122,14 @@ In Matplotlib, every plot element is a full Python object with properties that c
 
     # Retrieve an element of a plot and set properties
     for tick in ax.xaxis.get_ticklabels():
-        tick.set_fontsize('x-small')
+        tick.set_fontsize('large')
         tick.set_fontname('Times New Roman')
+        tick.set_color('blue')
+        tick.set_weight('bold')
+
+.. image:: advanced_plots/appearance_fonts_custom.png
+   :scale: 60%
+   :align: center
 
 This is very powerful, as it allows you to customize virtually *all* elements in a plot. However, in practice, this can be a lot of work for simple and common things (e.g. setting the tick label properties), so matplotlib allows users to specify default properties via rc parameters. These can be set either in a `~/.matplotlib/matplotlibrc` file, or in a script. To set these via a file, see `matplotlibrc`_. Example lines from this script include::
 
@@ -115,21 +137,29 @@ This is very powerful, as it allows you to customize virtually *all* elements in
     #xtick.minor.size     : 2      # minor tick size in points
     #xtick.major.pad      : 4      # distance to major tick label in points
     #xtick.minor.pad      : 4      # distance to the minor tick label in points
-    #xtick.color          : k      # color of the tick labels
+    #xtick.color          : r      # color of the tick labels
     #xtick.labelsize      : medium # fontsize of the tick labels
-    #xtick.direction      : in     # direction: in or out
+    #xtick.direction      : out     # direction: in or out
 
 These lines are commented out by default, but you can uncomment them to make them active. However, it's often easier to define properties on a per-script basis using the `rc`_ function. This function's first argument is the category of the settings, and this is followed by a set of keyword arguments to set the parameters for this element. To reproduce the above lines from the ``matplotlibrc`` file, one would do::
 
     import matplotlib.pyplot as plt
 
-    plt.rc('xtick', color='k', labelsize='medium', direction='in'
+    plt.rc('xtick', color='r', labelsize='medium', direction='out')
     plt.rc('xtick.major', size=4, pad=4)
     plt.rc('xtick.minor', size=2, pad=4)
+
+.. image:: advanced_plots/appearance_fonts_rc.png
+   :scale: 60%
+   :align: center
 
 It is not necessary to specify all the parameters in every script - only specify the ones you want to change from the default, e.g.::
 
     plt.rc('xtick', color='red')
+
+If you need to reset the parameters to their default values, use::
+
+    plt.rcdefaults()
 
 Adding a legend
 ---------------
@@ -138,7 +168,7 @@ Adding a legend to a plot is straightforward. First, whenever calling a plotting
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
-    x = np.linspace(0.,13., 30)
+    x = np.linspace(1., 8., 30)
     ax.plot(x, x ** 1.5, 'ro', label='density')
     ax.plot(x, 20/x, 'bx', label='temperature')
 
@@ -148,6 +178,20 @@ Then, call the ``legend`` method::
 
 and the legend will automatically appear!
 
+.. image:: advanced_plots/legend.png
+   :scale: 60%
+   :align: center
+
+Note that you can control the font size in a legend with the following rc parameter::
+
+    plt.rc('legend', fontsize='small')
+
+which would produce:
+
+.. image:: advanced_plots/legend_custom.png
+   :scale: 60%
+   :align: center
+
 Adding a colorbar
 -----------------
 
@@ -155,9 +199,41 @@ Adding a colorbar to a plot is also straightforward, and involves capturing the 
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
-    image = np.random.random((100, 100))
-    i = ax.imshow(image)
+    image = np.random.poisson(10., (100, 80))
+    i = ax.imshow(image, interpolation='nearest')
     fig.colorbar(i)  # note that colorbar is a method of the figure, not the axes
+
+.. image:: advanced_plots/colorbar_ax.png
+   :scale: 60%
+   :align: center
+
+Note that in the above ``colorbar`` call, the colorbar box automatically eats up space from the axes to which it is attached. If you want to customize exactly where the colorbar appears, you can define a set of axes, and pass it to colorbar via the ``cax=`` argument::
+
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.6,0.8])
+    image = np.random.poisson(10., (100, 80))
+    i = ax.imshow(image, interpolation='nearest')
+    colorbar_ax = fig.add_axes([0.7, 0.1, 0.1, 0.8])
+    fig.colorbar(i, cax=colorbar_ax)
+
+.. image:: advanced_plots/colorbar_cax.png
+   :scale: 60%
+   :align: center
+
+You will notice that even though the axes we specified *should* line up nicely, they don't. This is because imshow automatically modifies the axes so that pixels are square. We can fix this with ``aspect='auto'``::
+
+    fig = plt.figure()
+    ax = fig.add_axes([0.1,0.1,0.6,0.8])
+    image = np.random.poisson(10., (100, 80))
+    i = ax.imshow(image, aspect='auto', interpolation='nearest')
+    colorbar_ax = fig.add_axes([0.7, 0.1, 0.1, 0.8])
+    fig.colorbar(i, cax=colorbar_ax)
+
+.. image:: advanced_plots/colorbar_cax_aspect.png
+   :scale: 60%
+   :align: center
+
+With these options, you should now have complete control on the placement of axes and colorbars!
 
 Custom ticks and labels
 -----------------------
@@ -166,17 +242,25 @@ In some cases, you may want to specify which tick locations should be shown. Thi
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
-    ax.xaxis.set_ticks([0.1, 0.5, 0.7])
-    ax.yaxis.set_ticks([0.2, 0.4, 0.8])
+    ax.set_xticks([0.1, 0.5, 0.7])
+    ax.set_yticks([0.2, 0.4, 0.8])
+
+.. image:: advanced_plots/custom_ticks_1.png
+   :scale: 60%
+   :align: center
 
 It is also easy to specify what the label strings should be explicitly::
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
-    ax.xaxis.set_ticks([0.1, 0.5, 0.7])
-    ax.xaxis.set_ticklabels(['a', 'b', 'c'])
-    ax.yaxis.set_ticks([0.2, 0.4, 0.8])
-    ax.yaxis.set_ticklabels(['first', 'second', 'third'])
+    ax.set_xticks([0.1, 0.5, 0.7])
+    ax.set_xticklabels(['a', 'b', 'c'])
+    ax.set_yticks([0.2, 0.4, 0.8])
+    ax.set_yticklabels(['first', 'second', 'third'])
+
+.. image:: advanced_plots/custom_ticks_2.png
+   :scale: 60%
+   :align: center
 
 It is best to only use ``set_ticklabels`` when also using ``set_ticks``, so that you know exactly which ticks you are assigning the labels for. The above can be used for example if you would like to make a plot as a function of spectral type, or if you want to format the labels in a very specific way.
 
@@ -184,13 +268,21 @@ This can also be used to hide ticks and/or labels. For example, to hide ticks an
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
-    ax.xaxis.set_ticks([])
+    ax.set_xticks([])
+
+.. image:: advanced_plots/custom_ticks_3.png
+   :scale: 60%
+   :align: center
 
 If you only want to hide labels, not the ticks, from an axis, then just do::
 
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
-    ax.xaxis.set_ticklabels('')
+    ax.set_xticklabels('')
+
+.. image:: advanced_plots/custom_ticks_4.png
+   :scale: 60%
+   :align: center
 
 Tips and tricks
 ---------------
@@ -199,15 +291,6 @@ Designing plots
 ^^^^^^^^^^^^^^^
 
 When designing plots, it's often fastest to save the plot to PNG when trying out different commands, and to switch to EPS and/or PDF (if necessary) only at the very end, once the plot is satisfactory, because PNG output is fastest. In particular, on MacOS X, if you have the PNG file open, and re-run the script to re-generate it, you simply need to click on the open file to refresh, which makes it easy to tweak the plot.
-
-Using your system's latex
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-One of the rc parameters available is ``text.usetex``, which allows Matplotlib to use the system LaTeX installation instead of the built-in one. The system installation generally produces better results, but is quite slow (it may take several seconds to generate the labels for the plot). The parameter can be set in-script with::
-
-    plt.rc('text', usetex=True)
-
-Because of the slower performance, we recommend only enabling this option at the last minute, once you are ready to make the final plot.
 
 Automatic bounding box
 ^^^^^^^^^^^^^^^^^^^^^^
