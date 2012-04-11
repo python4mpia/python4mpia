@@ -41,9 +41,9 @@ defines two figures, one with two sets of axes, and one with one set of axes. Su
 
 The slight downside of this method is that in interactive mode, you will need to explicitly call::
 
-    plt.draw()
+    fig.canvas.draw()
 
-to refresh the figure after plotting commands.
+to refresh the figure after plotting commands (where ``fig`` is the figure object).
 
 .. note:: while this method is more object-oriented than the procedural method
           we presented last time, it still relies on pyplot to instantiate the
@@ -197,8 +197,8 @@ This is very powerful, as it allows you to customize virtually *all* elements in
 
     **Hint 1:** <tab> suggestion/completion is your friend!
 
-    **Hint 2:** Don't forget to run ``plt.draw()`` to refresh the plot after
-    modifying properties!
+    **Hint 2:** Don't forget to run ``fig.canvas.draw()`` to refresh the plot
+    after modifying properties!
 
 .. raw:: html
 
@@ -208,7 +208,7 @@ This is very powerful, as it allows you to customize virtually *all* elements in
 
    points.set_color('red')
    title.set_fontsize('x-large')
-   plt.draw()
+   fig.canvas.draw()
 
 Easy! :-)
 
