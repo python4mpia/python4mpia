@@ -15,7 +15,9 @@ Plotting and Images
    :maxdepth: 1
    
    matplotlib
-
+   advanced
+   publication
+   aplpy
 
 :Authors: Tom Aldcroft, Tom Robitaille
 :Copyright: 2011 Smithsonian Astrophysical Observatory
