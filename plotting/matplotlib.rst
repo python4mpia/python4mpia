@@ -35,17 +35,16 @@
 .. _`yticks()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.yticks#matplotlib.pyplot.yticks
 .. _`savefig()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.savefig#matplotlib.pyplot.savefig
 
-.. _matplotlib:
 
 ============
  Matplotlib
 ============
 
-`Matplotlib`_ is a python 2-d plotting library which produces
-publication quality figures in a variety of formats and interactive
-environments across platforms.  Matplotlib can be used in Python
-scripts, the Python and IPython shell, web application servers, and
-six graphical user interface toolkits.
+Matplotlib is a python 2-d plotting library which produces publication
+quality figures in a variety of formats and interactive environments
+across platforms.  Matplotlib can be used in Python scripts, the
+Python and IPython shell, web application servers, and six graphical
+user interface toolkits.
 
 
 Documentation
@@ -139,7 +138,7 @@ Hints on getting from here (an idea) to there (a plot)
 Plotting 1-d data
 =================
 
-The `matplotlib`_ tutorial on `Pyplot
+The matplotlib tutorial on `Pyplot
 <http://matplotlib.sourceforge.net/users/pyplot_tutorial.html>`_
 (Copyright (c) 2002-2009 John D. Hunter; All Rights Reserved and
 `license <http://matplotlib.sourceforge.net/users/license.html>`_) is
