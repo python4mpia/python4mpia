@@ -35,6 +35,7 @@
 .. _`yticks()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.yticks#matplotlib.pyplot.yticks
 .. _`savefig()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.savefig#matplotlib.pyplot.savefig
 
+.. _matplotlib:
 
 ============
  Matplotlib
