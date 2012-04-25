@@ -33,6 +33,7 @@
 .. _`ylim()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.ylim#matplotlib.pyplot.ylim
 .. _`xticks()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.xticks#matplotlib.pyplot.xticks
 .. _`yticks()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.yticks#matplotlib.pyplot.yticks
+.. _`savefig()`: http://matplotlib.sourceforge.net/api/pyplot_api.html?highlight=plot.savefig#matplotlib.pyplot.savefig
 
 
 ============
@@ -185,7 +186,7 @@ same length as y but starts with 0.  Hence the x data are
 arguments.  For example, to plot x versus y, you can issue the
 command::
 
-    plt.clf()
+    plt.clf()    # this clears the existing figure
     plt.plot([1,2,3,4], [1,4,9,16])
 
 `plot()`_ is just the tip of the iceberg for plotting commands and you
@@ -218,8 +219,8 @@ axes.
 If matplotlib were limited to working with lists, it would be of
 limited use for numeric processing.  Generally, you will use `NumPy`_
 arrays.  In fact, all sequences are converted to numpy arrays
-internally.  The example below illustrates a plotting several lines
-with different format styles in one command using arrays::
+internally.  The example below illustrates plotting several lines with
+different format styles in one command using arrays::
 
   # evenly sampled time at 200ms intervals
   t = np.arange(0., 5., 0.2)
@@ -232,7 +233,6 @@ with different format styles in one command using arrays::
 
 .. image:: pyplot_three_v2.png
    :scale: 100
-
 .. admonition:: Exercise: Plot a sine curve
 
    Make a plot of a sin curve between 0 and 4*pi shown by a green
@@ -241,14 +241,15 @@ with different format styles in one command using arrays::
 
 .. raw:: html
 
-   <p class="flip1">Click to Show/Hide Solution</p> <div class="panel1">
+   <p class="flip0">Click to Show/Hide Solution</p> <div class="panel0">
 
 ::
 
+  plt.clf()
   x = np.linspace(0, 4*np.pi, 100)
   plt.plot(x, np.sin(x), 'g')
   plt.xlim(0, 4*np.pi)
-  plt.ylim(1.1, -1.1)
+  plt.ylim(-1.1, 1.1)
 
 .. raw:: html
 
@@ -340,8 +341,8 @@ zorder			a number determining the plot order (controls overlaps)
       :scale: 70
 
    Make a plot that looks similar to the one above. You should be able
-   to do this just by using keyword arguments to adjust the plotting
-   properties.
+   to do this just by using the format string and keyword arguments to
+   adjust the line and marker properties.
 
 .. raw:: html
 
@@ -369,11 +370,12 @@ Here are a few useful matplotlib.pyplot functions:
 
 =============================== ==================================================================
 `figure()`_		        Make new figure frame (accepts figsize=(width,height) in inches)
+`clf()`_		        Clear an existing figure
 `axis()`_		        Set plot axis limits or set aspect ratio (plus more)
 `subplots_adjust()`_	        Adjust the spacing around subplots (fix clipped labels etc)
 `xlim()`_, `ylim()`_, `axis()`_ Set x and y axis limits
 `xticks()`_, `yticks()`_        Set x and y axis ticks
-`savefig`_                      Save a figure as png, pdf, ps, svg, jpg, ...			         
+`savefig()`_                    Save a figure as png, pdf, ps, svg, jpg, ...			         
 =============================== ==================================================================
 
 .. _multiple-figs-axes:
@@ -453,8 +455,8 @@ You can clear the current figure with `clf()`_ and the current axes
 with `cla()`_.  There is also an object oriented API which you can use
 instead (see the `artist tutorial
 <http://matplotlib.sourceforge.net/users/artists.html>`_).Briefly,
-`subplot` and `axes` have equivalents that are methods of a figure;
-`figure().add_subplot()` and `figure().add_axes()`. In scripts it is
+``subplot`` and ``axes`` have equivalents that are methods of a figure;
+``figure().add_subplot()`` and ``figure().add_axes()``. In scripts it is
 often more convenient to use these as it makes explicit which figure
 the plot will appear on.
 
@@ -468,7 +470,7 @@ location, and the `xlabel()`_, `ylabel()`_ and `title()`_ are used to
 add text in the indicated locations (see the `text intro
 <http://matplotlib.sourceforge.net/users/text_intro.html#text-intro>`_
 for a more detailed example). Here we'll create a histogram from some
-data using the `hist_` command and then annotate it with some text::
+data using the `hist()`_ command and then annotate it with some text::
 
   mu, sigma = 0, 1
   x = np.random.normal(mu, sigma, size=10000)
@@ -489,7 +491,7 @@ data using the `hist_` command and then annotate it with some text::
 .. image:: pyplot_text.png
    :scale: 70
 
-All of the `text()`_ commands return an :class:`matplotlib.text.Text`
+All of the `text()`_ commands return a :class:`matplotlib.text.Text`
 instance.  Just as with with lines above, you can customize the
 properties by passing keyword arguments into the text functions or
 using `set_` methods::
@@ -510,7 +512,7 @@ legend. Let's do that now using ``legend()``::
 
   plt.legend(loc='best')
 
-Type ``legend?`` and take a look at the different keyword options that
+Type ``plt.legend?`` and take a look at the different keyword options that
 let you customise the legend. `loc='best'` means it will magically
 choose a location to minimise overlap with the plotted data.
 
@@ -528,11 +530,11 @@ choose a location to minimise overlap with the plotted data.
      ``np.arange(min, max, step)`` so both histograms are binned the
      same.
    - The ``histtype`` parameter may also prove useful depending on
-     your taste.plt.clf()
+     your taste.
 
 .. raw:: html
 
-   <p class="flip0">Click to Show/Hide Solution</p> <div class="panel0">
+   <p class="flip2">Click to Show/Hide Solution</p> <div class="panel2">
 
 ::
 
@@ -625,7 +627,7 @@ then be labelled with `clabel()`::
   # inline argument to clabel will control whether the labels are draw
   # over the line segments of the contour, removing the lines beneath
   # the label
-  plt.figure()
+  plt.clf()
   CS = plt.contour(X, Y, Z)
   plt.clabel(CS, inline=1, fontsize=10)
   plt.title('Simplest default with labels')
@@ -652,13 +654,14 @@ You can also save a plot using the button in the plotting window.
    Make a contour plot of a single 2d gaussian centred on 0,0. You
    should show only 2 contours that are both coloured black. Label the
    inner contour with '99%' and the outer contour with '95%'. You
-   might want to take a look at the `fmt` keyword in the `clabel()`
-   help to see how to give your own contour labels, and take note that
-   the values of each contour level are stored in `CS.levels`.
+   might want to take a look at the `fmt` keyword in the help for
+   `clabel()` to see how to give your own contour labels, and take
+   note that the values of each contour level are stored in
+   `CS.levels`.
 
 .. raw:: html
 
-   <p class="flip1">Click to Show/Hide Solution</p> <div class="panel1">
+   <p class="flip3">Click to Show/Hide Solution</p> <div class="panel3">
 
 ::
 
@@ -692,8 +695,8 @@ Plotting 3-d data
 =================
 
 Matplotlib supports plotting 3-d data through the
-``mpl_toolkits.mplot3d`` module.  This is somewhat experimental but
-it's worth looking at an example of the 3-d viewer that is available::
+``mpl_toolkits.mplot3d`` module.  Let's take a look at an example of
+the 3-d viewer that is available::
 
   from mpl_toolkits.mplot3d import Axes3D
   import numpy as np
@@ -716,11 +719,11 @@ To get more information check out the `mplot3d tutorial
 <http://matplotlib.sourceforge.net/mpl_toolkits/mplot3d/tutorial.html>`_.
 
 Putting it all together
------------------------
+=======================
 
 Let's use some of what we've learned over the past few lessons to plot
 a 2d distribution, overlay some contours, and show the 1d histograms
-in corresponding to each dimension. You should understand everything
+corresponding to each dimension. You should understand everything
 that's going on here - if you don't, please ask!::
    
   # the random data
@@ -770,4 +773,4 @@ that's going on here - if you don't, please ask!::
   ax_right.set_xticklabels([])
   ax_right.set_yticklabels([])
    
-  plt.show()
+  plt.draw()
