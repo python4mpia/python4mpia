@@ -25,11 +25,11 @@ The following instructions here are adapted from `here
 Installing MacPorts
 -------------------
 
-Ensure that `XCode <http://developer.apple.com/xcode/>`_ 3 or 4 is installed
-(should be on the install DVDs for your Mac). If you like to live on the
-bleeding edge, you can purchase XCode 4 from the Mac App Store. To check if
-XCode is installed properly, you can type ``gcc`` in the command-line. If you
-get ``gcc: command not found``, then XCode is not properly installed.
+First ensure that XCode version 3 or 4 is installed. To check if XCode
+is installed type ``gcc`` on the command-line. If you get ``gcc:
+command not found`` then XCode is not installed. To install it, use
+the install DVDs for your Mac, or if you are using MacOS 10.6 or 10.7,
+you can also get XCode 4 from the App Store.
 
 Download the DMG image for MacPorts from `here <http://www.macports.org/install.php>`_ - be sure to pick the correct
 one for your MacOS X version. Mount the disk image and run the installer.

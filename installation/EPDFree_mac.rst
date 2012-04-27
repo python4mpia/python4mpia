@@ -29,10 +29,9 @@ listed in the :ref:`python_pkg_requirements` section.
 
 First ensure that XCode version 3 or 4 is installed. To check if XCode
 is installed type ``gcc`` on the command-line. If you get ``gcc:
-command not found`` then XCode is not installed. To install either
-download it `here
-<http://itunes.apple.com/us/app/xcode/id448457090?mt=12>`_ or use the
-install DVDs for your Mac.
+command not found`` then XCode is not installed. To install it, use
+the install DVDs for your Mac, or if you are using MacOS 10.6 or 10.7,
+you can also get XCode 4 from the App Store.
 
 Once XCode is installed copy and paste the lines below one at a time,
 checking that each one works. The program outputs may contain various
