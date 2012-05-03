@@ -187,7 +187,7 @@ Making your own objects is fun and easy!  To create your own object, all you nee
 
 
 That's it!  You define the object with the *class* keyword.  The *__init__()* function is the function used to create a 
-new instance of an object.  The *__init__()* function is the only required function.  Any other function
+new instance of an object.  The *__init__()* function is the only required function.
 
 Here is a more practical example:  Say you are studying a sample of young stars.  Each star will have several attributes
 
@@ -286,8 +286,51 @@ Now, we can sort the any list of Star objects by Right Ascension::
    print star_list
    >> [TTauri: 65.495000, TWHya: 165.466250, AlphaBoo: 213.915290]
 
-Custom Objects are extremely powerful ways to organize your data and keeping your code from turning into spaghetti.
+The reason the previous examples are called *Overloading* is because they over-ride existing functions called *__repr__(self)* and 
+*__lt__(self, other)*.  Where did these functions come from?  We certainly didn't define them from scratch!  To understand this, we
+must understand the concept of "Inheritance".  In the original definition of *class Star( object ):*, the *object* is the parent class
+of the Star Object.  Here is an example from Wikipedia::
+   class Animal:
+       def __init__(self, name):    # Constructor of the class
+           self.name = name
+       def talk(self):              # Abstract method, defined by convention only
+           raise NotImplementedError("Subclass must implement abstract method")
+   
+   class Cat(Animal):
+       def talk(self):
+           return 'Meow!'
+   
+   class Dog(Animal):
+       def talk(self):
+           return 'Woof! Woof!'
+
+Class Animal is the parent class for both Cat and Dog.  You may notice that neither Cat nor Dog have the required *__init__()* function.
+This is because they inherit it from their parent class, Animal.  This means that both objects have a self.name variable.  Both 
+Cat and Dog overload the *talk(self)* function with functions appropriate to their type.::
+   
+   animals = [Cat('Missy'), Dog('Lassie')]
+   for animal in animals:
+       print animal.name + ': ' + animal.talk()
+
+This prints the following::
+
+   Missy: Meow!
+   Lassie: Woof! Woof!
+   
+Custom Objects are powerful ways to organize your data and keeping your code from turning into spaghetti.
 These are just a few of the things which are possible.  The sky's the limit, so feel free to explore!
+
+
+
+Further Reading
+---------------
+* `Object Oriented Thought Process <http://www.amazon.com/Object-Oriented-Thought-Process-The-Edition/dp/0672330164>`_, Matt Weisfeld
+* `Design Patterns <http://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612>`_, Erich Gamma et al.
+* `Object-Oriented Programming and Java <http://www.amazon.com/Object-Oriented-Programming-Java-Danny-C-C/dp/9813083964>`_, Danny Poo et al.
+* `Object-Oriented Programming in Python <http://www.amazon.com/Object-Oriented-Programming-Python-Michael-Goldwasser/dp/0136150314>`_, Goldwasser & Letscher
+
+
+
 
 +---+
 |   |
