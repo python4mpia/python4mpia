@@ -9,7 +9,7 @@ Object Oriented Programming is a philosophy of programming which compartmentaliz
 functions into "Objects"
 
 Non-Object Oriented Programming (Procedural Programming) can be thought of as a long, ordered list
-of instructions or commands.  Data is visible to the top-level program, and shepharded through the
+of instructions or commands.  Data is visible to the top-level program, and shepherded through the
 commands from beginning to end.
 
 Procedural Example::
@@ -54,12 +54,13 @@ Object Oriented Example::
    test_string.mixItUp()
    print test_string.get_text()
 
+`Here <./example_A.py>`_ is an example script of the above code.
 
 In Object Oriented code, most variables at the main program level are Objects.  Data are stored
 within these objects, and are rarely accessible from the main program.
 
 In the above example, the *class mixableString( object ):* defines the format of the object.  Think of it
-as a blueprint.  The *__init__(self)* fuction contains a description of the object.  Other
+as a blueprint.  The *__init__(self)* fiction contains a description of the object.  Other
 functions describe functions the object can perform or can access the information inside the object::
 However, just as a blueprint is not a building, the definition of an object is not very useful until you "instantiate"
 the object.  The line *test_string = mixableString('this is a test')* creates a new instance of the mixableString
@@ -224,7 +225,7 @@ Here is a more practical example:  Say you are studying a sample of young stars.
 
 The *Star* class defines an object which has private members __Name, __RA, __Dec, __Jmag, __Hmag, __Kmag, __SpT, and __Av.
 
-Here is an example of how an object like this might be used
+`Here <./example_B.py>`_ is an example of how an object like this might be used
 
 .. code-block:: python
 
@@ -268,8 +269,8 @@ Now, when you ask Python to print a Star object, it calls this function.  So, re
 You can also overload the "less-than" or "greater-than" operations.  This is powerful because Python
 now knows how to compare objects of this type, and can sort them.  So, in the example above, we could
 redefine the less-than/greater-than operations to sort a list of stars by Right Ascension (or J-band magnitude,
-or alphabetically by name, or whatever you like).  To do this, you must include in the *class* defintion
-your new defintion of less-than/greater-than::
+or alphabetically by name, or whatever you like).  To do this, you must include in the *class* definition
+your new definition of less-than/greater-than::
 
    class Star( object ):
       ...
@@ -285,6 +286,8 @@ Now, we can sort the any list of Star objects by Right Ascension::
    star_list.sort()
    print star_list
    >> [TTauri: 65.495000, TWHya: 165.466250, AlphaBoo: 213.915290]
+
+`Here <./example_C.py>`_ is an example of the above code.
 
 The reason the previous examples are called *Overloading* is because they over-ride existing functions called *__repr__(self)* and 
 *__lt__(self, other)*.  Where did these functions come from?  We certainly didn't define them from scratch!  To understand this, we

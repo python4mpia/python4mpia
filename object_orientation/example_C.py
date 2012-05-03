@@ -22,9 +22,62 @@ class Star(object):
         else:
             return self.__RA
 
+    def getRA(self):
+        return self.__RA
+
+    def getdec(self):
+        return self.__dec
+
+    def getJmag(self):
+        return self.__Jmag
+
+    def getHmag(self):
+        return self.__Hmag
+
+    def getKmag(self):
+        return self.__Kmag
+
+    def getSpT(self):
+        return self.__SpT
+
+    def getAv(self):
+        return self.__Av
+
+    # The following functions set/modify values for internal variables
+    def setName(self, name):
+        self.__name = name
+
+    def setRA(self, RA):
+        self.__RA = RA
+
+    def setdec(self, dec):
+        self.__dec = dec
+
+    def setJmag(self, Jmag):
+        self.__Jmag = Jmag
+
+    def setHmag(self, Hmag):
+        self.__Hmag = Hmag
+
+    def setKmag(self, Kmag):
+        self.__Kmag = Kmag
+
+    def setSpT(self, SpT):
+        self.__SpT = SpT
+    
     # The following functions perform internal calculations
     def computeReddening(self):
         self.__Av = calcReddening(self.__Jmag, self.__Hmag, self.__Kmag, self.__SpT)
+
+    def __repr__( self ):
+        return '%s: %f' % (self.__name, self.__RA)
+
+    def __lt__(self, other):
+        if isinstance(other, float):
+            return self.__RA < other
+        else:
+            return self.__RA < other.__RA
+
 
 star_list = []
 
