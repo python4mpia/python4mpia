@@ -33,7 +33,7 @@ encounter in research*.
    pure_python/pure_python
    core/core
    plotting/plotting
-
+   object_orientation/index
 
 Workshop Schedule
 -----------------
