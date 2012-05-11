@@ -34,6 +34,7 @@ encounter in research*.
    core/core
    plotting/plotting
    object_orientation/index
+   fitting_data/fitting_data
 
 Workshop Schedule
 -----------------
@@ -50,7 +51,7 @@ Feb 29th    Numpy and Scipy                        Hörsaal, 10:45-12:15
 Mar 14th    Making plots with Matplotlib           Hörsaal, 10:45-12:15
 Apr 11th    Making publication-quality plots       Hörsaal, 10:45-12:15
 Apr 25th    Clinic                                 Hörsaal, 10:45-12:15
-May TBD     Advanced Scipy - Fitting data          Hörsaal, 10:45-12:15
+May 16th    Fitting data with Python               Hörsaal, 10:45-12:15
 ========== ======================================= ========================
 
 About the Workshops
