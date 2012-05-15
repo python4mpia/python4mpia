@@ -1,6 +1,8 @@
 Metropolis-Hastings algorithm
 ===========================
 
+
+
 Salpeter likelihood function
 --------------------
 
@@ -10,13 +12,16 @@ Now, our goal is to learn the probability distribution of :math:`\alpha`, given 
 
 We assume that we are given :math:`N` i.i.d. samples of stellar masses (with negligible errors on the measurements). In that case, the likelihood of the problem is
 
-  :math:`\mathcal L(\{M_1,M_2,\ldots,M_N\};\alpha) = \prod_{n=1}^N p(M_n|\theta) = \prod_{n=1}^N c\left(\frac{M_n}{M_\odot}\right)^{-\alpha}`
+  :math:`\mathcal L(\{M_1,M_2,\ldots,M_N\};\alpha) = \prod_{n=1}^N p(M_n|\alpha) = \prod_{n=1}^N c\left(\frac{M_n}{M_\odot}\right)^{-\alpha}`
 
-Furthermore, we assume that we are given an observation interval :math:`[M_{min},M_{max}]` of stellar masses. (Infering that interval for observational data is a complicated astronomical problem.) Then, we can evaluate the normalisation constant,
+We can evaluate the normalisation constant by integrating over the observation interval :math:`[M_{min},M_{max}]`:
 
   :math:`\int_{M_{min}}^{M_{max}}dM c M^{-\alpha} = c\frac{M_{max}^{1-\alpha}-M_{min}^{1-\alpha}}{1-\alpha}=1`
 
-This enables us to solve for :math:`c`, if we want to.
+There are two simplifying assumptions in this approach:
+
+* We neglect errors of stellar mass observations :math:`M_n`.
+* We assume that :math:`[M_{min},M_{max}]` are known.
 
 Instead of :math:`\mathcal L`, once usually considers :math:`\log\mathcal L`, which is numerically more stable and usually also simplifies the math,
   
@@ -30,31 +35,41 @@ There are two important things to note carefully about this log-likelihood funct
 
 
 
-Problems of Monte-Carlo sampling
+
+
+
+Markov-chain Monte-Carlo (MCMC) sampling
 --------------------
 
-If we were to plot :math:`\log\mathcal L(\{M_1,M_2,\ldots,M_N\};\alpha)` as a function of :math:`\alpha`, we would realise that it has a single extremely sharp peak.
+MCMC is an iterative algorithm. We provide a first value - an initial guess - and then look for better values in a Monte-Carlo fashion.
 
-This is a huge problem for Monte-Carlo sampling, because the likelihood is essentially zero everywhere, except at this single sharp peak. The chance that our proposal distribution hits a value at this peak tends towards zero. Consequently, we cannot estimate :math:`\alpha` by drawing Monte-Carlo samples from :math:`\log\mathcal L(\{M_1,M_2,\ldots,M_N\};\alpha)`.
+Basic idea of MCMC: Chain is an iteration, i.e., a set of points. Density of points is directly proportional to likelihood. (In brute-force grids, likelihood values at points map manifold.)
 
-In general, there is also an even more severe problem: Monte-Carlo methods such as the one we discussed before only work in one dimension. If we have more than one fit parameter, i.e., if we need to draw samples from PDFs over high-dimensional parameter spaces, these Monte-Carlo methods quickly become computationally infeasible. (See Sect. 29.3 in `MacKay's ITILA <http://www.inference.phy.cam.ac.uk/mackay/itila/book.html>`_ for a runtime analysis.)
+MCMC is NOT a greedy algorithm, but can theoretically explore the whole manifold if run for infinite time.
+
+BONUS: MCMC not only provides best-fit values but also uncertainty estimates via scatter of chain.
 
 
+Metropolis-Hastings algorithm
+---------------------
 
-Solution: Markov-chain Monte-Carlo (MCMC) sampling
---------------------
-
-The solution to both problems is MCMC. We provide a first value - an initial guess - and then look for better values in a Monte-Carlo fashion.
-
-There are numerous MCMC algorithms. For the moment, we only consider the Metropolis-Hastings algorithm, which is the simplest type of MCMC.
+There are numerous MCMC algorithms. For the moment, we only consider the Metropolis-Hastings algorithm, which is the simplest type of MCMC. See chapters 29 and 30 in `MacKay's ITILA <http://www.inference.phy.cam.ac.uk/mackay/itila/book.html>`_ for a very nice introduction to Monte-Carlo algorithms.
 
 We continue the previous code that drew samples from the Salpeter SMF and start implementation with the definition of the log-likelihood function and the toy data::
   
-  def evaluateLogLikelihood(alpha, D, N, M_min, M_max):
-	# Compute normalisation constant.
-	c = (1.0 - alpha)/(math.pow(M_max, 1.0-alpha) - math.pow(M_min, 1.0-alpha))
-	# return log likelihood.
-	return N*math.log(c) - alpha*D
+  # Define logarithmic likelihood function.
+  # params ... array of fit params, here just alpha
+  # D      ... sum over log(M_n)
+  # N      ... number of data points.
+  # M_min  ... lower limit of mass interval
+  # M_max  ... upper limit of mass interval
+  def evaluateLogLikelihood(params, D, N, M_min, M_max):
+      alpha = params[0]  # extract alpha
+      # Compute normalisation constant.
+      c = (1.0 - alpha)/(math.pow(M_max, 1.0-alpha) 
+                          - math.pow(M_min, 1.0-alpha))
+      # return log likelihood.
+      return N*math.log(c) - alpha*D
   
   # Generate toy data.
   N      = 1000000  # Draw 1 Million stellar masses.
@@ -65,34 +80,39 @@ We continue the previous code that drew samples from the Salpeter SMF and start 
   LogM   = numpy.log(numpy.array(Masses))
   D      = numpy.mean(LogM)*N
 
-Now follows the actual Metropolis-Hastings algorithm::
+Now follows the actual Metropolis-Hastings algorithm (for arbitrary number of fit parameters)::
 
-  # initial guess for alpha.
-  guess = 3.0
-  # Prepare storing MCMC chain.
+  # initial guess for alpha as array.
+  guess = [3.0]
+  # Prepare storing MCMC chain as array of arrays.
   A = [guess]
   # define stepsize of MCMC.
-  stepsize = 0.005
-  accepted = 0.0
-
+  stepsizes = [0.005]  # array of stepsizes
+  accepted  = 0.0
+  
   # Metropolis-Hastings with 10,000 iterations.
   for n in range(10000):
-	  old_alpha  = A[len(A)-1]
-	  old_loglik = evaluateLogLikelihood(old_alpha, D, N, M_min, M_max)
-	  # Suggest new candidate from Gaussian proposal distribution.
-	  new_alpha  = random.gauss(old_alpha, stepsize)
-	  new_loglik = evaluateLogLikelihood(new_alpha, D, N, M_min, M_max)
-	  # Accept new candidate in Monte-Carlo fashing.
-	  if (new_loglik > old_loglik):
-		  A.append(new_alpha)
-		  accepted = accepted + 1.0
-	  else:
-		  u = random.uniform(0.0,1.0)
-		  if (u < math.exp(new_loglik - old_loglik)):
-			  A.append(new_alpha)
-			  accepted = accepted + 1.0
-		  else:
-			  A.append(old_alpha)
+      old_alpha  = A[len(A)-1]  # old parameter value as array
+      old_loglik = evaluateLogLikelihood(old_alpha, D, N, M_min, 
+                      M_max)
+      # Suggest new candidate from Gaussian proposal distribution.
+      new_alpha = numpy.zeros([len(old_alpha)])
+      for i in range(len(old_alpha)):
+          # Use stepsize provided for every dimension.
+          new_alpha[i] = random.gauss(old_alpha[i], stepsizes[i])
+      new_loglik = evaluateLogLikelihood(new_alpha, D, N, M_min, 
+                      M_max)
+      # Accept new candidate in Monte-Carlo fashing.
+      if (new_loglik > old_loglik):
+          A.append(new_alpha)
+          accepted = accepted + 1.0  # monitor acceptance
+      else:
+          u = random.uniform(0.0,1.0)
+          if (u < math.exp(new_loglik - old_loglik)):
+              A.append(new_alpha)
+              accepted = accepted + 1.0  # monitor acceptance
+          else:
+              A.append(old_alpha)
 
   print "Acceptance rate = "+str(accepted/10000.0)
 
@@ -101,16 +121,23 @@ Finally, we discard the burn-in phase, thin out the Markov chain in order to red
   # Discard first half of MCMC chain and thin out the rest.
   Clean = []
   for n in range(5000,10000):
-	  if (n % 10 == 0):
-		  Clean.append(A[n])
-
+      if (n % 10 == 0):
+          Clean.append(A[n][0])
+  
+  # Print Monte-Carlo estimate of alpha.
+  print "Mean:  "+str(numpy.mean(Clean))
+  print "Sigma: "+str(numpy.std(Clean))
+  
   plt.figure(1)
   plt.hist(Clean, 20, histtype='step', lw=3)
-  plt.xticks([2.346,2.348,2.35,2.352,2.354],[2.346,2.348,2.35,2.352,2.354])
+  plt.xticks([2.346,2.348,2.35,2.352,2.354],
+             [2.346,2.348,2.35,2.352,2.354])
   plt.xlim(2.345,2.355)
   plt.xlabel(r'$\alpha$', fontsize=24)
   plt.ylabel(r'$\cal L($Data$;\alpha)$', fontsize=24)
   plt.savefig('example-MCMC-results.png')
   plt.show()
+
+The true value we used to generate the data was :math:`\alpha=2.35`. The Monte-Carlo estimate is :math:`\hat\alpha=2.3507\pm 0.0015`. Here is the estimated likelihood of :math:`\alpha`.
 
 .. image:: example-MCMC-results.png

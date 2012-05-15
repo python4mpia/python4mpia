@@ -1,4 +1,4 @@
-Convexity of the Salpeter problem
+Additional material: Convexity of the Salpeter problem
 ====================
 
 The Salpeter problem is neither a linear nor a least-squares problem. Let us check if it is a convex problem!

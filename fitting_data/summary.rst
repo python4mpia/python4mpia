@@ -6,10 +6,23 @@ Summary
 * Not all problems are least-square problems.
 * Simplex is robust but inefficient.
 * Gradient methods are efficient but not robust (assume convex problem).
-* Fitting a Salpeter SMF is a convex problem.
-* Direct Monte-Carlo sampling only works for trivial fit problems (1D, large uncertainties).
 * Metropolis-Hastings is robust but efficiency strongly depends on fine-tuning of numerous stepsizes.
 * Hamiltonian Monte-Carlo is robust and efficiency depends on fine-tuning of a single stepsize.
+
+
+
+What we did not have time to cover:
+--------------------
+
+* `making a fancy plot from Monte-Carlo samples <http://python4mpia.github.com/intro/quick-tour.html>`_
+* gradient methods (read additional material)
+* testing convexity
+* `emcee Python package by Foreman-Mackey et al. (2012) <http://arxiv.org/abs/1202.3665>`_
+* multistate/nested sampling
+* genetic algorithms
+
+
+
 
 Take home messages
 ---------------------

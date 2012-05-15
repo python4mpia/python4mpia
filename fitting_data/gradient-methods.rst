@@ -1,4 +1,4 @@
-Gradient methods
+Additional material: Gradient methods
 ========================
 
 As mentioned before, `leastsq` and thus also `curve_fit` from `scipy.optimize` employ a Levenburg-Marquardt algorithm, which is a special kind of gradient method that is very popular in astronomy (e.g. used in GalFit). There are numerous different types of gradient methods, e.g.:
@@ -10,7 +10,7 @@ As mentioned before, `leastsq` and thus also `curve_fit` from `scipy.optimize` e
 * stochastic gradient ascent/descent
 * ...
 
-Some of these methods are implemented in Scipy.
+Many of these methods are implemented in Scipy, see `here <http://docs.scipy.org/doc/scipy/reference/optimize.html>`_.
 
 
 
@@ -75,27 +75,32 @@ Let us consider the following example::
 
   # Iteration.
   for i in range(50):
-	  a = x0[0]
-	  b = x0[1]
-	  # Compute gradients of chi2 w.r.t. a and b.
-	  grad_a = 0.0
-	  grad_b = 0.0
-	  for n in range(len(xdata)):
-		  grad_a = grad_a - 2.0*(ydata[n] - a - b*xdata[n])*1.0/(sigma[n]*sigma[n])
-		  grad_b = grad_b - 2.0*(ydata[n] - a - b*xdata[n])*xdata[n]/(sigma[n]*sigma[n])
-	  # Update parameters.
-	  a_new = a - alpha*grad_a
-	  b_new = b - alpha*grad_b
-	  x0    = [a_new,b_new]
-	  
-	  # Store parameters for plotting.
-	  A.append(a_new)
-	  B.append(b_new)
+      a = x0[0]
+      b = x0[1]
+      # Compute gradients of chi2 w.r.t. a and b.
+      # Do the math first before trying to understand 
+      # this piece of code!
+      grad_a = 0.0
+      grad_b = 0.0
+      for n in range(len(xdata)):
+          grad_a = grad_a - 2.0*(ydata[n] - a - b*xdata[n])
+                       *1.0/(sigma[n]*sigma[n])
+          grad_b = grad_b - 2.0*(ydata[n] - a - b*xdata[n])
+                       *xdata[n]/(sigma[n]*sigma[n])
+      # Update parameters.
+      a_new = a - alpha*grad_a
+      b_new = b - alpha*grad_b
+      x0    = [a_new,b_new]
+      
+      # Store parameters for plotting.
+      A.append(a_new)
+      B.append(b_new)
 
   # Plot route of gradient descent.
   plt.figure(1)
   plt.plot(A, B, 'o-', ms=6, lw=3, color='blue')
-  plt.plot([0.0], [1.0], 'x', ms=12, markeredgewidth=3, color='orange')
+  plt.plot([0.0], [1.0], 'x', ms=12, markeredgewidth=3, 
+            color='orange')
   plt.xlim(-0.05,0.55)
   plt.ylim(0.75,1.55)
   plt.xlabel(r'$a$', fontsize=24)
@@ -144,20 +149,20 @@ The code of gradient descent only needs to be modified slightly::
 
   # Iteration (same number of evaluations as for gradient descent).
   for i in range(300):
-	  a = x0[0]
-	  b = x0[1]
-	  # Compute stochastic gradients of chi2 w.r.t. a and b.
-	  n      = random.randint(0,len(xdata)-1)  # randomly chose data point
-	  grad_a = - 2.0*(ydata[n] - a - b*xdata[n])*1.0/(sigma[n]*sigma[n])
-	  grad_b = - 2.0*(ydata[n] - a - b*xdata[n])*xdata[n]/(sigma[n]*sigma[n])
-	  # Update parameters.
-	  a_new = a - alpha*grad_a
-	  b_new = b - alpha*grad_b
-	  x0    = [a_new,b_new]
-	  
-	  # Store parameters for plotting.
-	  A.append(a_new)
-	  B.append(b_new)
+      a = x0[0]
+      b = x0[1]
+      # Compute stochastic gradients of chi2 w.r.t. a and b.
+      n      = random.randint(0,len(xdata)-1)  # randomly chose data point
+      grad_a = - 2.0*(ydata[n] - a - b*xdata[n])*1.0/(sigma[n]*sigma[n])
+      grad_b = - 2.0*(ydata[n] - a - b*xdata[n])*xdata[n]/(sigma[n]*sigma[n])
+      # Update parameters.
+      a_new = a - alpha*grad_a
+      b_new = b - alpha*grad_b
+      x0    = [a_new,b_new]
+      
+      # Store parameters for plotting.
+      A.append(a_new)
+      B.append(b_new)
 
   # Plot route of gradient descent.
   plt.figure(1)
